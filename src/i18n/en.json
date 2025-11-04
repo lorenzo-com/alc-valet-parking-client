@@ -1,0 +1,32 @@
+{
+    "carousel": {
+        "title01": "OUTDOOR PARKING",
+        "button01": "MORE INFO",
+        "title02": "PERSONALIZED SERVICE",
+        "text02": "COLLECTION AND DELIVERY OF VEHICLE IN TERMINAL",
+        "button02": "BOOK NOW",
+        "title03": "INDOOR PARKING",
+        "button03": "MORE INFO",
+        "title04": "PARKING",
+        "text04": "ALICANTE TRAIN STATION",
+        "button04": "CALL NOW",
+        "title05": "PARKING",
+        "text05": "ALICANTE-ELCHE AIRPORT",
+        "button05": "CONTACT US"
+    },
+    "header": {
+        "home": "HOME",
+        "company": "COMPANY",
+        "howitworks": "HOW IT WORKS",
+        "rates": "PRICES",
+        "booking": "BOOKING",
+        "extraservices": "EXTRA SERVICES",
+        "location": "LOCATION"
+    },
+    "auth": {
+        "login": "Log In",
+        "register": "Register",
+        "logout": "Logout",
+        "myprofile": "My Profile"
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "carousel": {
+        "title01": "OPENLUCHT PLEINEN",
+        "button01": "MEER INFORMATIE",
+        "title02": "PERSONALISEERDE AANDACHT",
+        "text02": "OPHAAL- EN AFLEVERDIENST VAN HET VOERTUIG OP DEZELFDE TERMINAL",
+        "button02": "BOEK NU",
+        "title03": "OVERDEKTE PLEINEN",
+        "button03": "MEER INFORMATIE",
+        "title04": "PARKING",
+        "text04": "TREINSTATION ALICANTE",
+        "button04": "BEL NU",
+        "title05": "PARKING",
+        "text05": "LUCHTHAVEN ALICANTE-ELCHE",
+        "button05": "NEEM CONTACT OP"
+    },
+    "header": {
+        "home": "HOME",
+        "company": "DE ONDERNEMING",
+        "howitworks": "HOE HET WERKT",
+        "rates": "PRIJZEN",
+        "booking": "BOEKING",
+        "extraservices": "EXTRA DIENSTEN",
+        "location": "LOCATIE"
+    },
+    "auth": {
+        "login": "INLOGGEN",
+        "register": "REGISTREREN",
+        "logout": "UITLOGGEN",
+        "myprofile": "MIJN PROFIEL"
+    }
+}

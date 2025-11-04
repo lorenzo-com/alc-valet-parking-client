@@ -1,0 +1,158 @@
+---
+import { Image } from 'astro:assets';
+import SlideHome01 from '@/assets/home/SlideHome01.webp';
+import SlideHome02 from '@/assets/home/SlideHome02.webp';
+import SlideHome03 from '@/assets/home/SlideHome03.webp';
+import SlideHome04 from '@/assets/home/SlideHome04.webp';
+import SlideHome05 from '@/assets/home/SlideHome05.webp';
+
+const { t } = Astro.props;
+---
+<div
+  id="carouselExampleIndicators"
+  class="carousel slide"
+  data-bs-ride="carousel"
+  data-bs-interval="4000"
+>
+  <div class="carousel-indicators">
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="0"
+      class="active"
+      aria-current="true"
+      aria-label="Slide 1"></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="1"
+      aria-label="Slide 2"></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="2"
+      aria-label="Slide 3"></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="3"
+      aria-label="Slide 4"></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="4"
+      aria-label="Slide 5"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active" style="position: relative;">
+      <Image src={SlideHome01} alt="Slide 01" />
+      <div class="responsive-text text-white">
+        <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
+          {t.title01}
+        </h2>
+        <a href="/localizacion" class="btn btn-primary text-light mt-2">
+          {t.button01}
+        </a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <Image src={SlideHome02} alt="Slide 02" />
+      <div class="responsive-text text-white">
+        <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
+          {t.title02}
+        </h2>
+        <p class="fw-light position-relative bg-dark opacity-75 p-2 fs-5">
+          {t.text02}
+        </p>
+        <a href="/reservas" class="btn btn-primary text-light mt-2">{t.button02}</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <Image src={SlideHome03} alt="Slide 03" />
+      <div class="responsive-text text-white">
+        <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
+          {t.title03}
+        </h2>
+        <a href="/localizacion" class="btn btn-primary text-light mt-2">
+          {t.button03}
+        </a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <Image src={SlideHome04} alt="Slide 04" />
+      <div class="responsive-text text-white">
+        <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
+          {t.title04}
+        </h2>
+        <p class="fw-light position-relative bg-dark opacity-75 p-2 fs-5">
+          {t.text04}
+        </p>
+        <a href="/localizacion" class="btn btn-primary text-light mt-2"
+          >{t.button04}</a
+        >
+      </div>
+    </div>
+    <div class="carousel-item">
+      <Image src={SlideHome05} alt="Slide 05" />
+      <div class="responsive-text text-white">
+        <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
+          {t.title05}
+        </h2>
+        <p class="fw-light position-relative bg-dark opacity-75 p-2 fs-5">
+          {t.text05}
+        </p>
+        <a href="/localizacion" class="btn btn-primary text-light mt-2"
+          >{t.button05}</a
+        >
+      </div>
+    </div>
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleIndicators"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExampleIndicators"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<style>
+  .carousel-item {
+    position: relative;
+    width: 100%;
+    height: 60vh; /* Ocupa toda la altura de la pantalla */
+    overflow: hidden;
+  }
+
+  .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7); /* Oscurece un poco la imagen de fondo */
+  }
+
+  .responsive-text {
+    position: absolute;
+    top: 50%; /* Centrado vertical */
+    left: 10%; /* Espaciado desde la izquierda */
+    transform: translateY(-50%); /* Ajuste para centrar verticalmente */
+    color: white;
+  }
+
+  @media (min-width: 1200px) {
+    .responsive-text {
+      left: 15%; /* Más espacio desde la izquierda en pantallas grandes */
+    }
+  }
+</style>

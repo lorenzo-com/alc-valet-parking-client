@@ -1,9 +1,18 @@
 
+---
+const { t, auth } = Astro.props;
+
+import { Image } from 'astro:assets';
+import Logo from '@/assets/logo.png';
+import es from '@/assets/lang/es.png';
+import en from '@/assets/lang/en.png';
+import nl from '@/assets/lang/nl.png';
+---
 <div class="bg-black d-flex justify-content-between py-2 px-5">
   <div>
-    <a href="#"><img src="assets/img/lang/en.png" alt="English" class="me-3 cursor-pointer" style="width: 25px;"></a>
-    <a href="#"><img src="assets/img/lang/es.png" alt="Spanish" class="me-3 cursor-pointer" style="width: 25px;"></a>
-    <a href="#"><img src="assets/img/lang/nl.png" alt="Dutch" class="cursor-pointer" style="width: 25px;"></a>
+    <a href="/en/"><img src={en.src} alt="English" class="me-3 cursor-pointer" style="width: 25px;"></a>
+    <a href="/es/"><img src={es.src} alt="Spanish" class="me-3 cursor-pointer" style="width: 25px;"></a>
+    <a href="/nl/"><img src={nl.src} alt="Dutch" class="cursor-pointer" style="width: 25px;"></a>
   </div>
     <a href="https://wa.me/601356356" class="d-flex align-items-center text-light text-decoration-none cursor-pointer" style="font-size: .8rem;" target="_blank">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-whatsapp text-light me-1" viewBox="0 0 16 16">
@@ -15,7 +24,7 @@
 <nav class="navbar  navbar-expand-lg bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
-      <img src="assets/img/Logo.png" alt="Logo" style="height: 80px;">
+      <Image src={Logo} alt="Logo" style="height: 80px; width: auto;" />
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
       aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -29,36 +38,36 @@
       <div class="offcanvas-body bg-primary">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a href="/" class="nav-link fw-medium text-light">INICIO</a>
+            <a href="/" class="nav-link fw-medium text-light">{t.home}</a>
           </li>
           <li class="nav-item">
-            <a href="/empresa" class="nav-link fw-medium text-light">LA EMPRESA</a>
+            <a href="/empresa" class="nav-link fw-medium text-light">{t.company}</a>
           </li>
           <li class="nav-item">
-            <a href="/como-funciona" class="nav-link fw-medium text-light">CÓMO FUNCIONA</a>
+            <a href="/como-funciona" class="nav-link fw-medium text-light">{t.howitworks}</a>
           </li>
           <li class="nav-item">
-            <a href="/tarifas" class="nav-link fw-medium text-light">TARIFAS</a>
+            <a href="/tarifas" class="nav-link fw-medium text-light">{t.rates}</a>
           </li>
           <li class="nav-item">
-            <a href="/reservas" class="nav-link fw-medium text-light">RESERVAR</a>
+            <a href="/reservas" class="nav-link fw-medium text-light">{t.booking}</a>
           </li>
           <li class="nav-item">
-            <a href="/servicios-adicionales" class="nav-link fw-medium text-light">SERVICIOS ADICIONALES</a>
+            <a href="/servicios-adicionales" class="nav-link fw-medium text-light">{t.extraservices}</a>
           </li>
           <li class="nav-item">
-            <a href="/localizacion" class="nav-link fw-medium text-light">UBICACIÓN</a>
+            <a href="/localizacion" class="nav-link fw-medium text-light">{t.location}</a>
           </li>
         </ul>
         <hr class="text-white my-3">
         <div class="d-flex flex-column align-items-center gap-2 d-lg-none">
-          <a href="/auth/iniciar-sesion" class="btn btn-light rounded-pill w-75">Iniciar Sesión</a>
-          <a href="/auth/registrarse" class="btn btn-outline-light rounded-pill w-75">Registrarse</a>
+          <a href="/auth/iniciar-sesion" class="btn btn-light rounded-pill w-75">{auth.login}</a>
+          <a href="/auth/registrarse" class="btn btn-outline-light rounded-pill w-75">{auth.register}</a>
         </div>
 
         <div class="d-none d-lg-flex justify-content-center align-items-center">
-          <a href="/auth/iniciar-sesion" class="btn btn-light rounded-pill ms-3">Iniciar Sesión</a>
-          <!-- <a href="/perfil" class="nav-link fw-medium text-light text-decoration-none ms-3">Mi perfil</a> -->
+          <a href="/auth/iniciar-sesion" class="btn btn-light rounded-pill ms-3">{auth.login}</a>
+          <!-- <a href="/perfil" class="nav-link fw-medium text-light text-decoration-none ms-3">{auth.myprofile}</a> -->
         </div>
       </div>
     </div>
