@@ -28,5 +28,8 @@
         "register": "Register",
         "logout": "Logout",
         "myprofile": "My Profile"
+    },
+    "footer": {
+        "airport": "Airport"
     }
 }

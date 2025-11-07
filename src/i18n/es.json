@@ -28,5 +28,8 @@
         "register": "Registrarse",
         "logout": "Cerrar sesión",
         "myprofile": "MI PERFIL"
+    },
+    "footer": {
+        "airport": "Aeropuerto"
     }
 }

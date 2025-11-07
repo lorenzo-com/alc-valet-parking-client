@@ -1,0 +1,107 @@
+---
+const { footer } = Astro.props;
+import { Image } from "astro:assets";
+
+import FacebookIcon from "@/assets/icons/FacebookIcon.astro";
+import LinkedinIcon from "@/assets/icons/LinkedinIcon.astro";
+import WhatsappIcon from "@/assets/icons/WhatsappIcon.astro";
+
+import Looking4Parking from "@/assets/footer/Looking4Parking.webp";
+import ParkVia from "@/assets/footer/ParkVia.webp";
+import ParkLot from "@/assets/footer/ParkLot.webp";
+
+import Fiatc from "@/assets/footer/Fiatc.webp";
+import Prosegur from "@/assets/footer/Prosegur.webp";
+---
+
+<footer class="bg-dark text-white">
+    <div class="container py-5">
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="mb-5 mb-md-0">
+                <h4 class="text-primary">ALC VALET PARKING</h4>
+                <p class="mb-2">
+                    <span class="fw-semibold">{footer.airport}: </span>+34 601 356 356
+                </p>
+                <p class="mb-2">
+                    <span class="fw-semibold">Oficina: </span>+34 601 356 356
+                </p>
+                <div class="d-flex align-items-center mb-2">
+                    <WhatsappIcon />
+                    <p class="m-0">+34 601 356 356</p>
+                </div>
+                <p class="mb-2">
+                    e-mail: <a
+                        href="mailto:info@alcvaletparking.com"
+                        class="text-decoration-none text-light"
+                        >info&#64;alcvaletparking.com</a>
+                </p>
+                <a
+                    href="https://www.facebook.com/profile.php?id=100069995474805#"
+                    target="_blank"
+                    class="me-2"
+                >
+                    <FacebookIcon />
+                </a>
+                <a
+                    href="https://www.linkedin.com/in/alc-valet-parking-6b8794171/"
+                    target="_blank"
+                >
+                    <LinkedinIcon />
+                </a>
+            </div>
+
+            <div class="mb-5 mb-md-0">
+                <h4>Colaboradores</h4>
+                <div class="row row-cols-3">
+                    <Image src={Looking4Parking} alt="Looking4Parking" class="img-fluid" />
+                    <Image src={ParkVia} alt="ParkVia" class="img-fluid" />
+                    <Image src={ParkLot} alt="ParkLot" class="img-fluid" />
+                </div>
+            </div>
+
+            <div>
+                <h4>Protegidos y asegurados por</h4>
+                <div class="row row-cols-2">
+                    <Image src={Prosegur} alt="Prosegur" class="img-fluid" />
+                    <Image src={Fiatc} alt="Fiatc" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div style="background-color: #111111;" class="p-3">
+    <div class="container text-white">
+        <div class="row row-cols-1 row-cols-md-2">
+            <div
+                class="d-flex justify-content-center justify-content-lg-start align-items-center"
+            >
+                <p class="mb-3 m-md-0">
+                    © Copyright - ALC Valet Parking Alicante - PARKING LARGA
+                    ESTANCIA
+                </p>
+            </div>
+            <div
+                class="d-flex align-items-center justify-content-center justify-content-lg-end"
+            >
+                <ul class="d-flex list-unstyled m-0 gap-3">
+                    <li>
+                        <a href="/terminos-y-condiciones" class="text-white"
+                            >Avisos Legales</a
+                        >
+                    </li>
+                    <li>
+                        <a href="/politica-de-cookies" class="text-white"
+                            >Política de Cookies</a
+                        >
+                    </li>
+                    <li>
+                        <a href="/politicas-de-privacidad" class="text-white"
+                            >Política de Privacidad</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

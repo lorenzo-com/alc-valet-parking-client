@@ -1,15 +1,22 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import { translations } from '@/i18n';
+
+const { lang } = Astro.params;
+
+// Idioma por defecto si no se encuentra
+const t = translations[lang] || translations['en'];
+
 import Carousel from "@/components/Carousel.astro";
-import es from "@/i18n/es.json";
+import en from "@/i18n/en.json";
 
 import Promo01 from '@/assets/home/Promo01.webp';
 import Promo02 from '@/assets/home/Promo02.webp';
 import Promo03 from '@/assets/home/Promo03.webp';
 ---
 
-<Layout t={es.header} auth={es.auth} title="ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE">
-	<Carousel t={es.carousel} />
+<Layout t={t.header} auth={t.auth} title="ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE">
+	<Carousel t={t.carousel} />
 <div class="container mb-3">
   <div class="row row-cols-1 row-cols-md-3 mt-md-4">
     <div class="d-flex flex-column align-items-center mt-0" style="padding:40px; background-color:#dd5500;">
@@ -19,10 +26,10 @@ import Promo03 from '@/assets/home/Promo03.webp';
           d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5m0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5z" />
       </svg>
       <div class="text-white text-center">
-        <h2>Calculador de tarifas</h2>
-        <p>Compruebe su precio de forma sencilla.</p>
+        <h2>Rates calculator</h2>
+        <p>Check your price easily.</p>
       </div>
-      <a href="/reservas" class="btn btn-outline-light border-2 fw-light">CALCULE SU TARIFA</a>
+      <a href="/reservas" class="btn btn-outline-light border-2 fw-light">CALCULATE YOUR RATE</a>
     </div>
 
     <div class="d-flex flex-column align-items-center bg-primary" style="padding:40px;">
@@ -34,10 +41,10 @@ import Promo03 from '@/assets/home/Promo03.webp';
           d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87z" />
       </svg>
       <div class="text-white text-center">
-        <h2>Lavado exterior premium</h2>
-        <p>Disponible en nuestros servicios adicionales.</p>
+        <h2>Premium exterior Washing</h2>
+        <p>Available in our additional services.</p>
       </div>
-      <a href="/servicios-adicionales" class="btn btn-outline-light border-2 fw-light">OTROS SERVICIOS</a>
+      <a href="/servicios-adicionales" class="btn btn-outline-light border-2 fw-light">OTHER SERVICES</a>
     </div>
 
     <div class="d-flex flex-column align-items-center"
@@ -50,62 +57,62 @@ import Promo03 from '@/assets/home/Promo03.webp';
           clip-rule="evenodd" />
       </svg>
       <div class="text-white text-center">
-        <h2>Parking Vigilado</h2>
-        <p>Servicio de guarda y custodia de vehículos vigilado y asegurado.</p>
+        <h2>Secure parking</h2>
+        <p>Guarding and custody of vehicles. Guarded and insured.</p>
       </div>
-      <a href="/localizacion" class="btn btn-outline-light border-2 fw-light">CONÓCENOS</a>
+      <a href="/localizacion" class="btn btn-outline-light border-2 fw-light">KNOW US</a>
     </div>
   </div>
 </div>
 
 <div class="container mt-3">
   <p>
-    ALC Valet Parking es una empresa joven y dinámica que nace en 2012 con un objetivo claro, ofrecer un servicio de aparcamiento de calidad a precios de bajo coste. Somos una empresa dedicada a parking, guarda y custodia de vehículos en Alicante con más de 15 años de experiencia en el sector. Nuestro servicio está pensado para aquellas personas que se desplacen en su propio vehículo y necesiten un servicio de aparcamiento completo.
+    ALC Valet Parking is a young and dynamic company founded in 2012 with a clear goal, to offer a parking quality service at low cost prices. Our company is dedicated to guard, custody and parking cars in Alicante with over 15 years of experience. Our service is designed for those who travel in their own car and need a full valet parking service.
   </p>
 </div>
 
 <div class="d-flex justify-content-center align-items-center p-4 bg-primary">
-  <h2 class="text-white fs-2 fw-light mb-0">PROMOCIONES</h2>
+  <h2 class="text-white fs-2 fw-light mb-0">PROMOTIONS</h2>
 </div>
 
 <div class="container my-5">
   <div class="row row-cols-1 row-cols-md-3">
     <div class="d-flex flex-column">
-      <h3 class="fs-4">Vehículos Especiales</h3>
+      <h3 class="fs-4">Special Vehicles</h3>
       <img src={Promo01.src} alt="Promo 01" class="mb-3">
       <p class="text-secondary">
-        Necesita aparcar su caravana, barca, remolque, o camión durante corta o larga estancia? Disponemos de más de 2.500m2 de terreno vigilado en zona Aeropuerto de Alicante-Elche. Ofrecemos un 10% de descuento para reservas de larga estancia.
+        Do you need to park your motorhome, camper van, boat, truck for short or long stay? We have more than 2.500m2 of secure compound available at Alicante-Elche Airport area.
       </p>
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MÁS INFORMACIÓN</a>
+        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
       </div>
     </div>
 
     <div class="d-flex flex-column">
-      <h3 class="fs-4"><span class="text-primary">Promoción</span> Larga Estancia</h3>
+      <h3 class="fs-4">Long Stay <span class="text-primary">Promo</span></h3>
       <img src={Promo02.src} alt="Promo 02" class="mb-3">
       <p class="text-secondary">
-        Necesita aparcar su coche larga estancia en Aeropuerto de Alicante-Elche o Estación de tren Alicante? Ofrecemos un 10% de descuento sobre nuestras tarifas actuales. Plazas al Aire Libre o Cubierto. Lavado exterior Básico incluido en cada estancia!
+        Do you need to park your car long stay in Alicante-Elche Airport or at Alicante Train Station? Outdoor parking or covered. Basic external carwash included with every stay!
       </p>
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MÁS INFORMACIÓN</a>
+        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
       </div>
     </div>
 
     <div class="d-flex flex-column">
-      <h3 class="fs-4 text-primary">Aparca con Confianza</h3>
+      <h3 class="fs-4 text-primary">Park with Confidence</h3>
       <img src={Promo03.src} alt="Promo 03" class="mb-3">
       <p class="text-secondary">
-        Ofrecemos plazas de aparcamiento vigiladas y aseguradas para su comodidad. Ya sea por corta o larga estancia, su vehículo estará siempre en buenas manos. Ubicado en la zona Aeropuerto de Alicante-Elche, contamos con espacios al aire libre y cubiertos, asegurando su tranquilidad.
+        We offer guarded and secured parking spaces for your convenience. Whether for short or long stay, your vehicle will always be in good hands. Located in the Alicante-Elche Airport area, we have outdoor and covered spaces, ensuring your peace of mind.
       </p>
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MÁS INFORMACIÓN</a>
+        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
       </div>
     </div>
   </div>

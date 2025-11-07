@@ -1,8 +1,9 @@
 ---
 import { ClientRouter } from "astro:transitions";
-import Header from "../components/Header.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
 
-const { t, auth, title = 'ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE' } = Astro.props;
+const { t, auth, footer, title = 'ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE' } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -18,6 +19,7 @@ const { t, auth, title = 'ALC Valet Parking Alicante | PARKING AEROPUERTO ALICAN
 	<body>
 		<Header t={t} auth={auth} />
 		<slot />
+		<Footer footer={footer} />
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 	</body>
 </html>
