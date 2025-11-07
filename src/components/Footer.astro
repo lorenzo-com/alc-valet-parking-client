@@ -24,10 +24,10 @@ const t = useTranslations(lang);
             <div class="mb-5 mb-md-0">
                 <h4 class="text-primary">ALC VALET PARKING</h4>
                 <p class="mb-2">
-                    <span class="fw-semibold">Aeropuerto: </span>+34 601 356 356
+                    <span class="fw-semibold">{t('footer.airport')}: </span>+34 601 356 356
                 </p>
                 <p class="mb-2">
-                    <span class="fw-semibold">Oficina: </span>+34 601 356 356
+                    <span class="fw-semibold">{t('footer.office')}: </span>+34 601 356 356
                 </p>
                 <div class="d-flex align-items-center mb-2">
                     <WhatsappIcon />
@@ -55,7 +55,7 @@ const t = useTranslations(lang);
             </div>
 
             <div class="mb-5 mb-md-0">
-                <h4>Colaboradores</h4>
+                <h4>{t('footer.partners')}</h4>
                 <div class="row row-cols-3">
                     <Image src={Looking4Parking} alt="Looking4Parking" class="img-fluid" />
                     <Image src={ParkVia} alt="ParkVia" class="img-fluid" />
@@ -64,7 +64,7 @@ const t = useTranslations(lang);
             </div>
 
             <div>
-                <h4>Protegidos y asegurados por</h4>
+                <h4>{t('footer.secure')}</h4>
                 <div class="row row-cols-2">
                     <Image src={Prosegur} alt="Prosegur" class="img-fluid" />
                     <Image src={Fiatc} alt="Fiatc" class="img-fluid" />
@@ -81,8 +81,7 @@ const t = useTranslations(lang);
                 class="d-flex justify-content-center justify-content-lg-start align-items-center"
             >
                 <p class="mb-3 m-md-0">
-                    © Copyright - ALC Valet Parking Alicante - PARKING LARGA
-                    ESTANCIA
+                    © Copyright - ALC Valet Parking Alicante - {t('footer.longterm').toUpperCase()}
                 </p>
             </div>
             <div
@@ -91,17 +90,17 @@ const t = useTranslations(lang);
                 <ul class="d-flex list-unstyled m-0 gap-3">
                     <li>
                         <a href="/terminos-y-condiciones" class="text-white"
-                            >Avisos Legales</a
+                            >{t('footer.legalnotices')}</a
                         >
                     </li>
                     <li>
                         <a href="/politica-de-cookies" class="text-white"
-                            >Política de Cookies</a
+                            >{t('footer.cookiespolicy')}</a
                         >
                     </li>
                     <li>
                         <a href="/politicas-de-privacidad" class="text-white"
-                            >Política de Privacidad</a
+                            >{t('footer.privacypolicy')}</a
                         >
                     </li>
                 </ul>

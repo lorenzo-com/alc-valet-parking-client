@@ -1,0 +1,97 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+import heroEmpresa from "@/assets/la-empresa/hero-empresa.webp";
+---
+
+<Layout title="The Company | ALC Valet Parking Alicante">
+    <div
+        style={`background-image: url(${heroEmpresa.src});`}
+        class="container-fluid empresa-hero"
+    >
+        <div
+            class="d-flex flex-column justify-content-center align-items-center"
+            style="position: relative; height: 100%; z-index: 1;"
+        >
+            <div class="recuadro p-3 mb-1">
+                <h2 class="text-white fs-1 fw-bold m-0">ALC VALET PARKING</h2>
+            </div>
+            <div class="recuadro p-2 mb-3">
+                <p class="text-white fs-2 m-0">Fast, convenient and safe!</p>
+            </div>
+            <a href="/localizacion" class="btn btn-primary text-light"
+                >Contact us</a
+            >
+        </div>
+    </div>
+    <div class="d-flex justify-content-center p-4 bg-primary">
+        <h1 class="m-0 text-white fs-2">THE COMPANY</h1>
+    </div>
+    <div class="container text-secondary my-5">
+        <p class="fs-6">
+            <span class="text-primary">ALC Valet Parking</span> is a young and dynamic
+            company founded in 2012 with a clear goal, to offer <span
+                class="text-primary">a parking quality service</span
+            > at low cost prices. Our company is dedicated to <span
+                class="text-primary">guard, custody and parking cars</span
+            > in Alicante with over 15 years of experience. Our service is designed
+            for those who travel in their own car and need a full valet parking service.
+        </p><p class="fs-6">
+            We offer a professional parking service with <span
+                class="text-primary">drop off and pick up</span
+            > at the termina of <span class="text-primary"
+                >Alicante-Elche Airport</span
+            >.
+        </p><p class="fs-6">
+            If you request it, we can also pick up or drop off your car at the <span
+                class="text-primary">Alicante Train Station</span
+            > whenever, either delivery or pick-up is at the Alicante Airport, contact
+            us.
+        </p><p class="fs-6">
+            We offer you <span class="text-primary"
+                >short, medium and long term</span
+            >, parking. Save over <span class="text-primary">50%</span> compared
+            to public parkings.
+        </p><p class="fs-6">
+            From collection to delivery, your car will be <span
+                class="text-primary">guarded (PROSEGUR) and secure (FIATC)</span
+            > 24 hours. We offer <span class="text-primary"
+                >indoor and outdoor parking</span
+            >. spaces. We are just 3 minutes from the Alicante Airport and 10
+            minutes from Alicante Train Station.
+        </p><p class="fs-6">
+            We also offer a range of additional services for your car as an
+            added value, ranging from <span class="text-primary"
+                >hand carwash, interior cleaning, general mechanics</span
+            >, or taking your car to the <span class="text-primary"
+                >ITV Applus</span
+            > Inspection while your car is park with us.
+        </p><p class="fs-6">
+            Opinion and <span class="text-primary">customer satisfaction</span> is
+            very important for us, our drivers will ensure that your car collection
+            and delivery would be nice, <span class="text-primary"
+                >no waiting, no hassles</span
+            >.
+        </p><p class="fs-6">
+            <span class="text-primary">Reserve your parking space</span> and let
+            us handle the rest. Our personal service guarantees the best solution
+            when traveling – <span class="text-primary"
+                >fast, convenient and safe</span
+            >!
+        </p>
+    </div>
+</Layout>
+
+<style>
+    .empresa-hero {
+        position: relative;
+        height: 60vh;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+    .recuadro {
+        background: rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+</style>

@@ -1,0 +1,230 @@
+---
+import { Image } from 'astro:assets';
+import { getLangFromUrl } from '@/i18n/utils';
+import Layout from "@/layouts/Layout.astro";
+
+import hero from "@/assets/como-funciona/hero.webp";
+import calcula from "@/assets/como-funciona/calcula.webp";
+import recoge from "@/assets/como-funciona/recoge.webp";
+import mecanica from "@/assets/como-funciona/mecanica.webp";
+import cuidado from "@/assets/como-funciona/cuidado.webp";
+import entrega from "@/assets/como-funciona/entrega.webp";
+
+const lang = getLangFromUrl(Astro.url);
+---
+<style>
+    .como-funciona-hero {
+        position: relative;
+        height: 60vh;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+    .recuadro {
+        background: rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+</style>
+
+<Layout title="Cómo Funciona | ALC Valet Parking Alicante">
+    <div class="container-fluid como-funciona-hero"
+  style={`background-image: url(${hero.src});`}>
+  <div class="d-flex flex-column justify-content-center align-items-center ms-5"
+    style="position: relative; height: 100%; z-index: 1;">
+    <div class="recuadro p-3 mb-1">
+      <h2 class="text-white fs-1 fw-bold m-0">ALC VALET PARKING</h2>
+    </div>
+    <div class="recuadro p-2 mb-3">
+      <p class="text-white fs-2 m-0">¿Cómo funciona?</p>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center p-4 bg-primary">
+  <h1 class="m-0 text-white fs-2">CÓMO FUNCIONA</h1>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2">
+  <Image src={calcula} alt="Calcule su tarifa" class="img-fluid p-0" />
+  <div class="d-flex flex-column justify-content-center p-5">
+    <h2 class="fs-2 fw-light mb-4">1º Calcule el precio de su estancia</h2>
+    <p class="mb-4 text-secondary">Puede consultar el precio de su estancia con nuestro calculador y reservar su plaza de aparcamiento simplemente rellenando y enviando el formulario de reserva. No hay gastos adicionales por cambios o cancelaciones.</p>
+    <p class="text-secondary">Reserve con un mínimo de 12h de antelación, y habrá asegurado la disponibilidad de su plaza de aparcamiento con nosotros. Recibirá un email de confirmación con los datos de su reserva.</p>
+  </div>
+  <div class="d-flex flex-column justify-content-center p-5">
+    <h2 class="fs-2 fw-light mb-4">2º Recogemos su vehículo</h2>
+    <p class="text-secondary mb-4">Recogemos su vehículo en la misma puerta de la terminal a la hora indicada en su reserva, firmará un parte de recepción del vehículo con sus datos y uno de nuestros conductores llevará su vehículo directamente a nuestro aparcamiento.</p>
+  </div>
+  <Image src={recoge} alt="Como recoger su coche" class="img-fluid p-0" />
+  <Image src={mecanica} alt="Como funciona la mecánica" class="img-fluid p-0" />
+  <div class="d-flex flex-column justify-content-center p-5">
+    <h2 class="fs-2 fw-light mb-4">3º Cuidamos de su vehículo</h2>
+    <p class="text-secondary mb-4">Durante el periodo de estacionamiento en nuestro parking , le ofrecemos servicios adicionales de limpieza , mantenimiento, reparación e ITV mientras custodiamos su vehículo.</p>
+  </div>
+  <div class="d-flex flex-column justify-content-center p-5">
+    <h2 class="fs-2 fw-light mb-4">4º Limpieza incluida</h2>
+    <p class="text-secondary mb-4">
+      Recogemos su vehículo en la misma puerta de la terminal a la hora indicada en su reserva, firmará un parte de recepción del vehículo con sus datos y uno de nuestros conductores llevará su vehículo directamente a nuestro aparcamiento.
+    </p>
+  </div>
+  <Image src={cuidado} alt="Como cuidamos su coche" class="img-fluid p-0" />
+  <Image src={entrega} alt="Como entregamos su coche" class="img-fluid p-0" />
+  <div class="d-flex flex-column justify-content-center p-5">
+    <h2 class="fs-2 fw-light mb-4">5º Le entregamos su vehículo en mano</h2>
+    <p class="text-secondary mb-4">
+      Le llevamos su vehículo a la puerta de la terminal justo a la hora de su regreso, gracias a nuestro servicio de recogida y entrega.
+    </p>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center bg-primary">
+  <a href={`/${lang}/reservar`} class="text-decoration-none d-flex justify-content-center w-100 p-5">
+    <div class="d-flex">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+        class="bi bi-list text-white me-1" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+      </svg>
+      <h2 class="m-0 text-white fs-2">RESERVAR AHORA</h2>
+    </div>
+  </a>
+</div>
+
+<div class="container my-5">
+  <h3>Preguntas Frecuentes</h3>
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            ¿Cuándo y como pago por el servicio?
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          La cantidad del servicio se abonará a la recogida de su vehículo o final de la estancia en efectivo o tarjeta de crédito.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          ¿Cómo identifico al conductor al que le tengo que entregar mi coche?
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          Nuestros conductores llevan uniforme con logotipo y colores de empresa.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          ¿Tengo que dejar mis llaves en el parking?
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          Si. Es necesario dejar las llaves del vehículo al conductor o chofer para poder trasladarlo a nuestras instalaciones.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          ¿Esta el parking abierto las 24h del día?
+        </button>
+      </h2>
+      <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          No, el horario es de 06:00 a 00:00. Más infomación por Whatsapp al +34 601 356 356
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          ¿Qué debo hacer para que me recojan mi coche en la terminal?
+        </button>
+      </h2>
+      <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          Si usted ya tiene una reserva de parking con nosotros, solo tiene que llamar al conductor 15 minutos antes de su llegada al punto de encuentro para proceder a la entrega su vehículo.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+          ¿Qué pasa si llego antes o más tarde de la hora programada en mi reserva?
+        </button>
+      </h2>
+      <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          Se ruega notificar cualquier cambio de hora o retraso con antelación por teléfono, correo electrónico. No hay ningún coste adicional por cambios de hora dentro del mismo día.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+          ¿Qué debo hacer cuando regrese de viaje?
+        </button>
+      </h2>
+      <div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          Una vez aterrice o antes de llegar debe llamar por teléfono (NO WHATSAPP) al conductor 15min antes para proceder a la recogida de su vehículo.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+          ¿Cómo puedo llegar al aparcamiento?
+        </button>
+      </h2>
+      <div id="collapseEight" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          No es necesario dirigirse al aparcamiento. Nuestro servicio de aparcamiento consiste en la recogida y entrega de su vehículo en la misma puerta de la Terminal (EN EL PARKING EXPRESS DE SALIDAS) por uno de nuestros conductores.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+          ¿Tienen instalaciones y servicios especiales para personas con movilidad reducida?
+        </button>
+      </h2>
+      <div id="collapseNine" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          Nuestro servicio personalizado de aparcamiento con recogida y entrega del vehículo en la misma puerta de la terminal (EN EL PARKING EXPRESS DE SALIDAS) esta diseñado especialmente para este tipo de necesidades.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+          ¿Existen restricciones de altura o dimensiones para el vehículo?
+        </button>
+      </h2>
+      <div id="collapseTen" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          Nuestras instalaciones cubiertas disponen de una altura máxima de 2,60m. No hay límite de altura para plazas al aire libre.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+          ¿Cuál es la distancia del parking a la terminal?
+        </button>
+      </h2>
+      <div id="collapseEleven" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body text-secondary bg-secondary-subtle">
+          Nuestras instalaciones están a a 3 km del aeropuerto.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</Layout>

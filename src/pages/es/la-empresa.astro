@@ -1,0 +1,101 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+import heroEmpresa from "@/assets/la-empresa/hero-empresa.webp";
+---
+<style>
+    .empresa-hero {
+        position: relative;
+        height: 60vh;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+    .recuadro {
+        background: rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+</style>
+
+<Layout title="La Empresa | ALC Valet Parking Alicante">
+    <div
+        style={`background-image: url(${heroEmpresa.src});`}
+        class="container-fluid empresa-hero"
+    >
+        <div
+            class="d-flex flex-column justify-content-center align-items-center"
+            style="position: relative; height: 100%; z-index: 1;"
+        >
+            <div class="recuadro p-3 mb-1">
+                <h2 class="text-white fs-1 fw-bold m-0">ALC VALET PARKING</h2>
+            </div>
+            <div class="recuadro p-2 mb-3">
+                <p class="text-white fs-2 m-0">¡Rápido, Cómodo y Seguro!</p>
+            </div>
+            <a href="/localizacion" class="btn btn-primary text-light"
+                >Contáctenos</a
+            >
+        </div>
+    </div>
+    <div class="d-flex justify-content-center p-4 bg-primary">
+        <h1 class="m-0 text-white fs-2">LA EMPRESA</h1>
+    </div>
+    <div class="container text-secondary my-5">
+        <p class="fs-6" style="text-align: justify; ">
+            <span class="text-primary">ALC Valet Parking</span> es una empresa joven
+            y dinámica que nace en 2012 con un objetivo claro, ofrecer <span
+                class="text-primary"
+                >un servicio de aparcamiento de calidad</span
+            > a precios de bajo coste. Somos una empresa dedicada a <span
+                class="text-primary"
+                >parking, guarda y custodia de vehículos</span
+            > en Alicante con más de 15 años de experiencia en el sector. Nuestro
+            servicio está pensado para aquellas personas que se desplacen en su propio
+            vehículo y necesiten un servicio de aparcamiento completo.
+        </p><p class="fs-6" style="text-align: justify; ">
+            Ofrecemos un servicio de aparcamiento <span class="text-primary"
+                >con recogida y entrega del vehículo</span
+            > en la terminal del <span class="text-primary"
+                >Aeropuerto de Alicante-Elche</span
+            >.
+        </p><p class="fs-6" style="text-align: justify; ">
+            Si lo solicita, también podemos recoger o entregar su coche en la <span
+                class="text-primary">Estación de Tren Alicante</span
+            > siempre que, o bien la entrega o la recogida sea en el Aeropuerto de
+            Alicante, consúltenos.
+        </p><p class="fs-6" style="text-align: justify; ">
+            Ofrecemos estancias de aparcamiento para <span class="text-primary"
+                >corto, medio y largo plazo</span
+            >, amoldándonos en todo momento a sus necesidades. Ahorre más de un <span
+                class="text-primary">50%</span
+            > respecto a los parkings públicos.
+        </p><p class="fs-6" style="text-align: justify; ">
+            Desde la recogida hasta la entrega, su vehículo estará <span
+                class="text-primary"
+                >vigilado por PROSEGUR y asegurado por FIATC</span
+            > las 24 horas del dia. Disponemos de plazas de <span
+                class="text-primary">parking cubiertas y al aire libre</span
+            >. Estamos a tan solo 3 min del Aeropuerto y 10 min de la Estación
+            de Tren.
+        </p><p class="fs-6" style="text-align: justify; ">
+            Como valor añadido ofrecemos una serie de servicios adicionales para
+            su vehículo que van desde el <span class="text-primary"
+                >lavado a mano, limpieza de interior, mecánica general,</span
+            > o llevar su vehículo a la <span class="text-primary"
+                >ITV Applus</span
+            > mientras lo custodiamos en nuestras instalaciones.
+        </p><p class="fs-6" style="text-align: justify; ">
+            Para nosotros la opinión y satisfacción de nuestros clientes es lo
+            más importante, nuestros conductores se encargarán de que la
+            recogida y entrega de su vehículo sea agradable, <span
+                class="text-primary">sin esperas ni inconvenientes</span
+            >.
+        </p><p class="fs-6" style="text-align: justify; ">
+            <span class="text-primary">Reserve su plaza de aparcamiento</span> y
+            deje que nosotros nos encarguemos del resto. Nuestro servicio personalizado
+            le garantiza la mejor solución a la hora de viajar – <span
+                class="text-primary">rápido, cómodo y seguro!</span
+            >
+        </p>
+    </div>
+</Layout>

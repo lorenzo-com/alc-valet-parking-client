@@ -2,11 +2,11 @@
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 
 import { Image } from 'astro:assets';
-import SlideHome01 from '@/assets/home/SlideHome01.webp';
-import SlideHome02 from '@/assets/home/SlideHome02.webp';
-import SlideHome03 from '@/assets/home/SlideHome03.webp';
-import SlideHome04 from '@/assets/home/SlideHome04.webp';
-import SlideHome05 from '@/assets/home/SlideHome05.webp';
+import hero01 from '@/assets/home/hero-slide-01.webp';
+import hero02 from '@/assets/home/hero-slide-02.webp';
+import hero03 from '@/assets/home/hero-slide-03.webp';
+import hero04 from '@/assets/home/hero-slide-04.webp';
+import hero05 from '@/assets/home/hero-slide-05.webp';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -48,7 +48,7 @@ const t = useTranslations(lang);
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active" style="position: relative;">
-      <Image src={SlideHome01} alt="Slide 01" />
+      <Image src={hero01} alt="Slide 01" />
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t('carousel.title01')}
@@ -59,7 +59,7 @@ const t = useTranslations(lang);
       </div>
     </div>
     <div class="carousel-item">
-      <Image src={SlideHome02} alt="Slide 02" />
+      <Image src={hero02} alt="Slide 02" />
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t('carousel.title02')}
@@ -71,7 +71,7 @@ const t = useTranslations(lang);
       </div>
     </div>
     <div class="carousel-item">
-      <Image src={SlideHome03} alt="Slide 03" />
+      <Image src={hero03} alt="Slide 03" />
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t('carousel.title03')}
@@ -82,7 +82,7 @@ const t = useTranslations(lang);
       </div>
     </div>
     <div class="carousel-item">
-      <Image src={SlideHome04} alt="Slide 04" />
+      <Image src={hero04} alt="Slide 04" />
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t('carousel.title04')}
@@ -96,7 +96,7 @@ const t = useTranslations(lang);
       </div>
     </div>
     <div class="carousel-item">
-      <Image src={SlideHome05} alt="Slide 05" />
+      <Image src={hero05} alt="Slide 05" />
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t('carousel.title05')}
