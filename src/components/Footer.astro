@@ -1,5 +1,6 @@
 ---
-const { footer } = Astro.props;
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
 import { Image } from "astro:assets";
 
 import FacebookIcon from "@/assets/icons/FacebookIcon.astro";
@@ -12,6 +13,9 @@ import ParkLot from "@/assets/footer/ParkLot.webp";
 
 import Fiatc from "@/assets/footer/Fiatc.webp";
 import Prosegur from "@/assets/footer/Prosegur.webp";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <footer class="bg-dark text-white">
@@ -20,7 +24,7 @@ import Prosegur from "@/assets/footer/Prosegur.webp";
             <div class="mb-5 mb-md-0">
                 <h4 class="text-primary">ALC VALET PARKING</h4>
                 <p class="mb-2">
-                    <span class="fw-semibold">{footer.airport}: </span>+34 601 356 356
+                    <span class="fw-semibold">Aeropuerto: </span>+34 601 356 356
                 </p>
                 <p class="mb-2">
                     <span class="fw-semibold">Oficina: </span>+34 601 356 356

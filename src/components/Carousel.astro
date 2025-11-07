@@ -1,4 +1,6 @@
 ---
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
 import { Image } from 'astro:assets';
 import SlideHome01 from '@/assets/home/SlideHome01.webp';
 import SlideHome02 from '@/assets/home/SlideHome02.webp';
@@ -6,7 +8,8 @@ import SlideHome03 from '@/assets/home/SlideHome03.webp';
 import SlideHome04 from '@/assets/home/SlideHome04.webp';
 import SlideHome05 from '@/assets/home/SlideHome05.webp';
 
-const { t } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 <div
   id="carouselExampleIndicators"
@@ -48,10 +51,10 @@ const { t } = Astro.props;
       <Image src={SlideHome01} alt="Slide 01" />
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
-          {t.title01}
+          {t('carousel.title01')}
         </h2>
         <a href="/localizacion" class="btn btn-primary text-light mt-2">
-          {t.button01}
+          {t('carousel.button01')}
         </a>
       </div>
     </div>
@@ -59,22 +62,22 @@ const { t } = Astro.props;
       <Image src={SlideHome02} alt="Slide 02" />
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
-          {t.title02}
+          {t('carousel.title02')}
         </h2>
         <p class="fw-light position-relative bg-dark opacity-75 p-2 fs-5">
-          {t.text02}
+          {t('carousel.text02')}
         </p>
-        <a href="/reservas" class="btn btn-primary text-light mt-2">{t.button02}</a>
+        <a href="/reservas" class="btn btn-primary text-light mt-2">{t('carousel.button02')}</a>
       </div>
     </div>
     <div class="carousel-item">
       <Image src={SlideHome03} alt="Slide 03" />
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
-          {t.title03}
+          {t('carousel.title03')}
         </h2>
         <a href="/localizacion" class="btn btn-primary text-light mt-2">
-          {t.button03}
+          {t('carousel.button03')}
         </a>
       </div>
     </div>
@@ -82,13 +85,13 @@ const { t } = Astro.props;
       <Image src={SlideHome04} alt="Slide 04" />
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
-          {t.title04}
+          {t('carousel.title04')}
         </h2>
         <p class="fw-light position-relative bg-dark opacity-75 p-2 fs-5">
-          {t.text04}
+          {t('carousel.text04')}
         </p>
         <a href="/localizacion" class="btn btn-primary text-light mt-2"
-          >{t.button04}</a
+          >{t('carousel.button04')}</a
         >
       </div>
     </div>
@@ -96,13 +99,13 @@ const { t } = Astro.props;
       <Image src={SlideHome05} alt="Slide 05" />
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
-          {t.title05}
+          {t('carousel.title05')}
         </h2>
         <p class="fw-light position-relative bg-dark opacity-75 p-2 fs-5">
-          {t.text05}
+          {t('carousel.text05')}
         </p>
         <a href="/localizacion" class="btn btn-primary text-light mt-2"
-          >{t.button05}</a
+          >{t('carousel.button05')}</a
         >
       </div>
     </div>

@@ -1,22 +1,15 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { translations } from '@/i18n';
-
-const { lang } = Astro.params;
-
-// Idioma por defecto si no se encuentra
-const t = translations[lang] || translations['en'];
 
 import Carousel from "@/components/Carousel.astro";
-import en from "@/i18n/en.json";
 
 import Promo01 from '@/assets/home/Promo01.webp';
 import Promo02 from '@/assets/home/Promo02.webp';
 import Promo03 from '@/assets/home/Promo03.webp';
 ---
 
-<Layout t={t.header} auth={t.auth} title="ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE">
-	<Carousel t={t.carousel} />
+<Layout title="ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE">
+	<Carousel />
 <div class="container mb-3">
   <div class="row row-cols-1 row-cols-md-3 mt-md-4">
     <div class="d-flex flex-column align-items-center mt-0" style="padding:40px; background-color:#dd5500;">
@@ -26,10 +19,10 @@ import Promo03 from '@/assets/home/Promo03.webp';
           d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5m0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5z" />
       </svg>
       <div class="text-white text-center">
-        <h2>Rates calculator</h2>
-        <p>Check your price easily.</p>
+        <h2>Tarieven berekenen</h2>
+        <p>Controleer je prijs gemakkelijk.</p>
       </div>
-      <a href="/reservas" class="btn btn-outline-light border-2 fw-light">CALCULATE YOUR RATE</a>
+      <a href="/reservas" class="btn btn-outline-light border-2 fw-light">BEREKEN JE TARIEF</a>
     </div>
 
     <div class="d-flex flex-column align-items-center bg-primary" style="padding:40px;">
@@ -41,10 +34,10 @@ import Promo03 from '@/assets/home/Promo03.webp';
           d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87z" />
       </svg>
       <div class="text-white text-center">
-        <h2>Premium exterior Washing</h2>
-        <p>Available in our additional services.</p>
+        <h2>Eersteklas buitenwassen</h2>
+        <p>Beschikbaar in onze aanvullende services.</p>
       </div>
-      <a href="/servicios-adicionales" class="btn btn-outline-light border-2 fw-light">OTHER SERVICES</a>
+      <a href="/servicios-adicionales" class="btn btn-outline-light border-2 fw-light">OVERIGE DIENSTEN</a>
     </div>
 
     <div class="d-flex flex-column align-items-center"
@@ -57,62 +50,62 @@ import Promo03 from '@/assets/home/Promo03.webp';
           clip-rule="evenodd" />
       </svg>
       <div class="text-white text-center">
-        <h2>Secure parking</h2>
-        <p>Guarding and custody of vehicles. Guarded and insured.</p>
+        <h2>Bewaakt parkeren</h2>
+        <p>Bewaakte en verzekerde opslag en bewaring van voertuigen.</p>
       </div>
-      <a href="/localizacion" class="btn btn-outline-light border-2 fw-light">KNOW US</a>
+      <a href="/localizacion" class="btn btn-outline-light border-2 fw-light">OVER ONS</a>
     </div>
   </div>
 </div>
 
 <div class="container mt-3">
   <p>
-    ALC Valet Parking is a young and dynamic company founded in 2012 with a clear goal, to offer a parking quality service at low cost prices. Our company is dedicated to guard, custody and parking cars in Alicante with over 15 years of experience. Our service is designed for those who travel in their own car and need a full valet parking service.
+    ALC Valet Parking is een jong en dynamisch bedrijf dat werd opgericht in 2012 met een duidelijk doel, namelijk het aanbieden van een kwaliteitsparkeerservice tegen lage kostprijzen. Wij zijn een bedrijf toegewijd aan parkeren, opslaan en bewaren van voertuigen in Alicante met meer dan 15 jaar ervaring in de sector. Onze service is ontworpen voor mensen die met hun eigen voertuig reizen en een complete parkeerservice nodig hebben.
   </p>
 </div>
 
 <div class="d-flex justify-content-center align-items-center p-4 bg-primary">
-  <h2 class="text-white fs-2 fw-light mb-0">PROMOTIONS</h2>
+  <h2 class="text-white fs-2 fw-light mb-0">PROMOTIES</h2>
 </div>
 
 <div class="container my-5">
   <div class="row row-cols-1 row-cols-md-3">
     <div class="d-flex flex-column">
-      <h3 class="fs-4">Special Vehicles</h3>
+      <h3 class="fs-4">Speciale Voertuigen</h3>
       <img src={Promo01.src} alt="Promo 01" class="mb-3">
       <p class="text-secondary">
-        Do you need to park your motorhome, camper van, boat, truck for short or long stay? We have more than 2.500m2 of secure compound available at Alicante-Elche Airport area.
+        Moet je je caravan, boot, trailer of vrachtwagen voor een kort of lang verblijf stallen? We hebben meer dan 2.500m2 veilige grond in de buurt van de luchthaven van Alicante-Elche.
       </p>
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
+        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MEER INFORMATIE</a>
       </div>
     </div>
 
     <div class="d-flex flex-column">
-      <h3 class="fs-4">Long Stay <span class="text-primary">Promo</span></h3>
+      <h3 class="fs-4"><span class="text-primary">Promotie</span> Lange Verblijf</h3>
       <img src={Promo02.src} alt="Promo 02" class="mb-3">
       <p class="text-secondary">
-        Do you need to park your car long stay in Alicante-Elche Airport or at Alicante Train Station? Outdoor parking or covered. Basic external carwash included with every stay!
+        Moet je je auto voor een lang verblijf parkeren op de luchthaven van Alicante-Elche of het treinstation van Alicante? Buiten of overdekte parkeerplaatsen. Basis buitenwassen inbegrepen bij elk verblijf!
       </p>
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
+        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MEER INFORMATIE</a>
       </div>
     </div>
 
     <div class="d-flex flex-column">
-      <h3 class="fs-4 text-primary">Park with Confidence</h3>
+      <h3 class="fs-4 text-primary">Parkeer met Vertrouwen</h3>
       <img src={Promo03.src} alt="Promo 03" class="mb-3">
       <p class="text-secondary">
-        We offer guarded and secured parking spaces for your convenience. Whether for short or long stay, your vehicle will always be in good hands. Located in the Alicante-Elche Airport area, we have outdoor and covered spaces, ensuring your peace of mind.
+        We bieden bewaakte en beveiligde parkeerplaatsen voor uw gemak. Of het nu voor een kort of lang verblijf is, je voertuig is altijd in veilige handen. We zijn gevestigd in de buurt van de luchthaven van Alicante-Elche en beschikken over buiten- en overdekte parkeerplaatsen, zodat je gemoedsrust verzekerd is.
       </p>
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
+        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MEER INFORMATIE</a>
       </div>
     </div>
   </div>

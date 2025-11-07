@@ -1,6 +1,9 @@
 
 ---
-const { t, auth } = Astro.props;
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 import { Image } from 'astro:assets';
 import Logo from '@/assets/logo.png';
@@ -38,36 +41,36 @@ import nl from '@/assets/lang/nl.png';
       <div class="offcanvas-body bg-primary">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a href="/" class="nav-link fw-medium text-light">{t.home}</a>
+            <a href="/" class="nav-link fw-medium text-light">{t('header.home').toUpperCase()}</a>
           </li>
           <li class="nav-item">
-            <a href="/empresa" class="nav-link fw-medium text-light">{t.company}</a>
+            <a href="/empresa" class="nav-link fw-medium text-light">{t('header.company').toUpperCase()}</a>
           </li>
           <li class="nav-item">
-            <a href="/como-funciona" class="nav-link fw-medium text-light">{t.howitworks}</a>
+            <a href="/como-funciona" class="nav-link fw-medium text-light">{t('header.howitworks').toUpperCase()}</a>
           </li>
           <li class="nav-item">
-            <a href="/tarifas" class="nav-link fw-medium text-light">{t.rates}</a>
+            <a href="/tarifas" class="nav-link fw-medium text-light">{t('header.prices').toUpperCase()}</a>
           </li>
           <li class="nav-item">
-            <a href="/reservas" class="nav-link fw-medium text-light">{t.booking}</a>
+            <a href="/reservas" class="nav-link fw-medium text-light">{t('header.booking').toUpperCase()}</a>
           </li>
           <li class="nav-item">
-            <a href="/servicios-adicionales" class="nav-link fw-medium text-light">{t.extraservices}</a>
+            <a href="/servicios-adicionales" class="nav-link fw-medium text-light">{t('header.extraservices').toUpperCase()}</a>
           </li>
           <li class="nav-item">
-            <a href="/localizacion" class="nav-link fw-medium text-light">{t.location}</a>
+            <a href="/localizacion" class="nav-link fw-medium text-light">{t('header.location').toUpperCase()}</a>
           </li>
         </ul>
         <hr class="text-white my-3">
         <div class="d-flex flex-column align-items-center gap-2 d-lg-none">
-          <a href="/auth/iniciar-sesion" class="btn btn-light rounded-pill w-75">{auth.login}</a>
-          <a href="/auth/registrarse" class="btn btn-outline-light rounded-pill w-75">{auth.register}</a>
+          <a href="/auth/iniciar-sesion" class="btn btn-light rounded-pill w-75">{t('auth.login')}</a>
+          <a href="/auth/registrarse" class="btn btn-outline-light rounded-pill w-75">{t('auth.register')}</a>
         </div>
 
         <div class="d-none d-lg-flex justify-content-center align-items-center">
-          <a href="/auth/iniciar-sesion" class="btn btn-light rounded-pill ms-3">{auth.login}</a>
-          <!-- <a href="/perfil" class="nav-link fw-medium text-light text-decoration-none ms-3">{auth.myprofile}</a> -->
+          <a href="/auth/iniciar-sesion" class="btn btn-light rounded-pill ms-3">{t('auth.login')}</a>
+          <!-- <a href="/perfil" class="nav-link fw-medium text-light text-decoration-none ms-3">{t('auth.myprofile')}</a> -->
         </div>
       </div>
     </div>
