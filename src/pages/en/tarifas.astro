@@ -2,13 +2,13 @@
 import { getLangFromUrl } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 
-import heroTarifas from "@/assets/tarifas/hero-tarifas.webp";
+import hero from "@/assets/tarifas/hero-tarifas.webp";
 
 const lang = getLangFromUrl(Astro.url);
 ---
 
 <style>
-  .tarifas-hero {
+  .hero {
     position: relative;
     height: 60vh;
     background-repeat: no-repeat;
@@ -19,8 +19,8 @@ const lang = getLangFromUrl(Astro.url);
 
 <Layout title="Prices | ALC Valet Parking Alicante">
   <div
-    class="container-fluid tarifas-hero"
-    style={`background-image: url(${heroTarifas.src});`}
+    class="container-fluid hero"
+    style={`background-image: url(${hero.src});`}
   >
     <div
       class="d-flex flex-column justify-content-center align-items-center"

@@ -3,19 +3,19 @@ import Layout from '@/layouts/Layout.astro';
 
 import Carousel from "@/components/Carousel.astro";
 
-import promo01 from '@/assets/home/promo-01.webp';
-import promo02 from '@/assets/home/promo-02.webp';
-import promo03 from '@/assets/home/promo-03.webp';
-import CalculatorIcon from '@/assets/home/CalculatorIcon.astro';
-import DropIcon from '@/assets/home/DropIcon.astro';
-import EyeIcon from '@/assets/home/EyeIcon.astro';
+import promo01 from '@/assets/inicio/promo-01.webp';
+import promo02 from '@/assets/inicio/promo-02.webp';
+import promo03 from '@/assets/inicio/promo-03.webp';
+import calculatorIcon from '@/assets/inicio/icons/calculator.astro';
+import dropIcon from '@/assets/inicio/icons/drop.astro';
+import eyeIcon from '@/assets/inicio/icons/eye.astro';
 ---
 <Layout title="ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE">
 	<Carousel />
 <div class="container mb-3">
   <div class="row row-cols-1 row-cols-md-3 mt-md-4">
     <div class="d-flex flex-column align-items-center mt-0" style="padding:40px; background-color:#dd5500;">
-      <CalculatorIcon />
+      <calculatorIcon />
       <div class="text-white text-center">
         <h2>Calculador de tarifas</h2>
         <p>Compruebe su precio de forma sencilla.</p>
@@ -24,7 +24,7 @@ import EyeIcon from '@/assets/home/EyeIcon.astro';
     </div>
 
     <div class="d-flex flex-column align-items-center bg-primary" style="padding:40px;">
-      <DropIcon />
+      <dropIcon />
       <div class="text-white text-center">
         <h2>Lavado exterior premium</h2>
         <p>Disponible en nuestros servicios adicionales.</p>
@@ -34,7 +34,7 @@ import EyeIcon from '@/assets/home/EyeIcon.astro';
 
     <div class="d-flex flex-column align-items-center"
       style="padding:40px; background-color:#ff8833; border-radius:0px;">
-      <EyeIcon />
+      <eyeIcon />
       <div class="text-white text-center">
         <h2>Parking Vigilado</h2>
         <p>Servicio de guarda y custodia de vehículos vigilado y asegurado.</p>

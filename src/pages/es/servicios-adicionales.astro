@@ -1,0 +1,214 @@
+---
+import { getLangFromUrl } from "@/i18n/utils";
+import Layout from "@/layouts/Layout.astro";
+
+import hero from "@/assets/servicios-adicionales/hero.webp";
+import BasicExteriorWash from "@/assets/servicios-adicionales/icons/basic-exterior-wash.astro";
+import ProExteriorWash from "@/assets/servicios-adicionales/icons/pro-exterior-wash.astro";
+import ProInteriorClean from "@/assets/servicios-adicionales/icons/pro-interior-clean.astro";
+import FullPremiumWash from "@/assets/servicios-adicionales/icons/full-premium-wash.astro";
+import TransferTerminal from "@/assets/servicios-adicionales/icons/transfer-terminal-service.astro";
+import ItvApplus from "@/assets/servicios-adicionales/icons/itv-applus-service.astro";
+import Refuel from "@/assets/servicios-adicionales/icons/refuel.astro";
+import ChangeOilFilters from "@/assets/servicios-adicionales/icons/change-oil-filters.astro";
+import ChangeTires from "@/assets/servicios-adicionales/icons/change-tires.astro";
+import ChangeBattery from "@/assets/servicios-adicionales/icons/change-battery.astro";
+import AirCondition from "@/assets/servicios-adicionales/icons/air-condition.astro";
+import BodyPaintWork from "@/assets/servicios-adicionales/icons/body-paint-work.astro";
+import GeneralMech from "@/assets/servicios-adicionales/icons/general-mech.astro";
+import OfficialService from "@/assets/servicios-adicionales/icons/official-service.astro";
+import LegalServices from "@/assets/servicios-adicionales/icons/legal-services.astro";
+import Information from "@/assets/servicios-adicionales/icons/information.astro";
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<style>
+    .hero {
+        position: relative;
+        height: 60vh;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+</style>
+
+<Layout title="Servicios adicionales | ALC Valet Parking Alicante">
+    <div
+        class="container-fluid hero"
+        style={`background-image: url(${hero.src});`}
+    >
+        <div
+            class="d-flex flex-column justify-content-center align-items-center"
+            style="position: relative; height: 100%; z-index: 1;"
+        >
+            <div class="recuadro p-3 mb-1">
+                <h2 class="text-white fs-1 fw-bold m-0">ALC VALET PARKING</h2>
+            </div>
+            <div class="recuadro p-2 mb-3">
+                <p class="text-white fs-2 m-0">¡Mucho más que un parking!</p>
+            </div>
+            <a href="/localizacion" class="btn btn-primary text-light"
+                >Contáctenos</a
+            >
+        </div>
+    </div>
+    <div class="d-flex justify-content-center p-4 bg-primary">
+        <h1 class="m-0 text-white fs-2">SERVICIOS ADICIONALES</h1>
+    </div>
+    <div class="container my-5">
+        <div class="mb-5">
+            <p class="fs-6 text-secondary">
+                <span class="text-primary">ALC Valet Parking</span> le ofrece no solo un servicio de aparcamiento,
+                sino también, una amplia gama de servicios adicionales para que
+                usted no se preocupe de nada mientras esta de viaje.
+            </p>
+            <p class="fs-6 text-secondary">
+                Si desea obtener mas información acerca de alguno de los
+                servicios que a continuación se detallan, sólo tiene que
+                mandarnos un email de contacto a <span class="text-primary">info@alcvaletparking.com</span>
+            </p>
+        </div>
+
+        <div class="row">
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #dd5500; padding: 40px;"
+            >
+                <BasicExteriorWash />
+                <h4 class="fs-5 mb-3">Lavado Exterior Básico</h4>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center bg-primary"
+                style="padding: 40px;"
+            >
+                <ProExteriorWash />
+                <h4 class="fs-5 mb-3">Lavado Exterior Pro</h4>
+                <p>
+                    Lavado a mano, Llantas, Cristales, Abrillantado plásticos y
+                    neumáticos
+                </p>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #ff8833; padding: 40px;"
+            >
+                <ProInteriorClean />
+                <h4 class="fs-5 mb-3">Limpieza interior Pro</h4>
+                <p>
+                    Aspirado tapicería, Alfombrillas, Puertas, Cristales,
+                    Abrillantado mueble interior, Ambientador
+                </p>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #ff9955; padding: 40px;"
+            >
+                <FullPremiumWash />
+                <h4 class="fs-5 mb-3">Lavado Completo Premium</h4>
+                <p>Limpieza Integral del vehículo</p>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #ff9955; padding: 40px;"
+            >
+                <TransferTerminal />
+                <h4 class="fs-5 mb-3">Servicio de Transfer a Terminal 2</h4>
+                <p>Recogida y Entrega del vehículo en diferente Terminal</p>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #ff8833; padding: 40px;"
+            >
+                <ItvApplus />
+                <h4 class="fs-5 mb-3">Servicio ITV Applus</h4>
+                <p>Pre ITV, Inspección técnica del vehículo</p>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center bg-primary"
+                style="padding: 40px;"
+            >
+                <Refuel />
+                <h4 class="fs-5 mb-3">Repostaje de combustible</h4>
+                <p>Diesel, Gasolina</p>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #dd5500; padding: 40px;"
+            >
+                <ChangeOilFilters />
+                <h4 class="fs-5 mb-3">Cambio de Aceite y Filtros</h4>
+                <p>Recambios</p>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #dd5500; padding: 40px;"
+            >
+                <ChangeTires />
+                <h4 class="fs-5 mb-3">Cambio neumáticos</h4>
+                <p>Recambios</p>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center bg-primary"
+                style="padding: 40px;"
+            >
+                <ChangeBattery />
+                <h4 class="fs-5 mb-3">Cambio de Batería</h4>
+                <p>Recambios</p>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #ff8833; padding: 40px;"
+            >
+                <AirCondition />
+                <h4 class="fs-5 mb-3">Carga Aire acondicionado</h4>
+                <p>Traslado a taller</p>
+            </div>
+            <div
+                class="col-12 col-md-3 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #ff9955; padding: 40px;"
+            >
+                <BodyPaintWork />
+                <h4 class="fs-5 mb-3">Chapa y Pintura</h4>
+                <p>Presupuestos, Traslado a taller, etc.</p>
+            </div>
+            <div
+                class="col-12 col-md-4 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #ff8833; padding: 40px; flex-grow: 1;"
+            >
+                <GeneralMech />
+                <h4 class="fs-5 mb-3">Mecánica General</h4>
+                <p>
+                    Presupuestos, Traslado a taller, Recambios, Revisiones, etc.
+                </p>
+            </div>
+            <div
+                class="col-12 col-md-4 text-light d-flex flex-column align-items-center text-center bg-primary"
+                style="padding: 40px; flex-grow: 1;"
+            >
+                <OfficialService />
+                <h4 class="fs-5 mb-3">Servicio Oficial</h4>
+                <p>Traslado a Concesionario Oficial</p>
+            </div>
+            <div
+                class="col-12 col-md-4 text-light d-flex flex-column align-items-center text-center"
+                style="background-color: #dd5500; padding: 40px; flex-grow: 1;"
+            >
+                <LegalServices />
+                <h4 class="fs-5 mb-3">Servicios Legales</h4>
+                <p>Transferencias, Rematriculación, Impuestos, etc.</p>
+            </div>
+            <div class="col-12 bg-dark">
+                <a
+                    href="/localizacion"
+                    class="fs-4 text-light d-flex justify-content-center p-3 w-100 text-decoration-none"
+                >
+                    <span class="d-flex align-items-center">
+                        <Information />
+                    </span>
+                    Más información</a
+                >
+            </div>
+        </div>
+    </div>
+</Layout>
