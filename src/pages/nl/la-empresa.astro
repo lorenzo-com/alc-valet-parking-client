@@ -1,7 +1,9 @@
 ---
+import { getLangFromUrl } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 
 import heroEmpresa from "@/assets/la-empresa/hero-empresa.webp";
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <Layout title="Het Bedrijf | ALC Valet Parking Alicante">
@@ -19,7 +21,7 @@ import heroEmpresa from "@/assets/la-empresa/hero-empresa.webp";
             <div class="recuadro p-2 mb-3">
                 <p class="text-white fs-2 m-0">Snel, handig en veilig!</p>
             </div>
-            <a href="/localizacion" class="btn btn-primary text-light"
+            <a href={`/${lang}/localizacion`} class="btn btn-primary text-light"
                 >Contact ons</a
             >
         </div>

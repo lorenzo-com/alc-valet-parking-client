@@ -1,4 +1,5 @@
 ---
+import { getLangFromUrl } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 
 import Carousel from "@/components/Carousel.astro";
@@ -6,6 +7,8 @@ import Carousel from "@/components/Carousel.astro";
 import promo01 from '@/assets/inicio/promo-01.webp';
 import promo02 from '@/assets/inicio/promo-02.webp';
 import promo03 from '@/assets/inicio/promo-03.webp';
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <Layout title="ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE">
@@ -22,7 +25,7 @@ import promo03 from '@/assets/inicio/promo-03.webp';
         <h2>Rates calculator</h2>
         <p>Check your price easily.</p>
       </div>
-      <a href="/reservas" class="btn btn-outline-light border-2 fw-light">CALCULATE YOUR RATE</a>
+      <a href={`/${lang}/reservar`} class="btn btn-outline-light border-2 fw-light">CALCULATE YOUR RATE</a>
     </div>
 
     <div class="d-flex flex-column align-items-center bg-primary" style="padding:40px;">
@@ -37,7 +40,7 @@ import promo03 from '@/assets/inicio/promo-03.webp';
         <h2>Premium exterior Washing</h2>
         <p>Available in our additional services.</p>
       </div>
-      <a href="/servicios-adicionales" class="btn btn-outline-light border-2 fw-light">OTHER SERVICES</a>
+      <a href={`/${lang}/servicios-adicionales`} class="btn btn-outline-light border-2 fw-light">OTHER SERVICES</a>
     </div>
 
     <div class="d-flex flex-column align-items-center"
@@ -53,7 +56,7 @@ import promo03 from '@/assets/inicio/promo-03.webp';
         <h2>Secure parking</h2>
         <p>Guarding and custody of vehicles. Guarded and insured.</p>
       </div>
-      <a href="/localizacion" class="btn btn-outline-light border-2 fw-light">KNOW US</a>
+      <a href={`/${lang}/localizacion`} class="btn btn-outline-light border-2 fw-light">KNOW US</a>
     </div>
   </div>
 </div>
@@ -79,7 +82,7 @@ import promo03 from '@/assets/inicio/promo-03.webp';
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
+        <a href={`/${lang}/localizacion`} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
       </div>
     </div>
 
@@ -92,7 +95,7 @@ import promo03 from '@/assets/inicio/promo-03.webp';
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
+        <a href={`/${lang}/localizacion`} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
       </div>
     </div>
 
@@ -105,7 +108,7 @@ import promo03 from '@/assets/inicio/promo-03.webp';
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
+        <a href={`/${lang}/localizacion`} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MORE INFO</a>
       </div>
     </div>
   </div>

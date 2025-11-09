@@ -1,4 +1,5 @@
 ---
+import { getLangFromUrl } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 
 import Carousel from "@/components/Carousel.astro";
@@ -6,9 +7,8 @@ import Carousel from "@/components/Carousel.astro";
 import promo01 from '@/assets/inicio/promo-01.webp';
 import promo02 from '@/assets/inicio/promo-02.webp';
 import promo03 from '@/assets/inicio/promo-03.webp';
-import calculatorIcon from '@/assets/inicio/icons/calculator.astro';
-import dropIcon from '@/assets/inicio/icons/drop.astro';
-import eyeIcon from '@/assets/inicio/icons/eye.astro';
+
+const lang = getLangFromUrl(Astro.url);
 ---
 <Layout title="ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE">
 	<Carousel />
@@ -20,7 +20,7 @@ import eyeIcon from '@/assets/inicio/icons/eye.astro';
         <h2>Calculador de tarifas</h2>
         <p>Compruebe su precio de forma sencilla.</p>
       </div>
-      <a href="/reservas" class="btn btn-outline-light border-2 fw-light">CALCULE SU TARIFA</a>
+      <a href={`/${lang}/reservar`} class="btn btn-outline-light border-2 fw-light">CALCULE SU TARIFA</a>
     </div>
 
     <div class="d-flex flex-column align-items-center bg-primary" style="padding:40px;">
@@ -29,7 +29,7 @@ import eyeIcon from '@/assets/inicio/icons/eye.astro';
         <h2>Lavado exterior premium</h2>
         <p>Disponible en nuestros servicios adicionales.</p>
       </div>
-      <a href="/servicios-adicionales" class="btn btn-outline-light border-2 fw-light">OTROS SERVICIOS</a>
+      <a href={`/${lang}/servicios-adicionales`} class="btn btn-outline-light border-2 fw-light">OTROS SERVICIOS</a>
     </div>
 
     <div class="d-flex flex-column align-items-center"
@@ -39,7 +39,7 @@ import eyeIcon from '@/assets/inicio/icons/eye.astro';
         <h2>Parking Vigilado</h2>
         <p>Servicio de guarda y custodia de vehículos vigilado y asegurado.</p>
       </div>
-      <a href="/localizacion" class="btn btn-outline-light border-2 fw-light">CONÓCENOS</a>
+      <a href={`/${lang}/localizacion`} class="btn btn-outline-light border-2 fw-light">CONÓCENOS</a>
     </div>
   </div>
 </div>
@@ -65,7 +65,7 @@ import eyeIcon from '@/assets/inicio/icons/eye.astro';
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MÁS INFORMACIÓN</a>
+        <a href={`/${lang}/localizacion`} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MÁS INFORMACIÓN</a>
       </div>
     </div>
 
@@ -78,7 +78,7 @@ import eyeIcon from '@/assets/inicio/icons/eye.astro';
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MÁS INFORMACIÓN</a>
+        <a href={`/${lang}/localizacion`} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MÁS INFORMACIÓN</a>
       </div>
     </div>
 
@@ -91,7 +91,7 @@ import eyeIcon from '@/assets/inicio/icons/eye.astro';
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href="/localizacion" class="btn btn-outline-dark border-2" style="font-size: .8rem;">MÁS INFORMACIÓN</a>
+        <a href={`/${lang}/localizacion`} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MÁS INFORMACIÓN</a>
       </div>
     </div>
   </div>
