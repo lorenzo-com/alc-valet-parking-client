@@ -1,6 +1,7 @@
 {
 	"main": "dist/_worker.js/index.js",
 	"name": "alcvaletparking-client",
+  "pages_build_output_dir": "./dist",
   "compatibility_date": "2025-11-21",
   "compatibility_flags": [
     "nodejs_compat",
