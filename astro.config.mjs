@@ -7,6 +7,12 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   output: 'static',
 
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/no-op'
+    }
+  },
+
   i18n: {
       locales: ['en', 'nl', 'es'],
       defaultLocale: 'es'
