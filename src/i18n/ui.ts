@@ -1,3 +1,4 @@
+export const showDefaultLang = false;
 export const languages = {
     es: 'Español',
     en: 'English',
@@ -80,6 +81,7 @@ export const ui = {
         "carousel.button05": "Contact us"
     },
     nl: {
+        'header.home': 'Home',
         'header.company': 'Bedrijf',
         'header.howitworks': 'Hoe het werkt',
         'header.prices': 'Prijzen',

@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, useTranslatedPath, useTranslations } from "@/i18n/utils";
 
 import { Image } from "astro:assets";
 import hero01 from "@/assets/inicio/hero-slide-01.webp";
@@ -10,6 +10,7 @@ import hero05 from "@/assets/inicio/hero-slide-05.webp";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 ---
 
 <style>
@@ -85,7 +86,7 @@ const t = useTranslations(lang);
           {t("carousel.title01")}
         </h2>
         <a
-          href={`/${lang}/localizacion`}
+          href={translatePath("/localizacion")}
           class="btn btn-primary text-light mt-2"
         >
           {t("carousel.button01")}
@@ -101,7 +102,7 @@ const t = useTranslations(lang);
         <p class="fw-light position-relative bg-dark opacity-75 p-2 fs-5">
           {t("carousel.text02")}
         </p>
-        <a href={`/${lang}/reservar`} class="btn btn-primary text-light mt-2"
+        <a href={translatePath("/reservar")} class="btn btn-primary text-light mt-2"
           >{t("carousel.button02")}</a
         >
       </div>
@@ -112,7 +113,7 @@ const t = useTranslations(lang);
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t("carousel.title03")}
         </h2>
-        <a href={`/${lang}/localizacion`} class="btn btn-primary text-light mt-2">
+        <a href={translatePath("/localizacion")} class="btn btn-primary text-light mt-2">
           {t("carousel.button03")}
         </a>
       </div>
@@ -127,7 +128,7 @@ const t = useTranslations(lang);
           {t("carousel.text04")}
         </p>
         <a
-          href={`/${lang}/localizacion`}
+          href={translatePath("/localizacion")}
           class="btn btn-primary text-light mt-2">{t("carousel.button04")}</a
         >
       </div>
@@ -141,7 +142,7 @@ const t = useTranslations(lang);
         <p class="fw-light position-relative bg-dark opacity-75 p-2 fs-5">
           {t("carousel.text05")}
         </p>
-        <a href={`/${lang}/localizacion`} class="btn btn-primary text-light mt-2"
+        <a href={translatePath("/localizacion")} class="btn btn-primary text-light mt-2"
           >{t("carousel.button05")}</a
         >
       </div>

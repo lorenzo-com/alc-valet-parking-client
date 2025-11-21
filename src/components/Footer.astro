@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, useTranslatedPath, useTranslations } from '@/i18n/utils';
 
 import { Image } from "astro:assets";
 
@@ -16,6 +16,7 @@ import Prosegur from "@/assets/footer/Prosegur.webp";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 ---
 
 <footer class="bg-dark text-white">
@@ -89,17 +90,17 @@ const t = useTranslations(lang);
             >
                 <ul class="d-flex list-unstyled m-0 gap-3">
                     <li>
-                        <a href={`/${lang}/avisos-legales`} class="text-white"
+                        <a href={translatePath("/avisos-legales")} class="text-white"
                             >{t('footer.legalnotices')}</a
                         >
                     </li>
                     <li>
-                        <a href={`/${lang}/politica-cookies`} class="text-white"
+                        <a href={translatePath("/politica-cookies")} class="text-white"
                             >{t('footer.cookiespolicy')}</a
                         >
                     </li>
                     <li>
-                        <a href={`/${lang}/politica-privacidad`} class="text-white"
+                        <a href={translatePath("/politica-privacidad")} class="text-white"
                             >{t('footer.privacypolicy')}</a
                         >
                     </li>

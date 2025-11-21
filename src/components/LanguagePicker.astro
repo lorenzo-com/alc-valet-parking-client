@@ -1,8 +1,9 @@
 ---
 import { languages } from "@/i18n/ui";
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslatedPath } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
 ---
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -11,7 +12,7 @@ const lang = getLangFromUrl(Astro.url);
   <ul class="dropdown-menu dropdown-menu-dark">
     {Object.entries(languages).map(([lang, label]) => (
     <li>
-      <a class="dropdown-item" href={`/${lang}/`}>{label}</a>
+      <a class="dropdown-item" href={translatePath("/", lang)}>{label}</a>
     </li>
     ))}
   </ul>
