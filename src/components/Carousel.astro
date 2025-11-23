@@ -1,7 +1,6 @@
 ---
 import { getLangFromUrl, useTranslatedPath, useTranslations } from "@/i18n/utils";
 
-import { Image } from "astro:assets";
 import hero01 from "@/assets/inicio/hero-slide-01.webp";
 import hero02 from "@/assets/inicio/hero-slide-02.webp";
 import hero03 from "@/assets/inicio/hero-slide-03.webp";
@@ -80,7 +79,7 @@ const translatePath = useTranslatedPath(lang);
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active" style="position: relative;">
-      <Image src={hero01} alt="Slide 01" />
+      <img src={hero01.src} alt="Slide 01">
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t("carousel.title01")}
@@ -94,7 +93,7 @@ const translatePath = useTranslatedPath(lang);
       </div>
     </div>
     <div class="carousel-item">
-      <Image src={hero02} alt="Slide 02" />
+      <img src={hero02.src} alt="Slide 02">
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t("carousel.title02")}
@@ -108,7 +107,7 @@ const translatePath = useTranslatedPath(lang);
       </div>
     </div>
     <div class="carousel-item">
-      <Image src={hero03} alt="Slide 03" />
+      <img src={hero03.src} alt="Slide 03">
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t("carousel.title03")}
@@ -119,7 +118,7 @@ const translatePath = useTranslatedPath(lang);
       </div>
     </div>
     <div class="carousel-item">
-      <Image src={hero04} alt="Slide 04" />
+      <img src={hero04.src} alt="Slide 04">
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t("carousel.title04")}
@@ -134,7 +133,7 @@ const translatePath = useTranslatedPath(lang);
       </div>
     </div>
     <div class="carousel-item">
-      <Image src={hero05} alt="Slide 05" />
+      <img src={hero05.src} alt="Slide 05">
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t("carousel.title05")}

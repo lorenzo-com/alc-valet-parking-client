@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getLangFromUrl } from '@/i18n/utils';
 import Layout from "@/layouts/Layout.astro";
 
@@ -45,7 +44,7 @@ const lang = getLangFromUrl(Astro.url);
 </div>
 
 <div class="row row-cols-1 row-cols-md-2">
-  <Image src={calcula} alt="Calcule su tarifa" class="img-fluid p-0" />
+  <img src={calcula.src} alt="Calcule su tarifa" class="img-fluid p-0" />
   <div class="d-flex flex-column justify-content-center p-5">
     <h2 class="fs-2 fw-light mb-4">1º Bereken de prijs van je verblijf</h2>
     <p class="mb-4 text-secondary">U kunt uw prijs berekenen en uw parkeerplaats reserveren door simpelweg ons reserveringsformulier in te vullen</p>
@@ -55,8 +54,8 @@ const lang = getLangFromUrl(Astro.url);
     <h2 class="fs-2 fw-light mb-4">2º We halen je auto op</h2>
     <p class="text-secondary mb-4">Wij halen uw auto op bij de terminal op de tijd die op uw reservering staat aangegeven, u ondertekent een parkeerbon met uw gegevens en een van onze chauffeurs brengt uw auto rechtstreeks naar onze parkeerplaats.</p>
   </div>
-  <Image src={recoge} alt="Como recoger su coche" class="img-fluid p-0" />
-  <Image src={mecanica} alt="Como funciona la mecánica" class="img-fluid p-0" />
+  <img src={recoge.src} alt="Como recoger su coche" class="img-fluid p-0" />
+  <img src={mecanica.src} alt="Como funciona la mecánica" class="img-fluid p-0" />
   <div class="d-flex flex-column justify-content-center p-5">
     <h2 class="fs-2 fw-light mb-4">3º We zorgen voor je voertuig</h2>
     <p class="text-secondary mb-4">We bieden je autoreinigingsdiensten, onderhoud, reparatie en ITV-service, terwijl je auto bij ons staat.</p>
@@ -67,8 +66,8 @@ const lang = getLangFromUrl(Astro.url);
       Onze valet parking service is inclusief een gratis Basic externe carwash wanneer je je auto ophaalt.
     </p>
   </div>
-  <Image src={cuidado} alt="Como cuidamos su coche" class="img-fluid p-0" />
-  <Image src={entrega} alt="Como entregamos su coche" class="img-fluid p-0" />
+  <img src={cuidado.src} alt="Como cuidamos su coche" class="img-fluid p-0" />
+  <img src={entrega.src} alt="Como entregamos su coche" class="img-fluid p-0" />
   <div class="d-flex flex-column justify-content-center p-5">
     <h2 class="fs-2 fw-light mb-4">5º We leveren uw voertuig persoonlijk af</h2>
     <p class="text-secondary mb-4">

@@ -1,7 +1,6 @@
 ---
 import { getLangFromUrl, useTranslatedPath, useTranslations } from '@/i18n/utils';
 
-import { Image } from "astro:assets";
 
 import FacebookIcon from "@/assets/icons/FacebookIcon.astro";
 import LinkedinIcon from "@/assets/icons/LinkedinIcon.astro";
@@ -58,17 +57,17 @@ const translatePath = useTranslatedPath(lang);
             <div class="mb-5 mb-md-0">
                 <h4>{t('footer.partners')}</h4>
                 <div class="row row-cols-3">
-                    <Image src={Looking4Parking} alt="Looking4Parking" class="img-fluid" />
-                    <Image src={ParkVia} alt="ParkVia" class="img-fluid" />
-                    <Image src={ParkLot} alt="ParkLot" class="img-fluid" />
+                    <img src={Looking4Parking.src} alt="Looking4Parking" class="img-fluid" />
+                    <img src={ParkVia.src} alt="ParkVia" class="img-fluid" />
+                    <img src={ParkLot.src} alt="ParkLot" class="img-fluid" />
                 </div>
             </div>
 
             <div>
                 <h4>{t('footer.secure')}</h4>
                 <div class="row row-cols-2">
-                    <Image src={Prosegur} alt="Prosegur" class="img-fluid" />
-                    <Image src={Fiatc} alt="Fiatc" class="img-fluid" />
+                    <img src={Prosegur.src} alt="Prosegur" class="img-fluid" />
+                    <img src={Fiatc.src} alt="Fiatc" class="img-fluid" />
                 </div>
             </div>
         </div>

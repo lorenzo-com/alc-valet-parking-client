@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getLangFromUrl } from '@/i18n/utils';
 import Layout from "@/layouts/Layout.astro";
 
@@ -45,7 +44,7 @@ const lang = getLangFromUrl(Astro.url);
 </div>
 
 <div class="row row-cols-1 row-cols-md-2">
-  <Image src={calcula} alt="Calcule su tarifa" class="img-fluid p-0" />
+  <img src={calcula.src} alt="Calcule su tarifa" class="img-fluid p-0" />
   <div class="d-flex flex-column justify-content-center p-5">
     <h2 class="fs-2 fw-light mb-4">1º Calculate the price of your stay</h2>
     <p class="mb-4 text-secondary">You can calculate your price and book your parking space by simply filling in our reservation form.</p>
@@ -55,8 +54,8 @@ const lang = getLangFromUrl(Astro.url);
     <h2 class="fs-2 fw-light mb-4">2º We collect your car</h2>
     <p class="text-secondary mb-4">We collect your car at the terminal at the time indicated on your reservation, you will sign a parking receipt with your details and one of our drivers will take your car directly to our carpark.</p>
   </div>
-  <Image src={recoge} alt="Como recoger su coche" class="img-fluid p-0" />
-  <Image src={mecanica} alt="Como funciona la mecánica" class="img-fluid p-0" />
+  <img src={recoge.src} alt="Como recoger su coche" class="img-fluid p-0" />
+  <img src={mecanica.src} alt="Como funciona la mecánica" class="img-fluid p-0" />
   <div class="d-flex flex-column justify-content-center p-5">
     <h2 class="fs-2 fw-light mb-4">3º We take care of your vehicle</h2>
     <p class="text-secondary mb-4">We offer you car cleaning services, maintenance, repair and ITV service, while your car is at our premises.</p>
@@ -67,8 +66,8 @@ const lang = getLangFromUrl(Astro.url);
       Our valet parking service includes a Basic external carwash free of charge, when you collect your car.
     </p>
   </div>
-  <Image src={cuidado} alt="Como cuidamos su coche" class="img-fluid p-0" />
-  <Image src={entrega} alt="Como entregamos su coche" class="img-fluid p-0" />
+  <img src={cuidado.src} alt="Como cuidamos su coche" class="img-fluid p-0" />
+  <img src={entrega.src} alt="Como entregamos su coche" class="img-fluid p-0" />
   <div class="d-flex flex-column justify-content-center p-5">
     <h2 class="fs-2 fw-light mb-4">5º We deliver your vehicle personally</h2>
     <p class="text-secondary mb-4">

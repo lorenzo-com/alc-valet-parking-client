@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getLangFromUrl } from '@/i18n/utils';
 import Layout from "@/layouts/Layout.astro";
 
@@ -45,7 +44,7 @@ const lang = getLangFromUrl(Astro.url);
 </div>
 
 <div class="row row-cols-1 row-cols-md-2">
-  <Image src={calcula} alt="Calcule su tarifa" class="img-fluid p-0" />
+  <img src={calcula.src} alt="Calcule su tarifa" class="img-fluid p-0" />
   <div class="d-flex flex-column justify-content-center p-5">
     <h2 class="fs-2 fw-light mb-4">1º Calcule el precio de su estancia</h2>
     <p class="mb-4 text-secondary">Puede consultar el precio de su estancia con nuestro calculador y reservar su plaza de aparcamiento simplemente rellenando y enviando el formulario de reserva. No hay gastos adicionales por cambios o cancelaciones.</p>
@@ -55,8 +54,8 @@ const lang = getLangFromUrl(Astro.url);
     <h2 class="fs-2 fw-light mb-4">2º Recogemos su vehículo</h2>
     <p class="text-secondary mb-4">Recogemos su vehículo en la misma puerta de la terminal a la hora indicada en su reserva, firmará un parte de recepción del vehículo con sus datos y uno de nuestros conductores llevará su vehículo directamente a nuestro aparcamiento.</p>
   </div>
-  <Image src={recoge} alt="Como recoger su coche" class="img-fluid p-0" />
-  <Image src={mecanica} alt="Como funciona la mecánica" class="img-fluid p-0" />
+  <img src={recoge.src} alt="Como recoger su coche" class="img-fluid p-0" />
+  <img src={mecanica.src} alt="Como funciona la mecánica" class="img-fluid p-0" />
   <div class="d-flex flex-column justify-content-center p-5">
     <h2 class="fs-2 fw-light mb-4">3º Cuidamos de su vehículo</h2>
     <p class="text-secondary mb-4">Durante el periodo de estacionamiento en nuestro parking , le ofrecemos servicios adicionales de limpieza , mantenimiento, reparación e ITV mientras custodiamos su vehículo.</p>
@@ -67,8 +66,8 @@ const lang = getLangFromUrl(Astro.url);
       Recogemos su vehículo en la misma puerta de la terminal a la hora indicada en su reserva, firmará un parte de recepción del vehículo con sus datos y uno de nuestros conductores llevará su vehículo directamente a nuestro aparcamiento.
     </p>
   </div>
-  <Image src={cuidado} alt="Como cuidamos su coche" class="img-fluid p-0" />
-  <Image src={entrega} alt="Como entregamos su coche" class="img-fluid p-0" />
+  <img src={cuidado.src} alt="Como cuidamos su coche" class="img-fluid p-0" />
+  <img src={entrega.src} alt="Como entregamos su coche" class="img-fluid p-0" />
   <div class="d-flex flex-column justify-content-center p-5">
     <h2 class="fs-2 fw-light mb-4">5º Le entregamos su vehículo en mano</h2>
     <p class="text-secondary mb-4">
