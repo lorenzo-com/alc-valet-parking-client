@@ -41,7 +41,9 @@ export const ui = {
         "carousel.button04": "Llame ahora",
         "carousel.title05": "Parking",
         "carousel.text05": "Aeropuerto Alicante-Elche",
-        "carousel.button05": "Contáctenos"
+        "carousel.button05": "Contáctenos",
+
+        'reservas.errores.nombreRequerido': 'El nombre es obligatorio',
     },
     en: {
         'header.home': 'Home',

@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { z } from 'zod';
 
   // Props que recibe desde Astro
   export let locale = 'es';
@@ -9,6 +10,39 @@
   function t(key) {
     return translations[key] || key;
   }
+
+  // Schema de validación con Zod
+  const reservaSchema = z.object({
+    nombre: z.string()
+      .min(1, 'nombreRequerido'),
+    
+    email: z.string()
+      .min(1, 'emailRequerido')
+      .email('emailInvalido'),
+    
+    telefono: z.string()
+      .min(1, 'telefonoRequerido')
+      .regex(/^[0-9\s]{9,}$/, 'telefonoInvalido'),
+    
+    fecha: z.string()
+      .min(1, 'fechaRequerida')
+      .refine((date) => {
+        if (!date) return false;
+        const selectedDate = new Date(date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return selectedDate >= today;
+      }, 'fechaPasada'),
+    
+    hora: z.string()
+      .min(1, 'horaRequerida'),
+    
+    personas: z.number()
+      .min(1, 'personasMin')
+      .max(20, 'personasMax'),
+    
+    comentarios: z.string().optional()
+  });
 
   // Estado del formulario
   let formData = {
@@ -44,112 +78,81 @@
     minDate = today.toISOString().split('T')[0];
   });
 
-  // Validaciones
-  function validateNombre(value) {
-    if (!value.trim()) {
-      return t('reservas.errores.nombreRequerido');
-    }
-    if (value.trim().length < 2) {
-      return t('reservas.errores.nombreCorto');
-    }
-    return '';
-  }
-
-  function validateEmail(value) {
-    if (!value.trim()) {
-      return t('reservas.errores.emailRequerido');
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(value)) {
-      return t('reservas.errores.emailInvalido');
-    }
-    return '';
-  }
-
-  function validateTelefono(value) {
-    if (!value.trim()) {
-      return t('reservas.errores.telefonoRequerido');
-    }
-    const phoneRegex = /^[0-9]{9,}$/;
-    if (!phoneRegex.test(value.replace(/\s/g, ''))) {
-      return t('reservas.errores.telefonoInvalido');
-    }
-    return '';
-  }
-
-  function validateFecha(value) {
-    if (!value) {
-      return t('reservas.errores.fechaRequerida');
-    }
-    const selectedDate = new Date(value);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    if (selectedDate < today) {
-      return t('reservas.errores.fechaPasada');
-    }
-    return '';
-  }
-
-  function validateHora(value) {
-    if (!value) {
-      return t('reservas.errores.horaRequerida');
-    }
-    return '';
-  }
-
-  function validatePersonas(value) {
-    if (value < 1) {
-      return t('reservas.errores.personasMin');
-    }
-    if (value > 20) {
-      return t('reservas.errores.personasMax');
-    }
-    return '';
-  }
-
-  // Validar campo individual
+  // Validar campo individual con Zod
   function validateField(field, value) {
-    switch(field) {
-      case 'nombre':
-        errors.nombre = validateNombre(value);
-        break;
-      case 'email':
-        errors.email = validateEmail(value);
-        break;
-      case 'telefono':
-        errors.telefono = validateTelefono(value);
-        break;
-      case 'fecha':
-        errors.fecha = validateFecha(value);
-        break;
-      case 'hora':
-        errors.hora = validateHora(value);
-        break;
-      case 'personas':
-        errors.personas = validatePersonas(value);
-        break;
+    try {
+      // Crear un objeto con solo el campo a validar
+      const fieldData = { ...formData, [field]: value };
+      
+      // Validar solo ese campo
+      reservaSchema.pick({ [field]: true }).parse({ [field]: value });
+      
+      // Si no hay error, limpiar el mensaje
+      errors[field] = '';
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const fieldError = err.errors[0];
+        // Usar el mensaje del error como clave de traducción
+        errors[field] = t(`reservas.errores.${fieldError.message}`);
+      }
     }
   }
 
-  // Validar todo el formulario
+  // Validar todo el formulario con Zod
   function validateForm() {
-    errors.nombre = validateNombre(formData.nombre);
-    errors.email = validateEmail(formData.email);
-    errors.telefono = validateTelefono(formData.telefono);
-    errors.fecha = validateFecha(formData.fecha);
-    errors.hora = validateHora(formData.hora);
-    errors.personas = validatePersonas(formData.personas);
-
-    return !Object.values(errors).some(error => error !== '');
+    try {
+      reservaSchema.parse(formData);
+      
+      // Limpiar todos los errores
+      errors = {
+        nombre: '',
+        email: '',
+        telefono: '',
+        fecha: '',
+        hora: '',
+        personas: ''
+      };
+      
+      return true;
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        // Resetear errores
+        errors = {
+          nombre: '',
+          email: '',
+          telefono: '',
+          fecha: '',
+          hora: '',
+          personas: ''
+        };
+        
+        // Mapear errores de Zod a nuestro objeto de errores
+        err.errors.forEach((error) => {
+          const field = error.path[0];
+          if (field in errors) {
+            errors[field] = t(`reservas.errores.${error.message}`);
+          }
+        });
+      }
+      
+      return false;
+    }
   }
 
   // Manejar cambios en los campos
   function handleInput(field) {
     return (e) => {
-      formData[field] = e.target.value;
-      validateField(field, e.target.value);
+      const value = e.target.value;
+      formData[field] = value;
+      validateField(field, value);
     };
+  }
+
+  // Manejar cambio de número (personas)
+  function handleNumberInput(e) {
+    const value = parseInt(e.target.value) || 0;
+    formData.personas = value;
+    validateField('personas', value);
   }
 
   // Enviar formulario
@@ -234,6 +237,7 @@
           id="nombre"
           value={formData.nombre}
           on:input={handleInput('nombre')}
+          on:blur={handleInput('nombre')}
           class:error={errors.nombre}
           placeholder={t('reservas.placeholders.nombre')}
           disabled={isSubmitting}
@@ -252,6 +256,7 @@
           id="telefono"
           value={formData.telefono}
           on:input={handleInput('telefono')}
+          on:blur={handleInput('telefono')}
           class:error={errors.telefono}
           placeholder={t('reservas.placeholders.telefono')}
           disabled={isSubmitting}
@@ -271,6 +276,7 @@
         id="email"
         value={formData.email}
         on:input={handleInput('email')}
+        on:blur={handleInput('email')}
         class:error={errors.email}
         placeholder={t('reservas.placeholders.email')}
         disabled={isSubmitting}
@@ -290,6 +296,7 @@
           id="fecha"
           value={formData.fecha}
           on:input={handleInput('fecha')}
+          on:blur={handleInput('fecha')}
           class:error={errors.fecha}
           min={minDate}
           disabled={isSubmitting}
@@ -308,6 +315,7 @@
           id="hora"
           value={formData.hora}
           on:input={handleInput('hora')}
+          on:blur={handleInput('hora')}
           class:error={errors.hora}
           disabled={isSubmitting}
         />
@@ -323,8 +331,9 @@
         <input
           type="number"
           id="personas"
-          bind:value={formData.personas}
-          on:input={handleInput('personas')}
+          value={formData.personas}
+          on:input={handleNumberInput}
+          on:blur={handleNumberInput}
           class:error={errors.personas}
           min="1"
           max="20"
