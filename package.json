@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.11",
+    "@astrojs/svelte": "^7.2.2",
     "astro": "^5.15.3",
     "bootstrap": "5.3.8",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "svelte": "^5.44.0",
+    "typescript": "^5.9.3"
   }
 }
