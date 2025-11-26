@@ -22,9 +22,11 @@ export default defineConfig({
       }
   },
 
-  adapter: cloudflare({
-    imageService: 'cloudflare'
-  }),
+  image: {
+    service: { entrypoint: 'astro/assets/services/sharp' }
+  },
+
+  adapter: cloudflare(),
 
   integrations: [svelte()]
 });
