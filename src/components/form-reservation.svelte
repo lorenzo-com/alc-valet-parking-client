@@ -17,7 +17,9 @@
 
     email: z.string().min(1, "emailRequerido").email("emailInvalido"),
 
-    telefono: z.string().min(1, "phoneRequired"),
+    telefono: z.string().min(1, "telefonoRequerido"),
+
+    comoNosConoce: z.string().min(1, "comoNosConoceRequerido"),
 
     fecha: z
       .string()
@@ -32,7 +34,6 @@
 
     hora: z.string().min(1, "horaRequerida"),
 
-    personas: z.number().min(1, "personasMin").max(20, "personasMax"),
 
     comentarios: z.string().optional(),
   });
@@ -44,7 +45,7 @@
     telefono: "",
     fecha: "",
     hora: "",
-    personas: 2,
+    comoNosConoce: "",
     comentarios: "",
   };
 
@@ -55,7 +56,7 @@
     telefono: "",
     fecha: "",
     hora: "",
-    personas: "",
+    comoNosConoce: "",
   };
 
   // Estado del formulario
@@ -63,12 +64,7 @@
   let submitSuccess = false;
   let submitError = "";
 
-  // Fecha mínima (hoy)
-  let minDate = "";
-
   onMount(() => {
-    const today = new Date();
-    minDate = today.toISOString().split("T")[0];
   });
 
   // Validar campo individual con Zod
@@ -103,7 +99,7 @@
         telefono: "",
         fecha: "",
         hora: "",
-        personas: "",
+        comoNosConoce: ""
       };
 
       return true;
@@ -116,14 +112,14 @@
           telefono: "",
           fecha: "",
           hora: "",
-          personas: "",
+          comoNosConoce: ""
         };
 
         // Mapear errores de Zod a nuestro objeto de errores
         err.errors.forEach((error) => {
           const field = error.path[0];
           if (field in errors) {
-            errors[field] = t(`reservas.errores.${error.message}`);
+            errors[field] = t(`reservar.error.${error.message}`);
           }
         });
       }
@@ -141,12 +137,7 @@
     };
   }
 
-  // Manejar cambio de número (personas)
-  function handleNumberInput(e) {
-    const value = parseInt(e.target.value) || 0;
-    formData.personas = value;
-    validateField("personas", value);
-  }
+  
 
   // Enviar formulario
   async function handleSubmit(e) {
@@ -182,8 +173,8 @@
           telefono: "",
           fecha: "",
           hora: "",
-          personas: 2,
           comentarios: "",
+          comoNosConoce: ""
         };
         errors = {
           nombre: "",
@@ -191,13 +182,13 @@
           telefono: "",
           fecha: "",
           hora: "",
-          personas: "",
+          comoNosConoce: ""
         };
       } else {
-        submitError = t("reservas.errores.errorEnvio");
+        submitError = t("reservar.error.errorEnvio");
       }
     } catch (error) {
-      submitError = t("reservas.errores.errorConexion");
+      submitError = t("reservar.error.errorConexion");
     } finally {
       isSubmitting = false;
     }
@@ -210,149 +201,24 @@
   <h2 class="m-0 text-light">{t("reservar.title")}</h2>
 </div>
 
-<!-- Si no esta iniciado sesión mostramos un call to action -->
-<div class="border border-2 border-primary p-4 mb-3">
-  <!-- TODO: Mostrar solo si no esta iniciado sesión -->
-  <h2 class="fs-4 mb-3 text-center">{t("reservar.title.calltoaction")}</h2>
-  <div class="text-center">
-    <a href="#" class="btn btn-outline-primary me-2">
-      {t("reservar.login")}
-    </a>
-    <a href="#" class="btn btn-primary text-light">
-      {t("reservar.register")}
-    </a>
-  </div>
-</div>
-
 <div class="container my-5">
   <form on:submit={handleSubmit} novalidate>
+    <!-- Si no esta iniciado sesión mostramos un call to action -->
+    <div class="border border-2 border-primary p-4 mb-3">
+      <!-- TODO: Mostrar solo si no esta iniciado sesión -->
+      <h2 class="fs-4 mb-3 text-center">{t("reservar.title.calltoaction")}</h2>
+      <div class="text-center">
+        <a href="#" class="btn btn-outline-primary me-2">
+          {t("reservar.login")}
+        </a>
+        <a href="#" class="btn btn-primary text-light">
+          {t("reservar.register")}
+        </a>
+      </div>
+    </div>
+
     <div class="border border-2 border-primary p-4">
       <h2 class="fs-2">{t("reservar.subtitle")}</h2>
-
-      <div class="row">
-        <div class="form-group">
-          <label for="nombre">
-            {t("reservas.campos.nombre")} <span class="required">*</span>
-          </label>
-          <input
-            type="text"
-            id="nombre"
-            value={formData.nombre}
-            on:input={handleInput("nombre")}
-            on:blur={handleInput("nombre")}
-            class:error={errors.nombre}
-            placeholder={t("reservas.placeholders.nombre")}
-            disabled={isSubmitting}
-          />
-          {#if errors.nombre}
-            <span class="text-danger">{errors.nombre}</span>
-          {/if}
-        </div>
-
-        <div class="form-group">
-          <label for="email">
-            {t("reservas.campos.email")} <span class="required">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={formData.email}
-            on:input={handleInput("email")}
-            on:blur={handleInput("email")}
-            class:error={errors.email}
-            placeholder={t("reservas.placeholders.email")}
-            disabled={isSubmitting}
-          />
-          {#if errors.email}
-            <span class="error-message">{errors.email}</span>
-          {/if}
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="fecha">
-              {t("reservas.campos.fecha")} <span class="required">*</span>
-            </label>
-            <input
-              type="date"
-              id="fecha"
-              value={formData.fecha}
-              on:input={handleInput("fecha")}
-              on:blur={handleInput("fecha")}
-              class:error={errors.fecha}
-              min={minDate}
-              disabled={isSubmitting}
-            />
-            {#if errors.fecha}
-              <span class="error-message">{errors.fecha}</span>
-            {/if}
-          </div>
-
-          <div class="form-group">
-            <label for="hora">
-              {t("reservas.campos.hora")} <span class="required">*</span>
-            </label>
-            <input
-              type="time"
-              id="hora"
-              value={formData.hora}
-              on:input={handleInput("hora")}
-              on:blur={handleInput("hora")}
-              class:error={errors.hora}
-              disabled={isSubmitting}
-            />
-            {#if errors.hora}
-              <span class="error-message">{errors.hora}</span>
-            {/if}
-          </div>
-
-          <div class="form-group">
-            <label for="personas">
-              {t("reservas.campos.personas")} <span class="required">*</span>
-            </label>
-            <input
-              type="number"
-              id="personas"
-              value={formData.personas}
-              on:input={handleNumberInput}
-              on:blur={handleNumberInput}
-              class:error={errors.personas}
-              min="1"
-              max="20"
-              disabled={isSubmitting}
-            />
-            {#if errors.personas}
-              <span class="error-message">{errors.personas}</span>
-            {/if}
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="comentarios">
-            {t("reservas.campos.comentarios")}
-          </label>
-          <textarea
-            id="comentarios"
-            bind:value={formData.comentarios}
-            rows="4"
-            placeholder={t("reservas.placeholders.comentarios")}
-            disabled={isSubmitting}
-          ></textarea>
-        </div>
-
-        <button type="submit" class="submit-btn" disabled={isSubmitting}>
-          {#if isSubmitting}
-            {t("reservas.botones.enviando")}
-          {:else}
-            {t("reservas.botones.enviar")}
-          {/if}
-        </button>
-
-        <p class="form-note">
-          <span class="required">*</span>
-          {t("reservas.mensajes.camposObligatorios")}
-        </p>
-      </div>
     </div>
 
     <!-- Precio a pagar -->
@@ -430,7 +296,38 @@
             <span class="text-danger">{errors.email}</span>
           {/if}
         </div>
+
+        <div class="mb-3">
+          <label for="como nos has conocido" class="form-label"
+            >¿Cómo nos ha conocido?<span class="text-danger">*</span></label
+          >
+          <select
+            class="form-select"
+            bind:value={formData.comoNosConoce}
+            on:blur={handleInput("comoNosConoce")}
+            on:change={handleInput("comoNosConoce")}
+            class:is-invalid={errors.comoNosConoce}
+            disabled={isSubmitting}
+          >
+            <option value="" disabled>{t('reservar.comoNosConoce.seleccionar')}</option>
+            <option value="Ya soy cliente">{t('reservar.comoNosConoce.yaSoyCliente')}</option>
+            <option value="Google">Google</option>
+            <option value="Telefono">{t('reservar.comoNosConoce.telefono')}</option>
+            <option value="Un amigo">{t('reservar.comoNosConoce.unAmigo')}</option>
+            <option value="Internet">Internet</option>
+          </select>
+          {#if errors.comoNosConoce}
+            <span class="text-danger">{errors.comoNosConoce}</span>
+          {/if}
+        </div>
       </div>
     </div>
+    <button type="submit" class="btn btn-primary mt-3" disabled={isSubmitting}>
+      {#if isSubmitting}
+        {t("reservas.botones.enviando")}
+      {:else}
+        {t("reservar.boton.confirmarReserva")}
+      {/if}
+    </button>
   </form>
 </div>
