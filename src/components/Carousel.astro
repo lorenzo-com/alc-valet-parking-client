@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getLangFromUrl, useTranslatedPath, useTranslations } from "@/i18n/utils";
 
 import hero01 from "@/assets/inicio/hero-slide-01.webp";
@@ -79,7 +80,8 @@ const translatePath = useTranslatedPath(lang);
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active" style="position: relative;">
-      <img src={hero01.src} alt="Slide 01">
+      <!-- <img src={hero01.src} alt="Slide 01"> -->
+      <Image src={hero01} alt="Slide 01" class="d-block w-100" loading="eager"/>
       <div class="responsive-text text-white">
         <h2 class="fw-medium position-relative bg-dark opacity-75 p-2 fs-3">
           {t("carousel.title01")}
