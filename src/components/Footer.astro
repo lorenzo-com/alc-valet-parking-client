@@ -12,6 +12,7 @@ import ParkLot from "@/assets/footer/ParkLot.webp";
 
 import Fiatc from "@/assets/footer/Fiatc.webp";
 import Prosegur from "@/assets/footer/Prosegur.webp";
+import { Image } from 'astro:assets';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -57,17 +58,17 @@ const translatePath = useTranslatedPath(lang);
             <div class="mb-5 mb-md-0">
                 <h4>{t('footer.partners')}</h4>
                 <div class="row row-cols-3">
-                    <img src={Looking4Parking.src} alt="Looking4Parking" class="img-fluid" />
-                    <img src={ParkVia.src} alt="ParkVia" class="img-fluid" />
-                    <img src={ParkLot.src} alt="ParkLot" class="img-fluid" />
+                    <Image src={Looking4Parking} alt="Looking4Parking" class="img-fluid" loading="lazy" />
+                    <Image src={ParkVia} alt="ParkVia" class="img-fluid" loading="lazy" />
+                    <Image src={ParkLot} alt="ParkLot" class="img-fluid" loading="lazy" />
                 </div>
             </div>
 
             <div>
                 <h4>{t('footer.secure')}</h4>
                 <div class="row row-cols-2">
-                    <img src={Prosegur.src} alt="Prosegur" class="img-fluid" />
-                    <img src={Fiatc.src} alt="Fiatc" class="img-fluid" />
+                    <Image src={Prosegur} alt="Prosegur" class="img-fluid" loading="lazy" />
+                    <Image src={Fiatc} alt="Fiatc" class="img-fluid" loading="lazy" />
                 </div>
             </div>
         </div>
