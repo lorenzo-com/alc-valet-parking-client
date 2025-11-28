@@ -1,0 +1,11 @@
+---
+import LoginForm from '@/components/auth/LoginForm.svelte';
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="Acceso Usuarios">
+  <main>
+    <h1>Zona de Clientes</h1>
+    <LoginForm client:load />
+  </main>
+</Layout>

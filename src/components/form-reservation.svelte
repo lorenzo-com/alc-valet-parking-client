@@ -217,8 +217,12 @@
       </div>
     </div>
 
+    <!-- Datos de la reserva -->
     <div class="border border-2 border-primary p-4">
       <h2 class="fs-2">{t("reservar.subtitle")}</h2>
+      <div class="row row-cols-1 row-cols-md-2">
+        
+      </div>
     </div>
 
     <!-- Precio a pagar -->

@@ -1,0 +1,11 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import RegisterForm from '@/components/auth/RegisterForm.svelte';
+---
+
+<Layout title="Registro - ALC Valet Parking">
+  <main>
+    <h1>Bienvenido</h1>
+    <RegisterForm client:load />
+  </main>
+</Layout>
