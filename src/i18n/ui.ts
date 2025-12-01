@@ -69,6 +69,23 @@ export const ui = {
         "reservar.comoNosConoce.internet": "Internet",
         "reservar.error.comoNosConoceRequerido": "Cómo nos conociste es obligatorio",
         "reservar.boton.confirmarReserva": "Confirmar reserva",
+        
+        "login.title": "Iniciar sesión",
+        "login.label.email": "Email",
+        "login.placeholder.email": "tu@email.com",
+        "login.error.emailRequerido": "Email es obligatorio",
+        "login.error.emailInvalido": "Email no válido",
+        "login.label.password": "Contraseña",
+        "login.placeholder.password": "Introduzca su contraseña",
+        "login.error.contrasenyaRequerida": "Contraseña es obligatoria",
+        "login.error.contrasenyaCorta": "Contraseña debe tener al menos 6 caracteres",
+        "login.link.forgotPass": "¿Olvidaste tu contraseña?",
+        "login.boton": "Iniciar sesión",
+        "login.legend": "¿Aún no tienes cuenta?",
+        "login.link.register": "Regístrate aquí",
+        "login.supabase.incorrectInfo": "El correo electrónico o la contraseña son incorrectos",
+        "login.supabase.verify": "Debes confirmar tu correo electrónico antes de iniciar sesión",
+        "login.supabase.generico": "Ocurrió un error al iniciar sesión. Inténtalo de nuevo"
     },
     en: {
         'header.home': 'Home',
@@ -106,7 +123,7 @@ export const ui = {
         "carousel.title05": "Parking",
         "carousel.text05": "Alicante-Elche Airport",
         "carousel.button05": "Contact us",
-
+        
         'reservar.title': 'BOOKING INQUIRY',
         'reservar.title.calltoaction': 'Access your account or register',
         'reservar.login': 'Log in',
@@ -133,6 +150,23 @@ export const ui = {
         "reservar.comoNosConoce.internet": "Internet",
         "reservar.error.comoNosConoceRequerido": "How you found us is required",
         "reservar.boton.confirmarReserva": "Confirm booking",
+        
+        "login.title": "Log in",
+        "login.label.email": "Email",
+        "login.placeholder.email": "your@email.com",
+        "login.error.emailRequerido": "Email is required",
+        "login.error.emailInvalido": "Email is invalid",
+        "login.label.password": "Password",
+        "login.placeholder.password": "Enter your password",
+        "login.error.contrasenyaRequerida": "Password is required",
+        "login.error.contrasenyaCorta": "Password must be at least 6 characters long",
+        "login.link.forgotPass": "Forgot your password?",
+        "login.boton": "Log in",
+        "login.legend": "Don't have an account yet?",
+        "login.link.register": "Register here",
+        "login.supabase.incorrectInfo": "The email address or password is incorrect",
+        "login.supabase.verify": "You must confirm your email address before logging in",
+        "login.supabase.generico": "An error occurred while logging in. Please try again"
     },
     nl: {
         'header.home': 'Home',
@@ -197,6 +231,23 @@ export const ui = {
         "reservar.comoNosConoce.internet": "Internet",
         "reservar.error.comoNosConoceRequerido": "Hoe u ons gevonden heeft, is vereist",
         "reservar.boton.confirmarReserva": "Reservering bevestigen",
+
+        "login.title": "Inloggen",
+        "login.label.email": "E-mail",
+        "login.placeholder.email": "jij@email.com",
+        "login.error.emailRequerido": "E-mail is vereist",
+        "login.error.emailInvalido": "E-mail is invalid",
+        "login.label.password": "E-mail is ongeldig",
+        "login.placeholder.password": "Voer je wachtwoord in",
+        "login.error.contrasenyaRequerida": "Wachtwoord is verplicht",
+        "login.error.contrasenyaCorta": "Wachtwoord moet minimaal 6 tekens bevatten",
+        "login.link.forgotPass": "Wachtwoord vergeten?",
+        "login.boton": "Inloggen",
+        "login.legend": "Heb je nog geen account?",
+        "login.link.register": "Registreer hier",
+        "login.supabase.incorrectInfo": "Het e-mailadres of wachtwoord is onjuist",
+        "login.supabase.verify": "Je moet je e-mailadres bevestigen voordat je kunt inloggen",
+        "login.supabase.generico": "Er is een fout opgetreden bij het inloggen. Probeer het opnieuw"
     },
 } as const;
 

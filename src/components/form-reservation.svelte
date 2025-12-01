@@ -64,9 +64,6 @@
   let submitSuccess = false;
   let submitError = "";
 
-  onMount(() => {
-  });
-
   // Validar campo individual con Zod
   function validateField(field, value) {
     try {

@@ -15,7 +15,8 @@
     // Función para cerrar sesión
     const handleLogout = async () => {
         await supabase.auth.signOut();
-        window.location.href = "/"; // Redirigir a home tras salir
+        const targetUrl = lang === "es" ? "/" : `/${lang}/`;
+        window.location.href = targetUrl; // Redirigir a home tras salir
     };
 </script>
 
