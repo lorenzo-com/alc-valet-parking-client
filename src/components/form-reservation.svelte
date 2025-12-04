@@ -311,10 +311,9 @@
             disabled={isSubmitting}
           >
             <option value="" disabled>{t('reservar.comoNosConoce.seleccionar')}</option>
-            <option value="Ya soy cliente">{t('reservar.comoNosConoce.yaSoyCliente')}</option>
+            <option value="Ya soy cliente">{t('comoNosConoce.yaSoyCliente')}</option>
             <option value="Google">Google</option>
-            <option value="Telefono">{t('reservar.comoNosConoce.telefono')}</option>
-            <option value="Un amigo">{t('reservar.comoNosConoce.unAmigo')}</option>
+            <option value="Un amigo">{t('comoNosConoce.unAmigo')}</option>
             <option value="Internet">Internet</option>
           </select>
           {#if errors.comoNosConoce}

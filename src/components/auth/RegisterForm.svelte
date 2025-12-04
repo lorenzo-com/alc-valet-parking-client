@@ -83,7 +83,7 @@
                                     ? 'bg-white shadow-sm text-primary'
                                     : 'text-muted border-0'}"
                                 on:click={() => setUserType("PARTICULAR")}
-                                >{t("Particular")}
+                                >{t("register.particular")}
                             </button>
                             <button
                                 class="btn flex-fill px-4 fw-medium rounded-3 transition-all {userType ===
@@ -92,7 +92,7 @@
                                     : 'text-muted border-0'}"
                                 on:click={() => setUserType("COMPANY")}
                             >
-                                {t("Company")}
+                                {t("register.empresa")}
                             </button>
                         </div>
                     </div>
@@ -103,14 +103,14 @@
                                 <label
                                     for="email"
                                     class="form-label fw-medium text-secondary small"
-                                    >{t("E-MAIL ADDRESS")}</label
+                                    >{t("register.label.email")}</label
                                 >
                                 <input
                                     type="email"
                                     id="email"
                                     class="form-control form-control-lg bg-light-subtle"
                                     bind:value={formData.email}
-                                    placeholder="tu@email.com"
+                                    placeholder={t("register.placeholder.email")}
                                     required
                                 />
                             </div>
@@ -118,14 +118,14 @@
                                 <label
                                     for="password"
                                     class="form-label fw-medium text-secondary small"
-                                    >{t("PASSWORD")}</label
+                                    >{t("register.label.contrasenya")}</label
                                 >
                                 <input
                                     type="password"
                                     id="password"
                                     class="form-control form-control-lg bg-light-subtle"
                                     bind:value={formData.password}
-                                    placeholder="****"
+                                    placeholder="••••••••"
                                     required
                                     minlength="8"
                                 />
@@ -134,14 +134,14 @@
                                 <label
                                     for="passwordConfirm"
                                     class="form-label fw-medium text-secondary small"
-                                    >{t("CONFIRM PASSWORD")}</label
+                                    >{t("register.label.confirmarContrasenya")}</label
                                 >
                                 <input
                                     type="password"
                                     id="passwordConfirm"
                                     class="form-control form-control-lg bg-light-subtle"
                                     bind:value={formData.passwordConfirm}
-                                    placeholder="****"
+                                    placeholder="••••••••"
                                     required
                                 />
                             </div>
@@ -151,14 +151,19 @@
                                     class="form-label fw-medium text-secondary small"
                                 >
                                     {userType === "COMPANY"
-                                        ? t("Social Reason")
-                                        : t("Full Name")}
+                                        ? t("register.label.razonSocial")
+                                        : t("register.label.nombre")}
                                 </label>
                                 <input
                                     type="text"
                                     id="fullName"
                                     class="form-control form-control-lg bg-light-subtle"
                                     bind:value={formData.fullName}
+                                    placeholder={
+                                        userType === "COMPANY"
+                                            ? t("register.placeholder.razonSocial")
+                                            : t("register.placeholder.nombre")
+                                    }
                                     required
                                 />
                             </div>
@@ -168,13 +173,14 @@
                                     <label
                                         for="cif"
                                         class="form-label fw-medium text-secondary small"
-                                        >{t("CIF")}</label
+                                        >{t("register.label.cif")}</label
                                     >
                                     <input
                                         type="text"
                                         id="cif"
                                         class="form-control form-control-lg bg-light-subtle"
                                         bind:value={formData.cif}
+                                        placeholder={t("register.placeholder.cif")}
                                         required
                                     />
                                 </div>
@@ -182,13 +188,14 @@
                                     <label
                                         for="address"
                                         class="form-label fw-medium text-secondary small"
-                                        >{t("Full Address")}</label
+                                        >{t("register.label.direccion")}</label
                                     >
                                     <input
                                         type="text"
                                         id="address"
                                         class="form-control form-control-lg bg-light-subtle"
                                         bind:value={formData.address}
+                                        placeholder={t("register.placeholder.direccion")}
                                         required
                                     />
                                 </div>
@@ -198,13 +205,14 @@
                                 <label
                                     for="phone"
                                     class="form-label fw-medium text-secondary small"
-                                    >{t("Telephone")}</label
+                                    >{t("register.label.telefono")}</label
                                 >
                                 <input
                                     type="tel"
                                     id="phone"
                                     class="form-control form-control-lg bg-light-subtle"
                                     bind:value={formData.phone}
+                                    placeholder={t("register.placeholder.telefono")}
                                     required
                                 />
                             </div>
@@ -212,7 +220,7 @@
                                 <label
                                     for="howFound"
                                     class="form-label fw-medium text-secondary small"
-                                    >{t("How did you find us?")}</label
+                                    >{t("register.label.nosConoce")}</label
                                 >
                                 <select
                                     id="howFound"
@@ -221,12 +229,14 @@
                                     required
                                 >
                                     <option value="" disabled selected
-                                        >{t("Select option")}</option
+                                        >{t("register.placeholder.nosConoce")}</option
                                     >
+                                    <option value="Ya soy cliente">{t("comoNosConoce.yaSoyCliente")}</option>
                                     <option value="Google">Google</option>
-                                    <option value="Friend"
-                                        >{t("A friend")}</option
+                                    <option value="Un amigo"
+                                        >{t("comoNosConoce.unAmigo")}</option
                                     >
+                                    <option value="Internet">Internet</option>
                                 </select>
                             </div>
                         </div>
