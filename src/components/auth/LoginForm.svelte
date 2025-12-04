@@ -1,5 +1,5 @@
 <script>
-  import { supabase } from "../../lib/supabase";
+  import { supabase } from "@/lib/supabase";
   import { z } from "zod";
 
   // Props que recibe desde Astro
@@ -142,111 +142,143 @@
     }
   }
 </script>
+<div class="container py-5 min-vh-100 d-flex flex-column justify-content-center">
+  <div class="row justify-content-center w-100">
+    <!-- Hacemos la columna un poco más estrecha (col-lg-5) para Login, se ve más elegante -->
+    <div class="col-12 col-md-7 col-lg-5">
+      
+      <!-- Card Container: Sombra suave, bordes redondeados -->
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+          
+          <h2 class="text-center fw-bold mb-4 text-dark">{t("login.title")}</h2>
+          
+          <form on:submit={handleSubmit}>
+            
+            <!-- Email -->
+            <div class="mb-4">
+              <label for="email" class="form-label fw-medium text-secondary small">
+                {t("login.label.email")}
+              </label>
+              <input
+                id="email"
+                type="email"
+                class="form-control form-control-lg bg-light-subtle"
+                class:is-invalid={errors.email}
+                bind:value={formData.email}
+                on:input={handleInput("email")}
+                on:blur={handleInput("email")}
+                placeholder={t("login.placeholder.email")}
+                disabled={isSubmitting}
+              />
+              {#if errors.email}
+                <div class="invalid-feedback ps-1">
+                  {errors.email}
+                </div>
+              {/if}
+            </div>
 
-<div class="container">
-  <div class="form-container">
-    <h2>{t("login.title")}</h2>
-    <form on:submit={handleSubmit} class="row g-3">
-      <div class="col-12 mb-3">
-        <label for="email" class="form-label"
-          >{t("login.label.email")}<span class="text-danger">*</span></label
-        >
-        <input
-          id="email"
-          type="email"
-          class="form-control"
-          class:is-invalid={errors.email}
-          bind:value={formData.email}
-          on:input={handleInput("email")}
-          on:blur={handleInput("email")}
-          placeholder={t("login.placeholder.email")}
-          disabled={isSubmitting}
-        />
-        {#if errors.email}
-          <span class="text-danger">{errors.email}</span>
-        {/if}
-      </div>
+            <!-- Password -->
+            <div class="mb-2">
+              <label for="password" class="form-label fw-medium text-secondary small">
+                {t("login.label.password")}
+              </label>
+              <input
+                id="password"
+                type="password"
+                class="form-control form-control-lg bg-light-subtle"
+                class:is-invalid={errors.password}
+                bind:value={formData.password}
+                on:input={handleInput("password")}
+                on:blur={handleInput("password")}
+                placeholder="••••••••"
+                disabled={isSubmitting}
+              />
+              {#if errors.password}
+                <div class="invalid-feedback ps-1">
+                  {errors.password}
+                </div>
+              {/if}
+            </div>
 
-      <div class="col-12 mb-3">
-        <label for="password"
-          >{t("login.label.password")}<span class="text-danger">*</span></label
-        >
-        <input
-          id="password"
-          type="password"
-          class="form-control"
-          class:is-invalid={errors.password}
-          bind:value={formData.password}
-          on:input={handleInput("password")}
-          on:blur={handleInput("password")}
-          placeholder="****"
-          disabled={isSubmitting}
-        />
-        {#if errors.password}
-          <span class="text-danger">{errors.password}</span>
-        {/if}
-      </div>
+            <!-- Forgot Password Link (Aligned Right) -->
+            <div class="text-end mb-4">
+              <a href="/recuperar" class="text-decoration-none small fw-medium text-primary">
+                {t("login.link.forgotPass")}
+              </a>
+            </div>
 
-      <div>
-        <a href="/recuperar">{t("login.link.forgotPass")}</a>
-      </div>
+            <!-- Global Error Alert -->
+            {#if submitError}
+              <div class="alert alert-danger d-flex align-items-center rounded-3 mb-4" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+                <div class="small fw-medium">{submitError}</div>
+              </div>
+            {/if}
 
-      {#if submitError}
-        <div class="col-12 mt-3">
-          <div
-            class="alert alert-danger d-flex align-items-center"
-            role="alert"
-          >
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <div>{submitError}</div>
-          </div>
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow-sm"
+              disabled={isSubmitting}
+            >
+              {#if isSubmitting}
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Loading...
+              {:else}
+                {t("login.boton")}
+              {/if}
+            </button>
+
+          </form>
         </div>
-      {/if}
-      <button
-        type="submit"
-        class="btn btn-primary mt-3"
-        disabled={isSubmitting}
-      >
-        {t("login.boton")}
-      </button>
+      </div>
 
-      <p class="foot">
-        {t("login.legend")} <a href="/registro">{t("login.link.register")}</a>
-      </p>
-    </form>
+      <!-- Footer / Register Link -->
+      <div class="text-center mt-4 text-muted">
+        <small>
+          {t("login.legend")} 
+          <a href="/registro" class="text-decoration-none fw-bold text-dark link-primary-hover">
+            {t("login.link.register")}
+          </a>
+        </small>
+      </div>
+
+    </div>
   </div>
 </div>
 
 <style>
-  /* Contenedor principal */
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100%;
-    padding: 20px;
+  /* Transition utility */
+  .transition-all {
+    transition: all 0.2s ease-in-out;
   }
-  .form-container {
-    width: 100%;
-    max-width: 700px; /* Mayor anchura en pantallas grandes */
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Más prominente */
+  
+  /* Inputs Styles: Matching the registration form */
+  .form-control:focus {
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+    border-color: #86b7fe;
+  }
+
+  /* Background subtle for inputs */
+  .bg-light-subtle {
+    background-color: #f8f9fa; /* Gray-50 */
+    border: 1px solid #dee2e6;
+  }
+  
+  .bg-light-subtle:focus {
     background-color: #fff;
   }
 
-  .error-message {
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
+  /* Link Hover Effect */
+  .link-primary-hover:hover {
+    color: var(--bs-primary) !important;
+    text-decoration: underline !important;
   }
 
-  /* Estilo para dispositivos pequeños */
-  @media (max-width: 768px) {
-    .container {
-      width: 100%;
-      padding: 15px;
-      box-shadow: none;
-    }
+  /* Override invalid feedback to be simpler */
+  .invalid-feedback {
+    font-size: 0.85em;
+    font-weight: 500;
   }
 </style>
