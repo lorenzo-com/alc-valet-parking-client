@@ -20,11 +20,8 @@
    * Fácil de extender si en el futuro necesitas validar más campos.
    */
   const LOGIN_SCHEMA = z.object({
-    email: z.string().min(1, "emailRequerido").email("emailInvalido"),
-    password: z
-      .string()
-      .min(1, "contrasenyaRequerida")
-      .min(6, "contrasenyaCorta"),
+    email: z.string().min(1, "required").email("email_invalid"),
+    password: z.string().min(6, "password_min"),
   });
 
   /**
@@ -39,7 +36,7 @@
   // ESTADO DEL COMPONENTE
   // ==========================================
   let formData = { email: "", password: "" };
-  let formErrors = { email: "", password: "" }; // Renombrado para mayor claridad
+  let formErrors = {};
 
   let isSubmitting = false;
   let generalError = ""; // Error general del formulario
@@ -74,12 +71,12 @@
   function isFormValid() {
     try {
       LOGIN_SCHEMA.parse(formData);
-      formErrors = { email: "", password: "" }; // Limpieza completa
+      formErrors = {}; // Limpieza completa
       return true;
     } catch (err) {
       if (err instanceof z.ZodError) {
         // Mapeamos todos los errores encontrados al objeto de estado
-        const newErrors = { email: "", password: "" };
+        const newErrors = {};
         err.errors.forEach((e) => {
           // path[0] es el nombre del campo (ej: 'email')
           if (typeof e.path[0] === "string") {
@@ -117,7 +114,7 @@
     generalError = "";
 
     try {
-      // 3. Llamada al servicio (Supabase)
+      // Llamada al servicio (Supabase)
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
@@ -125,13 +122,11 @@
 
       if (error) throw error; // Lanzamos error para manejarlo en el catch unificado
 
-      
-        // Éxito y Redirección
-        // Nota: Tenemos un store de Svelte escuchando onAuthStateChange,
-        // se actualizará solo, pero la redirección la forzamos aquí.
-        const targetUrl = lang === "es" ? "/" : `/${lang}/`;
-        window.location.href = targetUrl;
-
+      // Éxito y Redirección
+      // Nota: Tenemos un store de Svelte escuchando onAuthStateChange,
+      // se actualizará solo, pero la redirección la forzamos aquí.
+      const targetUrl = lang === "es" ? "/" : `/${lang}/`;
+      window.location.href = targetUrl;
     } catch (error) {
       // Manejo centralizado de errores
       handleLoginError(error);
@@ -147,26 +142,31 @@
    */
   function handleLoginError(error) {
     console.error("Login Error:", error.message); // Log para desarrolladores
-    
+
     // Buscamos en el mapa, si no existe, usamos error genérico
-    const translationKey = SUPABASE_ERROR_MAP[error.message] || "login.error.generico";
-    
+    const translationKey =
+      SUPABASE_ERROR_MAP[error.message] || "login.error.generic";
+
     // Fallback de texto si la traducción falla
     generalError = t(translationKey) || "Ocurrió un error inesperado.";
   }
 </script>
-<div class="container py-5 min-vh-100 d-flex flex-column justify-content-center">
+
+<div
+  class="container py-5 min-vh-100 d-flex flex-column justify-content-center"
+>
   <div class="row justify-content-center w-100">
     <div class="col-12 col-md-7 col-lg-5">
-      
       <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body p-4 p-md-5">
           <h2 class="text-center fw-bold mb-4 text-dark">{t("login.title")}</h2>
 
           <form on:submit|preventDefault={handleSubmit}>
-            
             <div class="mb-4">
-              <label for="email" class="form-label fw-medium text-secondary small">
+              <label
+                for="email"
+                class="form-label fw-medium text-secondary small"
+              >
                 {t("login.label.email")}
               </label>
               <input
@@ -188,7 +188,10 @@
             </div>
 
             <div class="mb-2">
-              <label for="password" class="form-label fw-medium text-secondary small">
+              <label
+                for="password"
+                class="form-label fw-medium text-secondary small"
+              >
                 {t("login.label.password")}
               </label>
               <input
@@ -210,13 +213,19 @@
             </div>
 
             <div class="text-end mb-4">
-              <a href="/recuperar" class="text-decoration-none small fw-medium text-primary">
+              <a
+                href="/recuperar"
+                class="text-decoration-none small fw-medium text-primary"
+              >
                 {t("login.link.forgotPass")}
               </a>
             </div>
 
             {#if generalError}
-              <div class="alert alert-danger d-flex align-items-center rounded-3 mb-4 py-2" role="alert">
+              <div
+                class="alert alert-danger d-flex align-items-center rounded-3 mb-4 py-2"
+                role="alert"
+              >
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
                 <div class="small fw-medium">{generalError}</div>
               </div>
@@ -229,12 +238,11 @@
             >
               {#if isSubmitting}
                 <span class="spinner-border spinner-border-sm me-2"></span>
-                Loading...
+                {t("loading")}
               {:else}
                 {t("login.boton")}
               {/if}
             </button>
-
           </form>
         </div>
       </div>
@@ -250,14 +258,15 @@
           </a>
         </small>
       </div>
-
     </div>
   </div>
 </div>
 
 <style>
   /* UTILIDADES VISUALES */
-  .transition-all { transition: all 0.2s ease-in-out; }
+  .transition-all {
+    transition: all 0.2s ease-in-out;
+  }
 
   /* ESTILO DE INPUTS (Modern SaaS Look) */
   .form-control:focus {
