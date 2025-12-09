@@ -1,15 +1,11 @@
 <script>
-  import { onMount } from "svelte";
+  import { useTranslatedPath, useTranslations } from "@/i18n/utils";
   import { z } from "zod";
 
   // Props que recibe desde Astro
-  export let locale = "es";
-  export let translations = {};
-
-  // Helper para obtener traducciones
-  function t(key) {
-    return translations[key] || key;
-  }
+  export let lang = "es";
+  const t = useTranslations(lang);
+  const translatePath = useTranslatedPath(lang);
 
   // Schema de validación con Zod
   const reservaSchema = z.object({
@@ -33,7 +29,6 @@
       }, "fechaPasada"),
 
     hora: z.string().min(1, "horaRequerida"),
-
 
     comentarios: z.string().optional(),
   });
@@ -96,7 +91,7 @@
         telefono: "",
         fecha: "",
         hora: "",
-        comoNosConoce: ""
+        comoNosConoce: "",
       };
 
       return true;
@@ -109,7 +104,7 @@
           telefono: "",
           fecha: "",
           hora: "",
-          comoNosConoce: ""
+          comoNosConoce: "",
         };
 
         // Mapear errores de Zod a nuestro objeto de errores
@@ -134,8 +129,6 @@
     };
   }
 
-  
-
   // Enviar formulario
   async function handleSubmit(e) {
     e.preventDefault();
@@ -157,7 +150,7 @@
         },
         body: JSON.stringify({
           ...formData,
-          locale,
+          locale: lang,
         }),
       });
 
@@ -171,7 +164,7 @@
           fecha: "",
           hora: "",
           comentarios: "",
-          comoNosConoce: ""
+          comoNosConoce: "",
         };
         errors = {
           nombre: "",
@@ -179,7 +172,7 @@
           telefono: "",
           fecha: "",
           hora: "",
-          comoNosConoce: ""
+          comoNosConoce: "",
         };
       } else {
         submitError = t("reservar.error.errorEnvio");
@@ -193,7 +186,7 @@
 </script>
 
 <div
-  class="bg-primary d-flex justify-content-center py-4 border-top border-1 border-light"
+  class="bg-primary d-flex justify-content-center py-4 border-top border border-light"
 >
   <h2 class="m-0 text-light">{t("reservar.title")}</h2>
 </div>
@@ -201,29 +194,27 @@
 <div class="container my-5">
   <form on:submit={handleSubmit} novalidate>
     <!-- Si no esta iniciado sesión mostramos un call to action -->
-    <div class="border border-2 border-primary p-4 mb-3">
+    <div class="border-2 border-primary p-4 mb-3">
       <!-- TODO: Mostrar solo si no esta iniciado sesión -->
       <h2 class="fs-4 mb-3 text-center">{t("reservar.title.calltoaction")}</h2>
       <div class="text-center">
-        <a href="#" class="btn btn-outline-primary me-2">
+        <a href={translatePath("/login")} class="btn btn-outline-primary me-2">
           {t("reservar.login")}
         </a>
-        <a href="#" class="btn btn-primary text-light">
+        <a href={translatePath("/registro")} class="btn btn-primary text-light">
           {t("reservar.register")}
         </a>
       </div>
     </div>
 
     <!-- Datos de la reserva -->
-    <div class="border border-2 border-primary p-4">
+    <div class="border-2 border-primary p-4">
       <h2 class="fs-2">{t("reservar.subtitle")}</h2>
-      <div class="row row-cols-1 row-cols-md-2">
-        
-      </div>
+      <div class="row row-cols-1 row-cols-md-2"></div>
     </div>
 
     <!-- Precio a pagar -->
-    <div class="border border-2 border-primary p-4 mt-3">
+    <div class="border-2 border-primary p-4 mt-3">
       <h2 class="fs-2">{t("reservar.fee")}</h2>
       <div>
         <div class="text-center text-light py-2" style="background: #ff7908ba;">
@@ -233,12 +224,12 @@
     </div>
 
     <!-- Formulario para los NO autenticados -->
-    <div class="border border-2 border-primary p-4 mt-3">
+    <div class="border-2 border-primary p-4 mt-3">
       <!-- TODO: Validar que no este autenticado el usuario -->
       <h2 class="fs-2">{t("reservar.title.userInfo")}</h2>
       <div class="d-flex justify-content-center gap-3 mb-3">
-        <a class="btn btn-primary">{t("reservar.particular")}</a>
-        <a class="btn btn-primary">{t("reservar.company")}</a>
+        <button class="btn btn-primary">{t("reservar.particular")}</button>
+        <button class="btn btn-primary">{t("reservar.company")}</button>
       </div>
       <div class="row row-cols-1 row-cols-md-2">
         <div class="mb-3">
@@ -310,10 +301,14 @@
             class:is-invalid={errors.comoNosConoce}
             disabled={isSubmitting}
           >
-            <option value="" disabled>{t('reservar.comoNosConoce.seleccionar')}</option>
-            <option value="Ya soy cliente">{t('comoNosConoce.yaSoyCliente')}</option>
+            <option value="" disabled
+              >{t("reservar.comoNosConoce.seleccionar")}</option
+            >
+            <option value="Ya soy cliente"
+              >{t("comoNosConoce.yaSoyCliente")}</option
+            >
             <option value="Google">Google</option>
-            <option value="Un amigo">{t('comoNosConoce.unAmigo')}</option>
+            <option value="Un amigo">{t("comoNosConoce.unAmigo")}</option>
             <option value="Internet">Internet</option>
           </select>
           {#if errors.comoNosConoce}

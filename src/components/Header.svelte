@@ -1,9 +1,5 @@
 <script lang="ts">
-    import {
-        getLangFromUrl,
-        useTranslatedPath,
-        useTranslations,
-    } from "@/i18n/utils";
+    import { useTranslatedPath, useTranslations } from "@/i18n/utils";
     import { user } from "@/stores/auth"; // Importamos el estado global
     import { supabase } from "@/lib/supabase";
     import Logo from "@/assets/logo.png";
@@ -15,8 +11,7 @@
     // Función para cerrar sesión
     const handleLogout = async () => {
         await supabase.auth.signOut();
-        const targetUrl = lang === "es" ? "/" : `/${lang}/`;
-        window.location.href = targetUrl; // Redirigir a home tras salir
+        window.location.href = translatePath("/"); // Redirigir a home tras salir
     };
 </script>
 
@@ -114,8 +109,7 @@
                 >
                     {#if $user}
                         <div class="dropdown text-end">
-                            <a
-                                href="#"
+                            <button
                                 class="d-block link-light text-decoration-none dropdown-toggle"
                                 data-bs-toggle="dropdown"
                             >
@@ -124,7 +118,7 @@
                                 >
                                     <i class="bi bi-person-fill"></i>Mi Cuenta
                                 </span>
-                            </a>
+                            </button>
                             <ul class="dropdown-menu dropdown-menu-end shadow">
                                 <li>
                                     <a

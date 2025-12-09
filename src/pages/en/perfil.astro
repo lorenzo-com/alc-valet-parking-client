@@ -3,10 +3,6 @@ import Layout from "@/layouts/Layout.astro";
 import UserProfile from "@/components/auth/UserProfile.svelte";
 import { getLangFromUrl } from "@/i18n/utils";
 
-// Seguridad básica en servidor (opcional, ya que Svelte también protege)
-// Si quieres redirección instantánea desde servidor, necesitarías cookies,
-// pero con SPA/Svelte auth, es mejor dejar que el componente maneje la redirección.
-
 const lang = getLangFromUrl(Astro.url);
 ---
 

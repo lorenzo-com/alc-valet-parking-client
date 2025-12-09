@@ -1,10 +1,5 @@
 <script>
-    // TODO: Al intentar registrar un usuario con un email ya existente, no se muestra un error.
-    /**
-     * @component RegisterForm
-     * @description Formulario de registro unificado para Particulares y Empresas.
-     * Maneja validación compleja condicional (Zod) y sanitización de datos antes de enviarlos a Supabase.
-     */
+    import { useTranslatedPath, useTranslations } from "@/i18n/utils";
     import { supabase } from "@/lib/supabase";
     import { z } from "zod";
 
@@ -13,13 +8,8 @@
     // ==========================================
     // Props que recibe desde Astro
     export let lang = "es";
-    export let translations = {};
-
-    /**
-     * Helper simple para traducción.
-     * @param {string} key - Clave de traducción.
-     */
-    const t = (key) => translations[key] || key;
+    const t = useTranslations(lang);
+    const translatePath = useTranslatedPath(lang);
 
     /**
      * Modos de interfaz de usuario.
@@ -179,8 +169,7 @@
             // Éxito y Redirección
             // Nota: Tenemos un store de Svelte escuchando onAuthStateChange,
             // se actualizará solo, pero la redirección la forzamos aquí.
-            const targetUrl = lang === "es" ? "/login" : `/${lang}/login`;
-            window.location.href = targetUrl;
+            window.location.href = translatePath("/login");
         } catch (error) {
             console.error("Error en el registro:", error); // Log para desarrolladores
 
@@ -494,7 +483,7 @@
                 <small>
                     {t("register.link.login")}
                     <a
-                        href={lang === "es" ? "/login" : `/${lang}/login`}
+                        href={translatePath("/login")}
                         class="text-decoration-none fw-bold link-primary-hover"
                     >
                         {t("login.link")}

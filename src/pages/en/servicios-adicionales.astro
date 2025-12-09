@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslatedPath } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 
 import hero from "@/assets/servicios-adicionales/hero.webp";
@@ -21,6 +21,7 @@ import LegalServices from "@/assets/servicios-adicionales/icons/legal-services.a
 import Information from "@/assets/servicios-adicionales/icons/information.astro";
 
 const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
 ---
 
 <style>
@@ -48,7 +49,7 @@ const lang = getLangFromUrl(Astro.url);
             <div class="recuadro p-2 mb-3">
                 <p class="text-white fs-2 m-0">Much more than a car park!</p>
             </div>
-            <a href={`/${lang}/localizacion`} class="btn btn-primary text-light"
+            <a href={translatePath("/localizacion")} class="btn btn-primary text-light"
                 >Contact us</a
             >
         </div>
@@ -196,7 +197,7 @@ const lang = getLangFromUrl(Astro.url);
             </div>
             <div class="col-12 bg-dark">
                 <a
-                    href={`/${lang}/localizacion`}
+                    href={translatePath("/localizacion")}
                     class="fs-4 text-light d-flex justify-content-center p-3 w-100 text-decoration-none"
                 >
                     <span class="d-flex align-items-center">

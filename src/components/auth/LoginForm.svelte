@@ -1,4 +1,5 @@
 <script>
+  import { useTranslatedPath, useTranslations } from "@/i18n/utils";
   import { supabase } from "@/lib/supabase";
   import { z } from "zod";
 
@@ -7,13 +8,8 @@
   // ==========================================
   // Props que recibe desde Astro
   export let lang = "es";
-  export let translations = {};
-
-  /**
-   * Helper simple para traducción.
-   * @param {string} key - Clave de traducción.
-   */
-  const t = (key) => translations[key] || key;
+  const t = useTranslations(lang);
+  const translatePath = useTranslatedPath(lang);
 
   /**
    * Esquema de validación centralizado.
@@ -125,8 +121,7 @@
       // Éxito y Redirección
       // Nota: Tenemos un store de Svelte escuchando onAuthStateChange,
       // se actualizará solo, pero la redirección la forzamos aquí.
-      const targetUrl = lang === "es" ? "/" : `/${lang}/`;
-      window.location.href = targetUrl;
+      window.location.href = translatePath("/");
     } catch (error) {
       // Manejo centralizado de errores
       handleLoginError(error);
@@ -214,7 +209,7 @@
 
             <div class="text-end mb-4">
               <a
-                href="/recuperar-contrasenya"
+                href={translatePath("/recuperar-contrasenya")}
                 class="text-decoration-none small fw-medium text-primary"
               >
                 {t("login.link.forgotPass")}
@@ -251,7 +246,7 @@
         <small>
           {t("login.legend")}
           <a
-            href={lang === "es" ? "/registro" : `/${lang}/registro`}
+            href={translatePath("/registro")}
             class="text-decoration-none fw-bold text-dark link-primary-hover"
           >
             {t("login.link.register")}

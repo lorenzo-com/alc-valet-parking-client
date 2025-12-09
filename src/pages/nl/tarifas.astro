@@ -1,21 +1,12 @@
 ---
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslatedPath } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 
 import hero from "@/assets/tarifas/hero-tarifas.webp";
 
 const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
 ---
-
-<style>
-  .hero {
-    position: relative;
-    height: 60vh;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  }
-</style>
 
 <Layout title="Prijzen | ALC Valet Parking Alicante">
   <div
@@ -101,8 +92,9 @@ const lang = getLangFromUrl(Astro.url);
           </tbody>
         </table>
         <div class="d-flex justify-content-center">
-          <a href={`/${lang}/reservar`} class="btn btn-primary text-light"
-            >Reserveer nu</a
+          <a
+            href={translatePath("/reservar")}
+            class="btn btn-primary text-light">Reserveer nu</a
           >
         </div>
       </div>
@@ -172,11 +164,22 @@ const lang = getLangFromUrl(Astro.url);
           </tbody>
         </table>
         <div class="d-flex justify-content-center">
-          <a href={`/${lang}/reservar`} class="btn btn-primary text-light"
-            >Reserveer nu</a
+          <a
+            href={translatePath("/reservar")}
+            class="btn btn-primary text-light">Reserveer nu</a
           >
         </div>
       </div>
     </div>
   </div>
 </Layout>
+
+<style>
+  .hero {
+    position: relative;
+    height: 60vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+</style>

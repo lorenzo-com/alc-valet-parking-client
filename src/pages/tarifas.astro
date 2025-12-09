@@ -1,10 +1,11 @@
 ---
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslatedPath } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 
 import hero from "@/assets/tarifas/hero-tarifas.webp";
 
 const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
 ---
 
 <style>
@@ -101,7 +102,7 @@ const lang = getLangFromUrl(Astro.url);
           </tbody>
         </table>
         <div class="d-flex justify-content-center">
-          <a href={`/${lang}/reservar`} class="btn btn-primary text-light"
+          <a href={translatePath("/reservar")} class="btn btn-primary text-light"
             >Reservar ahora</a
           >
         </div>
@@ -172,7 +173,7 @@ const lang = getLangFromUrl(Astro.url);
           </tbody>
         </table>
         <div class="d-flex justify-content-center">
-          <a href={`/${lang}/reservar`} class="btn btn-primary text-light"
+          <a href={translatePath("/reservar")} class="btn btn-primary text-light"
             >Reservar ahora</a
           >
         </div>

@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl } from '@/i18n/utils';
+import { getLangFromUrl, useTranslatedPath } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
 
 import Carousel from "@/components/Carousel.astro";
@@ -9,6 +9,7 @@ import promo02 from '@/assets/inicio/promo-02.webp';
 import promo03 from '@/assets/inicio/promo-03.webp';
 
 const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
 ---
 
 <Layout title="ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE">
@@ -25,7 +26,7 @@ const lang = getLangFromUrl(Astro.url);
         <h2>Tarieven berekenen</h2>
         <p>Controleer je prijs gemakkelijk.</p>
       </div>
-      <a href={`/${lang}/reservar`} class="btn btn-outline-light border-2 fw-light">BEREKEN JE TARIEF</a>
+      <a href={translatePath("/reservar")} class="btn btn-outline-light border-2 fw-light">BEREKEN JE TARIEF</a>
     </div>
 
     <div class="d-flex flex-column align-items-center bg-primary" style="padding:40px;">
@@ -40,7 +41,7 @@ const lang = getLangFromUrl(Astro.url);
         <h2>Eersteklas buitenwassen</h2>
         <p>Beschikbaar in onze aanvullende services.</p>
       </div>
-      <a href={`/${lang}/servicios-adicionales`} class="btn btn-outline-light border-2 fw-light">OVERIGE DIENSTEN</a>
+      <a href={translatePath("/servicios-adicionales")} class="btn btn-outline-light border-2 fw-light">OVERIGE DIENSTEN</a>
     </div>
 
     <div class="d-flex flex-column align-items-center"
@@ -56,7 +57,7 @@ const lang = getLangFromUrl(Astro.url);
         <h2>Bewaakt parkeren</h2>
         <p>Bewaakte en verzekerde opslag en bewaring van voertuigen.</p>
       </div>
-      <a href={`/${lang}/localizacion`} class="btn btn-outline-light border-2 fw-light">OVER ONS</a>
+      <a href={translatePath("/localizacion")} class="btn btn-outline-light border-2 fw-light">OVER ONS</a>
     </div>
   </div>
 </div>
@@ -82,7 +83,7 @@ const lang = getLangFromUrl(Astro.url);
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href={`/${lang}/localizacion`} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MEER INFORMATIE</a>
+        <a href={translatePath("/localizacion")} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MEER INFORMATIE</a>
       </div>
     </div>
 
@@ -95,7 +96,7 @@ const lang = getLangFromUrl(Astro.url);
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href={`/${lang}/localizacion`} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MEER INFORMATIE</a>
+        <a href={translatePath("/localizacion")} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MEER INFORMATIE</a>
       </div>
     </div>
 
@@ -108,7 +109,7 @@ const lang = getLangFromUrl(Astro.url);
       <a href="mailto:info@alcvaletparking.com"
         class="text-decoration-none fw-medium text-primary">info&#64;alcvaletparking.com</a>
       <div class="d-flex justify-content-end">
-        <a href={`/${lang}/localizacion`} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MEER INFORMATIE</a>
+        <a href={translatePath("/localizacion")} class="btn btn-outline-dark border-2" style="font-size: .8rem;">MEER INFORMATIE</a>
       </div>
     </div>
   </div>

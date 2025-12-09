@@ -1,18 +1,14 @@
 <script>
+  import { useTranslatedPath, useTranslations } from "@/i18n/utils";
   import { supabase } from "@/lib/supabase";
   import { z } from "zod";
-    import { fa } from "zod/v4/locales";
 
   // ==========================================
   // CONFIGURACIÓN Y PROPS
   // ==========================================
   export let lang = "es";
-  export let translations = {};
-
-  /**
-   * Helper simple para traducción.
-   */
-  const t = (key) => translations[key] || key;
+  const t = useTranslations(lang);
+  const translatePath = useTranslatedPath(lang);
 
   /**
    * Esquema de validación estricto solo para el email.
@@ -26,9 +22,9 @@
   // ==========================================
   let email = "";
   let emailError = ""; // Error específico del campo
-  
+
   let isSubmitting = false;
-  let generalError = ""; 
+  let generalError = "";
   let successMessage = false; // Estado para mostrar feedback positivo
 
   // ==========================================
@@ -78,15 +74,17 @@
       // 4. Éxito: No redirigimos, mostramos mensaje para que revisen su inbox.
       successMessage = true;
       email = ""; // Limpiamos el campo por seguridad/UX
-
     } catch (error) {
       console.error("Recovery Error:", error.message);
-      
+
       // Manejo de errores defensivo (rate limits, etc)
       if (error.message.includes("Rate limit")) {
-        generalError = t("recovery.error.rateLimit") || "Demasiados intentos. Espera un momento.";
+        generalError =
+          t("recovery.error.rateLimit") ||
+          "Demasiados intentos. Espera un momento.";
       } else {
-        generalError = t("recovery.error.generic") || "Error al enviar el correo.";
+        generalError =
+          t("recovery.error.generic") || "Error al enviar el correo.";
       }
     } finally {
       isSubmitting = false;
@@ -94,38 +92,53 @@
   }
 </script>
 
-<div class="container py-5 min-vh-100 d-flex flex-column justify-content-center">
+<div
+  class="container py-5 min-vh-100 d-flex flex-column justify-content-center"
+>
   <div class="row justify-content-center w-100">
     <div class="col-12 col-md-7 col-lg-5">
       <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body p-4 p-md-5">
-          
           <h2 class="text-center fw-bold mb-3 text-dark">
             {t("recovery.title") || "Recuperar Contraseña"}
           </h2>
           <p class="text-center text-muted mb-4 small">
-            {t("recovery.subtitle") || "Ingresa tu email y te enviaremos las instrucciones."}
+            {t("recovery.subtitle") ||
+              "Ingresa tu email y te enviaremos las instrucciones."}
           </p>
 
           {#if successMessage}
-            <div class="alert alert-success rounded-3 p-4 text-center" role="alert">
-              <i class="bi bi-envelope-check-fill fs-1 d-block mb-2 text-success"></i>
-              <h5 class="alert-heading fw-bold">{t("recovery.success.title") || "¡Correo enviado!"}</h5>
+            <div
+              class="alert alert-success rounded-3 p-4 text-center"
+              role="alert"
+            >
+              <i
+                class="bi bi-envelope-check-fill fs-1 d-block mb-2 text-success"
+              ></i>
+              <h5 class="alert-heading fw-bold">
+                {t("recovery.success.title") || "¡Correo enviado!"}
+              </h5>
               <p class="mb-0 small">
-                {t("recovery.success.desc") || "Revisa tu bandeja de entrada (y spam) para restablecer tu acceso."}
+                {t("recovery.success.desc") ||
+                  "Revisa tu bandeja de entrada (y spam) para restablecer tu acceso."}
               </p>
             </div>
-            
+
             <div class="text-center mt-3">
-              <a href={lang === "es" ? "/login" : `/${lang}/login`} class="btn btn-outline-primary rounded-pill px-4">
+              <a
+                href={translatePath("/login")}
+                class="btn btn-outline-primary rounded-pill px-4"
+              >
                 {t("recovery.backToLogin") || "Volver al inicio de sesión"}
               </a>
             </div>
-
           {:else}
             <form on:submit|preventDefault={handleSubmit}>
               <div class="mb-4">
-                <label for="email" class="form-label fw-medium text-secondary small">
+                <label
+                  for="email"
+                  class="form-label fw-medium text-secondary small"
+                >
                   {t("login.label.email")}
                 </label>
                 <input
@@ -147,7 +160,10 @@
               </div>
 
               {#if generalError}
-                <div class="alert alert-danger d-flex align-items-center rounded-3 mb-4 py-2" role="alert">
+                <div
+                  class="alert alert-danger d-flex align-items-center rounded-3 mb-4 py-2"
+                  role="alert"
+                >
                   <i class="bi bi-exclamation-triangle-fill me-2"></i>
                   <div class="small fw-medium">{generalError}</div>
                 </div>
@@ -169,7 +185,7 @@
 
             <div class="text-center mt-4">
               <a
-                href={lang === "es" ? "/login" : `/${lang}/login`}
+                href={translatePath("/login")}
                 class="text-decoration-none small fw-bold text-secondary link-primary-hover"
               >
                 <i class="bi bi-arrow-left me-1"></i>
@@ -177,7 +193,6 @@
               </a>
             </div>
           {/if}
-
         </div>
       </div>
     </div>

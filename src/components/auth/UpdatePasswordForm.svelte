@@ -1,4 +1,5 @@
 <script>
+  import { useTranslatedPath, useTranslations } from "@/i18n/utils";
   import { supabase } from "@/lib/supabase";
   import { z } from "zod";
 
@@ -6,10 +7,9 @@
   // CONFIGURACIÓN Y PROPS
   // ==========================================
   export let lang = "es";
-  export let translations = {};
-
-  const t = (key) => translations[key] || key;
-
+  const t = useTranslations(lang);
+  const translatePath = useTranslatedPath(lang);
+  
   /**
    * Esquema de validación para cambio de contraseña.
    * Incluye confirmación para evitar errores de tipeo.
@@ -92,8 +92,7 @@
       
       // 4. Redirección automática tras breve pausa para UX
       setTimeout(() => {
-        const targetUrl = lang === "es" ? "/" : `/${lang}/`;
-        window.location.href = targetUrl; 
+        window.location.href = translatePath("/"); 
       }, 2000);
 
     } catch (error) {

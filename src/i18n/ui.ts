@@ -115,6 +115,16 @@ export const ui = {
         "register.error.email_exists": "Ya existe una cuenta con este correo electrónico",
         "register.link.login": "¿Ya tienes una cuenta?",
         "login.link": "Iniciar sesión",
+
+        "profile.loading": "Cargando perfil...",
+        "profile.greeting": "Hola, ",
+        "profile.label.email": "Email",
+        "profile.label.phone": "Teléfono",
+        "profile.label.howFound": "¿Cómo nos conoció?",
+        "profile.label.cif": "CIF",
+        "profile.label.address": "Dirección de facturación",
+        "profile.error.loading": "No se pudo cargar la información del usuario.",
+        "profile.relogin": "Por favor, inicia sesión nuevamente.",
     },
     en: {
         "loading": "Loading...",
@@ -224,7 +234,17 @@ export const ui = {
         "register.error.howFound_required": "How you found us is required",
         "register.error.email_exists": "An account with this email already exists",
         "register.link.login": "Already have an account?",
-        "login.link": "Log in"
+        "login.link": "Log in",
+
+        "profile.loading": "Loading profile...",
+        "profile.greeting": "Hello, ",
+        "profile.label.email": "Email",
+        "profile.label.phone": "Phone",
+        "profile.label.howFound": "How did you find us?",
+        "profile.label.cif": "CIF",
+        "profile.label.address": "Billing Address",
+        "profile.error.loading": "Failed to load user information.",
+        "profile.relogin": "Please log in again.",
     },
     nl: {
         "loading": "Bezig met laden...",
@@ -334,7 +354,17 @@ export const ui = {
         "register.error.howFound_required": "Hoe u ons gevonden heeft, is vereist",
         "register.error.email_exists": "Er bestaat al een account met dit e-mailadres",
         "register.link.login": "Heb je al een account?",
-        "login.link": "Inloggen"
+        "login.link": "Inloggen",
+
+        "profile.loading": "Profiel laden...",
+        "profile.greeting": "Hallo, ",
+        "profile.label.email": "E-mail",
+        "profile.label.phone": "Telefoon",
+        "profile.label.howFound": "Hoe heeft u ons gevonden?",
+        "profile.label.cif": "CIF",
+        "profile.label.address": "Facturatieadres",
+        "profile.error.loading": "Kan gebruikersinformatie niet laden.",
+        "profile.relogin": "Log alstublieft opnieuw in.",
     },
 } as const;
 

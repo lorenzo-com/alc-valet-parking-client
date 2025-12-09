@@ -2,12 +2,12 @@
 import RegisterForm from '@/components/auth/RegisterForm.svelte';
 import { getLangFromUrl } from '@/i18n/utils';
 import Layout from '@/layouts/Layout.astro';
-import { ui } from '@/i18n/ui';
+
 const lang = getLangFromUrl(Astro.url);
 ---
 
 <Layout title="Registro - ALC Valet Parking">
   <main>
-    <RegisterForm client:load lang={lang} translations={ui[lang]} />
+    <RegisterForm client:load lang={lang} />
   </main>
 </Layout>
