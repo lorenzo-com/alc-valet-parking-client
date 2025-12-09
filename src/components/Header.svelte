@@ -1,10 +1,10 @@
-<script lang="ts">
+<script>
     import { useTranslatedPath, useTranslations } from "@/i18n/utils";
     import { user } from "@/stores/auth"; // Importamos el estado global
     import { supabase } from "@/lib/supabase";
     import Logo from "@/assets/logo.png";
 
-    export let lang: "es" | "nl" | "en" = "es"; // Valor por defecto
+    export let lang = "es"; // Valor por defecto
     const t = useTranslations(lang);
     const translatePath = useTranslatedPath(lang);
 
@@ -140,7 +140,7 @@
                     {:else}
                         <a
                             href={translatePath("/login")}
-                            class="btn btn-light text-primary fw-bold rounded-pill px-4 btn-sm"
+                            class="btn bg-white text-primary fw-bold rounded-pill px-4 py-2 shadow-sm w-100 w-lg-auto d-flex align-items-center justify-content-center gap-2"
                         >
                             Iniciar sesión
                         </a>

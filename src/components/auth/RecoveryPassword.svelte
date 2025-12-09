@@ -62,7 +62,7 @@
       // 2. Construcción de la URL de redirección.
       // Cuando el usuario haga clic en el email, ¿a dónde vuelve?
       // Lo ideal es enviarlo a una página donde pueda establecer su nueva password.
-      const redirectTo = `${window.location.origin}${lang === "es" ? "" : "/" + lang}/actualizar-password`;
+      const redirectTo = `${window.location.origin}${translatePath("/actualizar-password")}`;
 
       // 3. Llamada a Supabase
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -139,7 +139,7 @@
                   for="email"
                   class="form-label fw-medium text-secondary small"
                 >
-                  {t("login.label.email")}
+                  {t("recovery.label.email")}
                 </label>
                 <input
                   id="email"
@@ -149,7 +149,7 @@
                   bind:value={email}
                   on:input={validateEmail}
                   on:blur={validateEmail}
-                  placeholder={t("login.placeholder.email")}
+                  placeholder={t("recovery.placeholder.email")}
                   disabled={isSubmitting}
                 />
                 {#if emailError}
