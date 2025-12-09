@@ -214,7 +214,7 @@
 
             <div class="text-end mb-4">
               <a
-                href="/recuperar"
+                href="/recuperar-contrasenya"
                 class="text-decoration-none small fw-medium text-primary"
               >
                 {t("login.link.forgotPass")}

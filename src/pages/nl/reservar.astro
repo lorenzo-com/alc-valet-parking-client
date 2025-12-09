@@ -1,6 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import FormReservation from "@/components/form-reservation.svelte";
+import ReservationForm from "@/components/ReservationForm.svelte";
 import { getLangFromUrl } from "@/i18n/utils";
 import { ui } from "@/i18n/ui";
 
@@ -8,7 +8,7 @@ const lang = getLangFromUrl(Astro.url);
 ---
 
 <Layout title="Reservar | ALC Valet Parking Alicante">
-    <FormReservation
+    <ReservationForm
     client:load
     locale={lang}
     translations={ui[lang]}

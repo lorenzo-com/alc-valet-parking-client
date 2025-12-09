@@ -1,0 +1,35 @@
+---
+// src/pages/recuperar.astro
+import Layout from '@/layouts/Layout.astro'; // Asegúrate que la ruta a tu layout sea correcta
+import RecoveryPassword from '@/components/auth/RecoveryPassword.svelte';
+
+// 1. Configuración de idioma (Hardcodeado a 'es' para esta ruta raíz)
+const lang = "es";
+
+// 2. Diccionario de traducciones
+// Aquí pasas los textos que tu componente RecoveryForm necesita.
+// Lo ideal es que esto venga de tu archivo i18n/ui.ts, pero aquí te dejo el objeto listo.
+const translations = {
+  "login.label.email": "Correo electrónico",
+  "login.placeholder.email": "nombre@ejemplo.com",
+  "login.error.required": "El correo es obligatorio.",
+  "login.error.email_invalid": "Introduce un correo válido.",
+  "recovery.title": "¿Olvidaste tu contraseña?",
+  "recovery.subtitle": "Introduce tu correo y te enviaremos un enlace para recuperarla.",
+  "recovery.button": "Enviar enlace de recuperación",
+  "recovery.backToLogin": "Volver a iniciar sesión",
+  "recovery.success.title": "¡Correo enviado!",
+  "recovery.success.desc": "Revisa tu bandeja de entrada (y la carpeta de spam).",
+  "recovery.error.generic": "Ocurrió un error al enviar el correo.",
+  "recovery.error.rateLimit": "Demasiados intentos. Por favor espera unos segundos.",
+  "loading": "Enviando..."
+};
+---
+
+<Layout title="Recuperar Contraseña | Tu Empresa">
+  <RecoveryPassword 
+    client:load 
+    lang={lang} 
+    translations={translations} 
+  />
+</Layout>
