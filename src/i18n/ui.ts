@@ -16,6 +16,10 @@ export const ui = {
         'header.booking': 'Reservar',
         'header.extraservices': 'Servicios adicionales',
         'header.location': 'Localización',
+        "header.myAccount": "Mi cuenta",
+        "header.myProfile": "Mi perfil",
+        "header.logout": "Cerrar sesión",
+        "header.login": "Iniciar sesión",
 
         'auth.login': 'Iniciar sesión',
         'auth.register': 'Registrarse',
@@ -156,6 +160,10 @@ export const ui = {
         'header.booking': 'Booking',
         'header.extraservices': 'Extra services',
         'header.location': 'Location',
+        "header.myAccount": "My account",
+        "header.myProfile": "My profile",
+        "header.logout": "Log out",
+        "header.login": "Log in",
         
         'auth.login': 'Login',
         'auth.register': 'Register',
@@ -296,6 +304,10 @@ export const ui = {
         'header.booking': 'Reservering',
         'header.extraservices': 'Extra diensten',
         'header.location': 'Locatie',
+        "header.myAccount": "Mijn account",
+        "header.myProfile": "Mijn profiel",
+        "header.logout": "Uitloggen",
+        "header.login": "Inloggen",
         
         'auth.login': 'Inloggen',
         'auth.register': 'Registreren',

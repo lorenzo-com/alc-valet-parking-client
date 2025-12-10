@@ -1,4 +1,5 @@
 <script>
+  import { user } from "@/stores/auth"; // Importamos el estado global
   import { useTranslatedPath, useTranslations } from "@/i18n/utils";
   import { z } from "zod";
 
@@ -193,9 +194,9 @@
 
 <div class="container my-5">
   <form on:submit={handleSubmit} novalidate>
-    <!-- Si no esta iniciado sesión mostramos un call to action -->
+    <!-- Si el usuario no ha iniciado sesión, le mostramos un "call to action" -->
+    {#if !$user}
     <div class="border-2 border-primary p-4 mb-3">
-      <!-- TODO: Mostrar solo si no esta iniciado sesión -->
       <h2 class="fs-4 mb-3 text-center">{t("reservar.title.calltoaction")}</h2>
       <div class="text-center">
         <a href={translatePath("/login")} class="btn btn-outline-primary me-2">
@@ -206,6 +207,7 @@
         </a>
       </div>
     </div>
+    {/if}
 
     <!-- Datos de la reserva -->
     <div class="border-2 border-primary p-4">

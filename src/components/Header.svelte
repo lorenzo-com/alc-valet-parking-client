@@ -108,32 +108,34 @@
                     class="d-flex align-items-center justify-content-center ms-lg-4 mt-3 mt-lg-0"
                 >
                     {#if $user}
-                        <div class="dropdown text-end">
+                        <div class="dropdown text-lg-end w-100 w-lg-auto">
                             <button
-                                class="d-block link-light text-decoration-none dropdown-toggle"
+                                class="btn bg-white text-primary border-0 rounded-pill shadow-sm px-4 py-2 d-flex align-items-center justify-content-center gap-2 w-100 w-lg-auto"
+                                type="button"
                                 data-bs-toggle="dropdown"
+                                aria-expanded="false"
                             >
-                                <span
-                                    class="badge bg-white text-primary rounded-pill py-2 px-3 fw-bold"
-                                >
-                                    <i class="bi bi-person-fill"></i>Mi Cuenta
-                                </span>
+                                <span class="fw-bold">{t("header.myAccount")}</span>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                            <ul
+                                class="dropdown-menu dropdown-menu-end shadow border-0 mt-2 p-2 rounded-3 w-100 w-lg-auto"
+                            >
                                 <li>
                                     <a
-                                        class="dropdown-item"
+                                        class="dropdown-item rounded-2 py-2 d-flex align-items-center gap-2"
                                         href={translatePath("/perfil")}
-                                        >Mi Perfil</a
                                     >
+                                        {t("header.myProfile")}
+                                    </a>
                                 </li>
-                                <li><hr class="dropdown-divider" /></li>
                                 <li>
                                     <button
-                                        class="dropdown-item text-danger"
+                                        class="dropdown-item rounded-2 py-2 d-flex align-items-center gap-2 text-danger"
                                         on:click={handleLogout}
-                                        >Cerrar Sesión</button
                                     >
+                                        {t("header.logout")}
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -142,7 +144,7 @@
                             href={translatePath("/login")}
                             class="btn bg-white text-primary fw-bold rounded-pill px-4 py-2 shadow-sm w-100 w-lg-auto d-flex align-items-center justify-content-center gap-2"
                         >
-                            Iniciar sesión
+                            {t("header.login")}
                         </a>
                     {/if}
                 </div>
