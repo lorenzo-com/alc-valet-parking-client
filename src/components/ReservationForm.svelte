@@ -1,182 +1,239 @@
 <script>
-  import { user } from "@/stores/auth"; // Importamos el estado global
+  import { user } from "@/stores/auth";
   import { useTranslatedPath, useTranslations } from "@/i18n/utils";
   import { z } from "zod";
 
-  // Props que recibe desde Astro
   export let lang = "es";
   const t = useTranslations(lang);
   const translatePath = useTranslatedPath(lang);
 
-  // Schema de validación con Zod
-  const reservaSchema = z.object({
-    nombre: z.string().min(1, "nombreRequerido"),
+  const API_URL = import.meta.env.PUBLIC_API_URL;
 
-    email: z.string().min(1, "emailRequerido").email("emailInvalido"),
+  // --- 1. CONFIGURACIÓN Y CONSTANTES ---
+  
+  const TIPO_CLIENTE = {
+    PARTICULAR: "particular",
+    EMPRESA: "empresa",
+  };
 
-    telefono: z.string().min(1, "telefonoRequerido"),
+  // --- 2. SCHEMAS DE VALIDACIÓN (ZOD) ---
 
-    comoNosConoce: z.string().min(1, "comoNosConoceRequerido"),
-
-    fecha: z
-      .string()
-      .min(1, "fechaRequerida")
-      .refine((date) => {
-        if (!date) return false;
-        const selectedDate = new Date(date);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return selectedDate >= today;
-      }, "fechaPasada"),
-
-    hora: z.string().min(1, "horaRequerida"),
-
+  // Schema base para campos comunes
+  const baseSchema = z.object({
+    // Datos Reserva
+    fechaEntrada: z.string().optional(), // Opcional según requerimiento, aunque vital para precio
+    horaEntrada: z.string().optional(),
+    fechaSalida: z.string().optional(),
+    horaSalida: z.string().optional(),
+    tipoPlaza: z.string().min(1, "tipoPlazaRequerido"),
+    coche: z.string().min(1, "cocheRequerido"), // Marca - Modelo - Color
+    matricula: z.string().min(1, "matriculaRequerida"),
+    numVuelo: z.string().optional(),
     comentarios: z.string().optional(),
+
+    // Datos Cliente (Comunes)
+    tipoCliente: z.enum([TIPO_CLIENTE.PARTICULAR, TIPO_CLIENTE.EMPRESA]),
+    nombre: z.string().min(1, "nombreRequerido"),
+    email: z.string().min(1, "emailRequerido").email("emailInvalido"),
+    telefono: z.string().min(1, "telefonoRequerido"),
+    comoNosConoce: z.string().min(1, "comoNosConoceRequerido"),
+    
+    // Términos
+    aceptaTerminos: z.literal(true, {
+      errorMap: () => ({ message: "terminosRequeridos" }),
+    }),
   });
 
-  // Estado del formulario
+  // Schema refinado condicionalmente
+  const reservaSchema = baseSchema.superRefine((data, ctx) => {
+    // Si es empresa, validamos campos extra
+    if (data.tipoCliente === TIPO_CLIENTE.EMPRESA) {
+      if (!data.cif) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "cifRequerido",
+          path: ["cif"],
+        });
+      }
+      if (!data.direccion) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "direccionRequerida",
+          path: ["direccion"],
+        });
+      }
+      if (!data.nombreConductor) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "conductorRequerido",
+          path: ["nombreConductor"],
+        });
+      }
+    }
+
+    // Validación de fechas lógicas (Solo si están rellenas)
+    if (data.fechaEntrada && data.fechaSalida) {
+      const entrada = new Date(data.fechaEntrada);
+      const salida = new Date(data.fechaSalida);
+      if (salida < entrada) {
+         ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "fechaSalidaInvalida",
+          path: ["fechaSalida"],
+        });
+      }
+    }
+  });
+
+  // --- 3. ESTADO REACTIVO ---
+
   let formData = {
-    nombre: "",
-    email: "",
-    telefono: "",
-    fecha: "",
-    hora: "",
-    comoNosConoce: "",
+    // Reserva
+    fechaEntrada: "",
+    horaEntrada: "",
+    fechaSalida: "",
+    horaSalida: "",
+    tipoPlaza: "",
+    coche: "",
+    matricula: "",
+    numVuelo: "",
     comentarios: "",
-  };
-
-  // Errores de validación
-  let errors = {
+    // Cliente
+    tipoCliente: TIPO_CLIENTE.PARTICULAR,
     nombre: "",
     email: "",
     telefono: "",
-    fecha: "",
-    hora: "",
     comoNosConoce: "",
+    // Empresa
+    cif: "",
+    direccion: "",
+    nombreConductor: "",
+    // Legal
+    aceptaTerminos: false,
   };
 
-  // Estado del formulario
+  let errors = {};
+  
+  // Estados de UI
   let isSubmitting = false;
   let submitSuccess = false;
   let submitError = "";
+  
+  // Estados de Precio
+  let calculatedPrice = 0;
+  let priceError = "";
 
-  // Validar campo individual con Zod
-  function validateField(field, value) {
+  // Calcular precio cuando cambian fechas o plaza
+  // $: Sintaxis reactiva de Svelte (se ejecuta cuando las dependencias cambian)
+  $: if (formData.fechaEntrada && formData.fechaSalida && formData.tipoPlaza) {
+    fetchPrice();
+  } else {
+    calculatedPrice = 0; // Resetear si faltan datos
+  }
+
+  async function fetchPrice() {
+    priceError = "";
+    
     try {
-      // Crear un objeto con solo el campo a validar
-      const fieldData = { ...formData, [field]: value };
+      const response = await fetch(`${API_URL}/api/bookings/pricing`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fechaEntrada: formData.fechaEntrada,
+          fechaSalida: formData.fechaSalida,
+          tipoPlaza: formData.tipoPlaza,
+        }),
+      });
 
-      // Validar solo ese campo
-      reservaSchema.pick({ [field]: true }).parse({ [field]: value });
+      const result = await response.json();
+      
+      if (result.success) {
+        calculatedPrice = result.data.totalPrice;
+      } else {
+        // Manejar error silenciosamente o mostrar alerta pequeña
+        console.error("Error calculando precio", result);
+        calculatedPrice = 0;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
-      // Si no hay error, limpiar el mensaje
-      errors[field] = "";
+  function validateField(field) {
+    try {
+      // Pick no funciona bien con superRefine complejo, así que parseamos todo
+      // y extraemos el error específico si existe. Es más seguro.
+      reservaSchema.parse(formData);
+      errors[field] = ""; // Si pasa todo, este campo está bien
+      errors = { ...errors }; // Forzar reactividad
     } catch (err) {
       if (err instanceof z.ZodError) {
-        const fieldError = err.errors[0];
-        // Usar el mensaje del error como clave de traducción
-        errors[field] = t(`reservar.error.${fieldError.message}`);
+        const fieldError = err.errors.find((e) => e.path[0] === field);
+        errors[field] = fieldError ? t(`reservar.error.${fieldError.message}`) : "";
+        errors = { ...errors };
       }
     }
   }
 
-  // Validar todo el formulario con Zod
   function validateForm() {
     try {
       reservaSchema.parse(formData);
-
-      // Limpiar todos los errores
-      errors = {
-        nombre: "",
-        email: "",
-        telefono: "",
-        fecha: "",
-        hora: "",
-        comoNosConoce: "",
-      };
-
+      errors = {};
       return true;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        // Resetear errores
-        errors = {
-          nombre: "",
-          email: "",
-          telefono: "",
-          fecha: "",
-          hora: "",
-          comoNosConoce: "",
-        };
-
-        // Mapear errores de Zod a nuestro objeto de errores
+        const newErrors = {};
         err.errors.forEach((error) => {
           const field = error.path[0];
-          if (field in errors) {
-            errors[field] = t(`reservar.error.${error.message}`);
-          }
+          newErrors[field] = t(`reservar.error.${error.message}`);
         });
+        errors = newErrors;
       }
-
       return false;
     }
   }
 
-  // Manejar cambios en los campos
   function handleInput(field) {
     return (e) => {
-      const value = e.target.value;
+      // Manejo especial para checkbox
+      const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
       formData[field] = value;
-      validateField(field, value);
+      
+      // Validar al escribir (opcional, a veces es mejor solo on:blur)
+      if (errors[field]) validateField(field);
     };
   }
 
-  // Enviar formulario
   async function handleSubmit(e) {
     e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    isSubmitting = true;
     submitError = "";
     submitSuccess = false;
 
+    if (!validateForm()) return;
+
+    isSubmitting = true;
+
     try {
-      // Incluir locale en el envío
       const response = await fetch("/api/reservas", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
           locale: lang,
+          // Mapear campos si el backend espera nombres distintos, 
+          // aunque el backend de ejemplo parece manejar camelCase->snake_case internamente
         }),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         submitSuccess = true;
-        // Resetear formulario
-        formData = {
-          nombre: "",
-          email: "",
-          telefono: "",
-          fecha: "",
-          hora: "",
-          comentarios: "",
-          comoNosConoce: "",
-        };
-        errors = {
-          nombre: "",
-          email: "",
-          telefono: "",
-          fecha: "",
-          hora: "",
-          comoNosConoce: "",
-        };
+        // Scroll al mensaje de éxito
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Opcional: Redirigir a pagina de gracias
       } else {
-        submitError = t("reservar.error.errorEnvio");
+        submitError = result.message || t("reservar.error.errorEnvio");
       }
     } catch (error) {
       submitError = t("reservar.error.errorConexion");
@@ -186,145 +243,195 @@
   }
 </script>
 
-<div
-  class="bg-primary d-flex justify-content-center py-4 border-top border border-light"
->
+<div class="bg-primary d-flex justify-content-center py-4 border-top border-light">
   <h2 class="m-0 text-light">{t("reservar.title")}</h2>
 </div>
 
 <div class="container my-5">
+  
+  {#if submitSuccess}
+    <div class="alert alert-success text-center p-5">
+      <h3 class="fs-2">¡Reserva Confirmada!</h3>
+      <p>Hemos enviado los detalles a tu correo electrónico.</p>
+      <button class="btn btn-primary mt-3" on:click={() => window.location.reload()}>Nueva Reserva</button>
+    </div>
+  {:else}
+
   <form on:submit={handleSubmit} novalidate>
-    <!-- Si el usuario no ha iniciado sesión, le mostramos un "call to action" -->
+    
     {#if !$user}
-    <div class="border-2 border-primary p-4 mb-3">
+    <div class="border-2 border-primary p-4 mb-4 rounded bg-light-subtle">
       <h2 class="fs-4 mb-3 text-center">{t("reservar.title.calltoaction")}</h2>
       <div class="text-center">
-        <a href={translatePath("/login")} class="btn btn-outline-primary me-2">
-          {t("reservar.login")}
-        </a>
-        <a href={translatePath("/registro")} class="btn btn-primary text-light">
-          {t("reservar.register")}
-        </a>
+        <a href={translatePath("/login")} class="btn btn-outline-primary me-2">{t("reservar.login")}</a>
+        <a href={translatePath("/registro")} class="btn btn-primary text-light">{t("reservar.register")}</a>
       </div>
     </div>
     {/if}
 
-    <!-- Datos de la reserva -->
-    <div class="border-2 border-primary p-4">
-      <h2 class="fs-2">{t("reservar.subtitle")}</h2>
-      <div class="row row-cols-1 row-cols-md-2"></div>
-    </div>
-
-    <!-- Precio a pagar -->
-    <div class="border-2 border-primary p-4 mt-3">
-      <h2 class="fs-2">{t("reservar.fee")}</h2>
-      <div>
-        <div class="text-center text-light py-2" style="background: #ff7908ba;">
-          <span class="fs-3">0 €</span>
+    <div class="border-2 border-primary p-4 rounded mb-4">
+      <h2 class="fs-3 mb-4 text-primary border-bottom pb-2">{t("reservar.subtitle")}</h2>
+      
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <label for="entry date" class="form-label">{t("reservar.label.fechaEntrada")}</label>
+          <input type="date" class="form-control" bind:value={formData.fechaEntrada} />
         </div>
+        <div class="col-12 col-md-6">
+          <label for="arrival time" class="form-label">{t("reservar.label.horaEntrada")}</label>
+          <input type="time" class="form-control" bind:value={formData.horaEntrada} />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="departure date" class="form-label">{t("reservar.label.fechaSalida")}</label>
+          <input type="date" class="form-control" class:is-invalid={errors.fechaSalida} bind:value={formData.fechaSalida} />
+          {#if errors.fechaSalida}<div class="invalid-feedback">{errors.fechaSalida}</div>{/if}
+        </div>
+        <div class="col-12 col-md-6">
+          <label for="departure time" class="form-label">{t("reservar.label.horaSalida")}</label>
+          <input type="time" class="form-control" bind:value={formData.horaSalida} />
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label for="square type" class="form-label">{t("reservar.label.tipoPlaza")}<span class="text-danger">*</span></label>
+            <select class="form-select" bind:value={formData.tipoPlaza} class:is-invalid={errors.tipoPlaza}>
+                <option value="">{t("reservar.seleccionar")}</option>
+                <option value="Plaza Cubierta">{t("reservar.option.plazaCubierta")}</option>
+                <option value="Plaza Aire Libre">{t("reservar.option.plazaAireLibre")}</option>
+            </select>
+            {#if errors.tipoPlaza}<div class="invalid-feedback">{errors.tipoPlaza}</div>{/if}
+        </div>
+
+        <div class="col-12 col-md-6">
+           <label for="car" class="form-label">{t("reservar.label.coche")}<span class="text-danger">*</span></label>
+           <input type="text" class="form-control" bind:value={formData.coche} class:is-invalid={errors.coche} placeholder="Ej: Seat Ibiza Blanco"/>
+           {#if errors.coche}<div class="invalid-feedback">{errors.coche}</div>{/if}
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label for="license plate" class="form-label">{t("reservar.label.matricula")}<span class="text-danger">*</span></label>
+            <input type="text" class="form-control text-uppercase" bind:value={formData.matricula} class:is-invalid={errors.matricula} placeholder={t("reservar.placeholder.matricula")}/>
+            {#if errors.matricula}<div class="invalid-feedback">{errors.matricula}</div>{/if}
+         </div>
+
+         <div class="col-12 col-md-6">
+            <label for="num flight" class="form-label">{t("reservar.label.numVuelo")}</label>
+            <input type="text" class="form-control" bind:value={formData.numVuelo} placeholder={t("reservar.placeholder.numVuelo")} />
+         </div>
+         <div class="col-12">
+            <label for="comments" class="form-label">{t("reservar.label.comentarios")}</label>
+            <textarea class="form-control" rows="2" bind:value={formData.comentarios} placeholder={t("reservar.placeholder.comentarios")}></textarea>
+         </div>
       </div>
     </div>
 
-    <!-- Formulario para los NO autenticados -->
-    <div class="border-2 border-primary p-4 mt-3">
-      <!-- TODO: Validar que no este autenticado el usuario -->
-      <h2 class="fs-2">{t("reservar.title.userInfo")}</h2>
-      <div class="d-flex justify-content-center gap-3 mb-3">
-        <button class="btn btn-primary">{t("reservar.particular")}</button>
-        <button class="btn btn-primary">{t("reservar.company")}</button>
+    <div class="card border-primary mb-4 shadow-sm">
+        <div class="card-body text-center">
+            <h3 class="card-title text-muted fs-5">{t("reservar.fee")}</h3>
+            <div class="display-4 fw-bold text-primary my-2">
+                    {calculatedPrice} €
+            </div>
+            {#if !calculatedPrice}
+                <small class="text-muted">{t("reservar.legend.fee")}</small>
+            {/if}
+        </div>
+    </div>
+
+    {#if !$user}
+    <div class="border-2 border-primary p-4 rounded mb-4">
+      <h2 class="fs-3 mb-4 text-primary border-bottom pb-2">{t("reservar.title.userInfo")}</h2>
+
+      <div class="d-flex justify-content-center mb-4">
+        <div class="btn-group" role="group">
+            <input type="radio" class="btn-check" name="tipoCliente" id="t-particular" autocomplete="off" 
+                value={TIPO_CLIENTE.PARTICULAR} bind:group={formData.tipoCliente}>
+            <label class="btn btn-outline-primary px-4" for="t-particular">{t("reservar.particular")}</label>
+          
+            <input type="radio" class="btn-check" name="tipoCliente" id="t-empresa" autocomplete="off" 
+                value={TIPO_CLIENTE.EMPRESA} bind:group={formData.tipoCliente}>
+            <label class="btn btn-outline-primary px-4" for="t-empresa">{t("reservar.company")}</label>
+        </div>
       </div>
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="mb-3">
-          <label for="nombre completo" class="form-label">
-            {t("reservar.label.nombre")}<span class="text-danger">*</span>
-          </label>
-          <input
-            type="text"
-            class="form-control"
-            value={formData.nombre}
-            on:input={handleInput("nombre")}
-            on:blur={handleInput("nombre")}
-            class:is-invalid={errors.nombre}
-            placeholder={t("reservar.placeholder.nombre")}
-            disabled={isSubmitting}
-          />
-          {#if errors.nombre}
-            <span class="text-danger">{errors.nombre}</span>
-          {/if}
+
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+            <label for="name" class="form-label">{formData.tipoCliente === TIPO_CLIENTE.PARTICULAR ? t("reservar.label.nombre") : t("reservar.label.razonSocial")}<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" placeholder={formData.tipoCliente === TIPO_CLIENTE.PARTICULAR ? t("reservar.placeholder.nombre") : t("reservar.placeholder.razonSocial")} bind:value={formData.nombre} class:is-invalid={errors.nombre} />
+            {#if errors.nombre}<div class="invalid-feedback">{errors.nombre}</div>{/if}
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="phone" class="form-label">{t("reservar.label.telefono")}<span class="text-danger">*</span></label>
+            <input type="tel" class="form-control" placeholder={t("reservar.placeholder.telefono")} bind:value={formData.telefono} class:is-invalid={errors.telefono} />
+            {#if errors.telefono}<div class="invalid-feedback">{errors.telefono}</div>{/if}
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="email" class="form-label">{t("reservar.label.email")}<span class="text-danger">*</span></label>
+            <input type="email" class="form-control" placeholder={t("reservar.placeholder.email")} bind:value={formData.email} class:is-invalid={errors.email} />
+            {#if errors.email}<div class="invalid-feedback">{errors.email}</div>{/if}
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="how found" class="form-label">{t("reservar.label.comoNosConoce")}<span class="text-danger">*</span></label>
+            <select class="form-select" bind:value={formData.comoNosConoce} class:is-invalid={errors.comoNosConoce}>
+                <option value="" disabled>{t("reservar.seleccionar")}</option>
+                <option value="Ya soy cliente">{t("comoNosConoce.yaSoyCliente")}</option>
+                <option value="Google">Google</option>
+                <option value="Un amigo">{t("comoNosConoce.unAmigo")}</option>
+                <option value="Internet">Internet</option>
+            </select>
+            {#if errors.comoNosConoce}<div class="invalid-feedback">{errors.comoNosConoce}</div>{/if}
         </div>
 
-        <div class="mb-3">
-          <label for="telefono" class="form-label">
-            {t("reservar.label.telefono")}<span class="text-danger">*</span>
-          </label>
-          <input
-            type="number"
-            class="form-control"
-            value={formData.telefono}
-            on:input={handleInput("telefono")}
-            on:blur={handleInput("telefono")}
-            class:is-invalid={errors.telefono}
-            placeholder={t("reservar.placeholder.telefono")}
-            disabled={isSubmitting}
-          />
-          {#if errors.telefono}
-            <span class="text-danger">{errors.telefono}</span>
-          {/if}
-        </div>
+        {#if formData.tipoCliente === TIPO_CLIENTE.EMPRESA}
+            <div class="col-12 mt-4"><h5 class="text-secondary">{t("reservar.company.title")}</h5></div>
+            
+            <div class="col-12 col-md-6">
+                <label for="cif" class="form-label">{t("reservar.label.cif")}<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder={t("reservar.placeholder.cif")} bind:value={formData.cif} class:is-invalid={errors.cif} />
+                {#if errors.cif}<div class="invalid-feedback">{errors.cif}</div>{/if}
+            </div>
+            <div class="col-12 col-md-6">
+                <label for="driver name" class="form-label">{t("reservar.label.nombreConductor")}<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder={t("reservar.placeholder.nombreConductor")} bind:value={formData.nombreConductor} class:is-invalid={errors.nombreConductor} />
+                {#if errors.nombreConductor}<div class="invalid-feedback">{errors.nombreConductor}</div>{/if}
+            </div>
+            <div class="col-12 col-md-6">
+                <label for="address" class="form-label">{t("reservar.label.direccion")}<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder={t("reservar.placeholder.direccion")} bind:value={formData.direccion} class:is-invalid={errors.direccion} />
+                {#if errors.direccion}<div class="invalid-feedback">{errors.direccion}</div>{/if}
+            </div>
+        {/if}
+      </div>
+    </div>
+    {/if}
 
-        <div class="mb-3">
-          <label for="email" class="form-label">
-            {t("reservar.label.email")}<span class="text-danger">*</span>
-          </label>
-          <input
-            type="email"
-            class="form-control"
-            value={formData.email}
-            on:input={handleInput("email")}
-            on:blur={handleInput("email")}
-            class:is-invalid={errors.email}
-            placeholder={t("reservar.placeholder.email")}
-            disabled={isSubmitting}
-          />
-          {#if errors.email}
-            <span class="text-danger">{errors.email}</span>
-          {/if}
-        </div>
-
-        <div class="mb-3">
-          <label for="como nos has conocido" class="form-label"
-            >¿Cómo nos ha conocido?<span class="text-danger">*</span></label
-          >
-          <select
-            class="form-select"
-            bind:value={formData.comoNosConoce}
-            on:blur={handleInput("comoNosConoce")}
-            on:change={handleInput("comoNosConoce")}
-            class:is-invalid={errors.comoNosConoce}
-            disabled={isSubmitting}
-          >
-            <option value="" disabled
-              >{t("reservar.comoNosConoce.seleccionar")}</option
+    <div class="mb-4">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="terminos" 
+                bind:checked={formData.aceptaTerminos} 
+                class:is-invalid={errors.aceptaTerminos}
+                on:change={handleInput("aceptaTerminos")}
             >
-            <option value="Ya soy cliente"
-              >{t("comoNosConoce.yaSoyCliente")}</option
-            >
-            <option value="Google">Google</option>
-            <option value="Un amigo">{t("comoNosConoce.unAmigo")}</option>
-            <option value="Internet">Internet</option>
-          </select>
-          {#if errors.comoNosConoce}
-            <span class="text-danger">{errors.comoNosConoce}</span>
-          {/if}
+            <label class="form-check-label" for="terminos">
+                {t("reservar.politicas.1")} <a href={translatePath("/politica-cookies")} target="_blank">{t("reservar.politicas.2")}</a> {t("reservar.politicas.3")} <a href={translatePath("/politica-privacidad")} target="_blank">{t("reservar.politicas.4")}</a> <span class="text-danger">*</span>
+            </label>
+            {#if errors.aceptaTerminos}
+                <div class="invalid-feedback d-block">{errors.aceptaTerminos}</div>
+            {/if}
         </div>
-      </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-3" disabled={isSubmitting}>
+
+    {#if submitError}
+        <div class="alert alert-danger">{submitError}</div>
+    {/if}
+
+    <button type="submit" class="btn btn-primary w-100 py-3 fs-5 fw-bold" disabled={isSubmitting}>
       {#if isSubmitting}
-        {t("reservas.botones.enviando")}
+        <span class="spinner-border spinner-border-sm me-2"></span> {t("reservas.botones.enviando")}
       {:else}
         {t("reservar.boton.confirmarReserva")}
       {/if}
     </button>
+
   </form>
+  {/if}
 </div>
