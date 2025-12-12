@@ -11,11 +11,27 @@
     export let horaEntrada = "";
     export let fechaSalida = "";
     export let horaSalida = "";
-    export let fechasBloqueadas = [];
+    export let fechasBloqueadas = [
+        function (date) {
+            if (date.getMonth() === 0 && date.getDate() === 1) {
+                return true; // true = bloqueado
+            }
+
+            if (date.getMonth() === 11 && date.getDate() === 25) {
+                return true; // true = bloqueado
+            }
+
+            return false; // false = permitido
+        },
+    ];
 
     const t = useTranslations(lang);
 
-    let elFechaEntrada, elFechaSalida, elHoraEntrada, elHoraSalida;
+    // REFERENCIAS AL HTML (Para que Flatpickr sepa dónde pintarse)
+    let refInputFechaEntrada;
+    let refInputHoraEntrada;
+    let refInputFechaSalida;
+    let refInputHoraSalida;
 
     onMount(() => {
         // CALCULAR LA FECHA MÍNIMA DE ENTRADA
@@ -23,19 +39,24 @@
         const manana = new Date(hoy);
         manana.setDate(hoy.getDate() + 1); // Sumamos 1 día a hoy
 
-        // === CONFIGURACIÓN FECHAS ===
-        const fpEntrada = flatpickr(elFechaEntrada, {
+        const configBase = {
             locale: Spanish,
             dateFormat: "d-m-Y",
+            altFormat: "Y-m-d", // Formato alternativo para enviar al backend
             disableMobile: "true",
-            minDate: manana,
             disable: fechasBloqueadas,
+        };
+
+        // === CONFIGURACIÓN FECHAS ===
+        // Usamos 'refInputFechaEntrada' para vincularlo al HTML
+        const fpEntrada = flatpickr(refInputFechaEntrada, {
+            ...configBase,
+            minDate: manana,
             onChange: (selectedDates, dateStr) => {
                 fechaEntrada = dateStr; // Actualizamos la variable para Svelte
 
-                // Magia: Actualizamos el mínimo de la salida
+                // Actualizamos el mínimo de la salida
                 fpSalida.set("minDate", dateStr);
-
                 // Si la salida es menor a la nueva entrada, limpiamos salida
                 if (
                     fechaSalida &&
@@ -47,13 +68,10 @@
             },
         });
 
-        const fpSalida = flatpickr(elFechaSalida, {
-            locale: Spanish,
-            dateFormat: "d-m-Y",
-            disableMobile: "true",
+        const fpSalida = flatpickr(refInputFechaSalida, {
+            ...configBase,
             minDate: manana,
-            disable: fechasBloqueadas,
-            onChange: (selectedDates, dateStr) => {
+            onChange: (_, dateStr) => {
                 fechaSalida = dateStr; // Actualizamos variable
             },
         });
@@ -71,12 +89,12 @@
             minuteIncrement: 5,
         };
 
-        flatpickr(elHoraEntrada, {
+        flatpickr(refInputHoraEntrada, {
             ...configHora,
             onChange: (_, timeStr) => (horaEntrada = timeStr),
         });
 
-        flatpickr(elHoraSalida, {
+        flatpickr(refInputHoraSalida, {
             ...configHora,
             onChange: (_, timeStr) => (horaSalida = timeStr),
         });
@@ -91,7 +109,7 @@
             >{t("reservar.label.fechaEntrada")}</label
         >
         <input
-            bind:this={elFechaEntrada}
+            bind:this={refInputFechaEntrada}
             class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
             placeholder="dd-mm-aaaa"
         />
@@ -102,12 +120,12 @@
             >{t("reservar.label.horaEntrada")}</label
         >
         <input
-            bind:this={elHoraEntrada}
+            bind:this={refInputHoraEntrada}
             class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
             placeholder="--:--"
         />
         <p class="text-xs text-gray-500 mt-1 flex items-center">
-            Horario: 06:00 - 23:55
+            {t("reservar.textHelp.horaEntrada")}: 06:00 - 23:55
         </p>
     </div>
 
@@ -118,7 +136,7 @@
             >{t("reservar.label.fechaSalida")}</label
         >
         <input
-            bind:this={elFechaSalida}
+            bind:this={refInputFechaSalida}
             class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
             placeholder="dd-mm-aaaa"
         />
@@ -129,7 +147,7 @@
             >{t("reservar.label.horaSalida")}</label
         >
         <input
-            bind:this={elHoraSalida}
+            bind:this={refInputHoraSalida}
             class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
             placeholder="--:--"
         />

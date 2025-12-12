@@ -105,6 +105,11 @@
   // Calcular precio cuando cambian fechas o plaza
   // $: Sintaxis reactiva de Svelte (se ejecuta cuando las dependencias cambian)
   $: if (formData.fechaEntrada && formData.fechaSalida && formData.tipoPlaza) {
+    console.log(
+      formData.fechaEntrada,
+      formData.fechaSalida,
+      formData.tipoPlaza,
+    );
     fetchPrice();
   } else {
     calculatedPrice = 0; // Resetear si faltan datos
@@ -262,7 +267,7 @@
 
         <div class="row g-3">
           <BookingDates
-            lang={lang}
+            {lang}
             bind:fechaEntrada={formData.fechaEntrada}
             bind:horaEntrada={formData.horaEntrada}
             bind:fechaSalida={formData.fechaSalida}
