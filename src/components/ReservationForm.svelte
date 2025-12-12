@@ -262,10 +262,10 @@
 
         <div class="row g-3">
           <BookingDates
-            bind:fechaEntrada={formData.f_entrada}
-            bind:horaEntrada={formData.h_entrada}
-            bind:fechaSalida={formData.f_salida}
-            bind:horaSalida={formData.h_salida}
+            bind:fechaEntrada={formData.fechaEntrada}
+            bind:horaEntrada={formData.horaEntrada}
+            bind:fechaSalida={formData.fechaSalida}
+            bind:horaSalida={formData.horaSalida}
           />
 
           <div class="col-12 col-md-6">

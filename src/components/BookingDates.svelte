@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import flatpickr from 'flatpickr';
   import { Spanish } from 'flatpickr/dist/l10n/es.js';
-  import 'flatpickr/dist/themes/material_blue.css';
+  import 'flatpickr/dist/themes/airbnb.css';
 
   // Props para recibir datos y devolverlos al padre (Two-way binding)
   export let fechaEntrada = "";
@@ -16,11 +16,16 @@
   let elFechaEntrada, elFechaSalida, elHoraEntrada, elHoraSalida;
 
   onMount(() => {
+    // CALCULAR LA FECHA MÍNIMA DE ENTRADA
+    const hoy = new Date();
+    const manana = new Date(hoy);
+    manana.setDate(hoy.getDate() + 1); // Sumamos 1 día a hoy
+    
     // === CONFIGURACIÓN FECHAS ===
     const fpEntrada = flatpickr(elFechaEntrada, {
       locale: Spanish,
       dateFormat: "d-m-Y",
-      minDate: "today",
+      minDate: manana,
       disable: fechasBloqueadas,
       onChange: (selectedDates, dateStr) => {
         fechaEntrada = dateStr; // Actualizamos la variable para Svelte
