@@ -23,6 +23,7 @@
         const fpEntrada = flatpickr(elFechaEntrada, {
             locale: Spanish,
             dateFormat: "d-m-Y",
+            disableMobile: "true",
             minDate: manana,
             disable: fechasBloqueadas,
             onChange: (selectedDates, dateStr) => {
@@ -45,6 +46,7 @@
         const fpSalida = flatpickr(elFechaSalida, {
             locale: Spanish,
             dateFormat: "d-m-Y",
+            disableMobile: "true",
             minDate: manana,
             disable: fechasBloqueadas,
             onChange: (selectedDates, dateStr) => {
@@ -54,6 +56,7 @@
 
         // === CONFIGURACIÓN HORAS ===
         const configHora = {
+            disableMobile: "true",
             enableTime: true,
             noCalendar: true, // Solo reloj
             dateFormat: "H:i",
