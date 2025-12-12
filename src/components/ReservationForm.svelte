@@ -105,11 +105,6 @@
   // Calcular precio cuando cambian fechas o plaza
   // $: Sintaxis reactiva de Svelte (se ejecuta cuando las dependencias cambian)
   $: if (formData.fechaEntrada && formData.fechaSalida && formData.tipoPlaza) {
-    console.log(
-      formData.fechaEntrada,
-      formData.fechaSalida,
-      formData.tipoPlaza,
-    );
     fetchPrice();
   } else {
     calculatedPrice = 0; // Resetear si faltan datos
@@ -117,6 +112,7 @@
 
   async function fetchPrice() {
     try {
+      console.log(formData.fechaEntrada)
       const response = await fetch(`${API_URL}/api/bookings/pricing`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

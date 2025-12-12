@@ -41,8 +41,9 @@
 
         const configBase = {
             locale: Spanish,
-            dateFormat: "d-m-Y",
-            altFormat: "Y-m-d", // Formato alternativo para enviar al backend
+            altInput: true,
+            altFormat: "d-m-Y", // Lo que ve el usuario
+            dateFormat: "Y-m-d", // Lo que le llega al servidor
             disableMobile: "true",
             disable: fechasBloqueadas,
         };
