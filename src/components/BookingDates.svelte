@@ -3,13 +3,17 @@
     import flatpickr from "flatpickr";
     import { Spanish } from "flatpickr/dist/l10n/es.js";
     import "flatpickr/dist/themes/airbnb.css";
+    import { useTranslations } from "@/i18n/utils";
 
     // Props para recibir datos y devolverlos al padre (Two-way binding)
+    export let lang = "es";
     export let fechaEntrada = "";
     export let horaEntrada = "";
     export let fechaSalida = "";
     export let horaSalida = "";
     export let fechasBloqueadas = [];
+
+    const t = useTranslations(lang);
 
     let elFechaEntrada, elFechaSalida, elHoraEntrada, elHoraSalida;
 
@@ -84,7 +88,7 @@
         <label
             for="fecha entrada"
             class="block text-gray-700 text-sm font-bold mb-2"
-            >Fecha de entrada</label
+            >{t("reservar.label.fechaEntrada")}</label
         >
         <input
             bind:this={elFechaEntrada}
@@ -95,7 +99,7 @@
         <label
             for="hora entrada"
             class="block text-gray-700 text-sm font-bold mt-3 mb-2"
-            >Hora de entrada</label
+            >{t("reservar.label.horaEntrada")}</label
         >
         <input
             bind:this={elHoraEntrada}
@@ -111,7 +115,7 @@
         <label
             for="fecha salida"
             class="block text-gray-700 text-sm font-bold mb-2"
-            >Fecha de salida</label
+            >{t("reservar.label.fechaSalida")}</label
         >
         <input
             bind:this={elFechaSalida}
@@ -122,7 +126,7 @@
         <label
             for="hora salida"
             class="block text-gray-700 text-sm font-bold mt-3 mb-2"
-            >Hora de salida</label
+            >{t("reservar.label.horaSalida")}</label
         >
         <input
             bind:this={elHoraSalida}
@@ -130,7 +134,7 @@
             placeholder="--:--"
         />
         <p class="text-xs text-gray-500 mt-1 flex items-center">
-            Horario: 06:00 - 23:55
+            {t("reservar.textHelp.horaEntrada")}: 06:00 - 23:55
         </p>
     </div>
 </div>

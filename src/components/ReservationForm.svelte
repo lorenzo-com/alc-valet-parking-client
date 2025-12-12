@@ -262,6 +262,7 @@
 
         <div class="row g-3">
           <BookingDates
+            lang={lang}
             bind:fechaEntrada={formData.fechaEntrada}
             bind:horaEntrada={formData.horaEntrada}
             bind:fechaSalida={formData.fechaSalida}
