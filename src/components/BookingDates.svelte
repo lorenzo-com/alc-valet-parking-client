@@ -102,6 +102,9 @@
             class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
             placeholder="--:--"
         />
+        <p class="text-xs text-gray-500 mt-1 flex items-center">
+            Horario: 06:00 - 23:55
+        </p>
     </div>
 
     <div>
@@ -126,5 +129,8 @@
             class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
             placeholder="--:--"
         />
+        <p class="text-xs text-gray-500 mt-1 flex items-center">
+            Horario: 06:00 - 23:55
+        </p>
     </div>
 </div>
