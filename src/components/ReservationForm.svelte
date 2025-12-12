@@ -20,55 +20,70 @@
   // --- 2. SCHEMAS DE VALIDACIÓN (ZOD) ---
 
   // Schema base para campos comunes
-  const commonShape = {
-    // Datos Reserva
-    fechaEntrada: z.string().optional(),
-    horaEntrada: z.string().optional(),
-    fechaSalida: z.string().optional(),
-    horaSalida: z.string().optional(),
-    tipoPlaza: z.string().min(1, "tipoPlazaRequerido"),
-    coche: z.string().min(1, "cocheRequerido"),
-    matricula: z.string().min(1, "matriculaRequerida"),
-    numVuelo: z.string().optional(),
-    comentarios: z.string().optional(),
+  const getReservationSchema = (isLoggedIn) => {
+    // Función auxiliar para convertir vacíos y nulls a undefined
+    const emptyToUndefined = (value) =>
+      value === "" || value === null ? undefined : value;
 
-    // Datos Cliente Comunes
-    nombre: z.string().min(1, "nombreRequerido"),
-    email: z.string().min(1, "emailRequerido").email("emailInvalido"),
-    telefono: z.string().min(1, "telefonoRequerido"),
-    comoNosConoce: z.string().min(1, "comoNosConoceRequerido"),
+    const dynamicString = (msg) =>
+      isLoggedIn ? z.string().optional() : z.string().min(1, msg);
 
-    // Términos
-    aceptaTerminos: z.literal(true, {
-      errorMap: () => ({ message: "terminosRequeridos" }),
-    }),
+    const commonShape = {
+      clienteId: z.string().optional(),
+      // Datos Reserva
+      fechaEntrada: z.string().optional(),
+      horaEntrada: z.string().optional(),
+      fechaSalida: z.string().optional(),
+      horaSalida: z.string().optional(),
+
+      tipoPlaza: z.string().min(1, "tipoPlazaRequerido"),
+      coche: z.string().min(1, "cocheRequerido"),
+      matricula: z.string().min(1, "matriculaRequerida"),
+      numVuelo: z.string().optional(),
+      comentarios: z.string().optional(),
+      precio: z.number(),
+
+      // Datos Cliente Comunes
+      nombre: dynamicString("nombreRequerido"),
+      email: dynamicString("emailRequerido").email(
+        isLoggedIn ? undefined : "emailInvalido",
+      ),
+      telefono: dynamicString("telefonoRequerido"),
+      comoNosConoce: dynamicString("comoNosConoceRequerido"),
+
+      // Términos
+      aceptaTerminos: z.literal(true, {
+        errorMap: () => ({ message: "terminosRequeridos" }),
+      }),
+    };
+
+    // 2. Esquema para PARTICULAR (Usa los comunes + fija el tipo)
+    const ParticularSchema = z.object({
+      ...commonShape,
+      tipoCliente: z.literal(TIPO_CLIENTE.PARTICULAR),
+    });
+
+    // 3. Esquema para EMPRESA (Comunes + OBLIGATORIOS de empresa)
+    const EmpresaSchema = z.object({
+      ...commonShape,
+      tipoCliente: z.literal(TIPO_CLIENTE.EMPRESA),
+      // AQUÍ es donde los hacemos obligatorios al mismo nivel que el nombre
+      cif: z.string().min(1, "cifRequerido"),
+      direccion: z.string().min(1, "direccionRequerida"),
+      nombreConductor: z.string().min(1, "conductorRequerido"),
+    });
+
+    // 4. Esquema FINAL: Zod elige automáticamente cuál usar según el "tipoCliente"
+    return z.discriminatedUnion("tipoCliente", [
+      ParticularSchema,
+      EmpresaSchema,
+    ]);
   };
-
-  // 2. Esquema para PARTICULAR (Usa los comunes + fija el tipo)
-  const ParticularSchema = z.object({
-    ...commonShape,
-    tipoCliente: z.literal(TIPO_CLIENTE.PARTICULAR),
-  });
-
-  // 3. Esquema para EMPRESA (Comunes + OBLIGATORIOS de empresa)
-  const EmpresaSchema = z.object({
-    ...commonShape,
-    tipoCliente: z.literal(TIPO_CLIENTE.EMPRESA),
-    // AQUÍ es donde los hacemos obligatorios al mismo nivel que el nombre
-    cif: z.string().min(1, "cifRequerido"),
-    direccion: z.string().min(1, "direccionRequerida"),
-    nombreConductor: z.string().min(1, "conductorRequerido"),
-  });
-
-  // 4. Esquema FINAL: Zod elige automáticamente cuál usar según el "tipoCliente"
-  const RESERVA_SCHEMA = z.discriminatedUnion("tipoCliente", [
-    ParticularSchema,
-    EmpresaSchema,
-  ]);
 
   // --- 3. ESTADO REACTIVO ---
 
   let formData = {
+    clienteId: "",
     // Reserva
     fechaEntrada: "",
     horaEntrada: "",
@@ -102,6 +117,13 @@
   // Estados de Precio
   let calculatedPrice = 0;
 
+  $: if ($user) {
+    formData.clienteId = $user.id || null;
+  }
+
+  // Si el precio calculado cambia, lo inyectamos en formData
+  $: formData.precio = calculatedPrice;
+
   // Calcular precio cuando cambian fechas o plaza
   // $: Sintaxis reactiva de Svelte (se ejecuta cuando las dependencias cambian)
   $: if (formData.fechaEntrada && formData.fechaSalida && formData.tipoPlaza) {
@@ -112,7 +134,6 @@
 
   async function fetchPrice() {
     try {
-      console.log(formData.fechaEntrada)
       const response = await fetch(`${API_URL}/api/bookings/pricing`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -135,10 +156,9 @@
 
   function validateField(field) {
     try {
-      // Pick selecciona solo la regla del campo que estamos editando
-      RESERVA_SCHEMA.parse(formData);
+      const currentSchema = getReservationSchema(!!formData.clienteId);
 
-      // Si pasa, limpiamos el error de ese campo específicamente
+      currentSchema.parse(formData);
       formErrors[field] = "";
       formErrors = { ...formErrors };
     } catch (err) {
@@ -159,7 +179,9 @@
 
   function validateForm() {
     try {
-      RESERVA_SCHEMA.parse(formData);
+      const currentSchema = getReservationSchema(!!formData.clienteId);
+
+      currentSchema.parse(formData);
       formErrors = {};
       return true;
     } catch (err) {
@@ -190,13 +212,14 @@
 
     isSubmitting = true;
 
+    console.log(formData);
+
     try {
-      const response = await fetch("/api/reservas", {
+      const response = await fetch(`${API_URL}/api/bookings`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          locale: lang,
           // Mapear campos si el backend espera nombres distintos,
           // aunque el backend de ejemplo parece manejar camelCase->snake_case internamente
         }),
@@ -210,9 +233,11 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
         // Opcional: Redirigir a pagina de gracias
       } else {
+        console.error("Resultado: ", result);
         submitError = result.message || t("reservar.error.errorEnvio");
       }
-    } catch (error) {
+    } catch (err) {
+      console.error("Hola", err);
       submitError = t("reservar.error.errorConexion");
     } finally {
       isSubmitting = false;
