@@ -54,11 +54,11 @@ export const ui = {
         'reservar.login': 'Iniciar sesión',
         "reservar.register": "Registrarse",
         'reservar.subtitle': 'Datos De La Reserva',
-        "reservar.label.fechaEntrada": "Fecha de entrada",
-        "reservar.label.horaEntrada": "Hora de entrada",
+        "reservar.label.fechaEntrada": "Fecha de entrega",
+        "reservar.label.horaEntrada": "Hora de entrega (salidas, aeropuerto)",
         "reservar.textHelp.horaEntrada": "Horario",
-        "reservar.label.fechaSalida": "Fecha de salida",
-        "reservar.label.horaSalida": "Hora de salida",
+        "reservar.label.fechaSalida": "Fecha de recogida (llegada aeropuerto)",
+        "reservar.label.horaSalida": "Hora de llegada (aterrizaje)",
         "reservar.label.tipoPlaza": "Tipo de plaza",
         "reservar.error.tipoPlazaRequerido": "El campo tipo de plaza es obligatorio",
         "reservar.option.plazaCubierta": "Plaza Cubierta",
@@ -111,6 +111,9 @@ export const ui = {
         "reservar.error.terminosRequeridos": "Debe aceptar los términos y condiciones",
         
         "reservar.boton.confirmarReserva": "Confirmar reserva",
+        "reservar.success.title": "¡Reserva Confirmada!",
+        "reservar.success.description": "Hemos enviado los detalles a tu correo electrónico.",
+        "reservar.success.button": "Nueva Reserva",
         
         "nosConociste.yaSoyCliente": "Ya soy cliente",
         "nosConociste.unAmigo": "Un amigo",
@@ -295,6 +298,9 @@ export const ui = {
         "reservar.error.terminosRequeridos": "You must accept the terms and conditions",
 
         "reservar.boton.confirmarReserva": "Confirm booking",
+        "reservar.success.title": "Reservation confirmed!",
+        "reservar.success.description": "We have sent the details to your email address.",
+        "reservar.success.button": "New Reservation",
 
         "nosConociste.yaSoyCliente": "I am already a customer",
         "nosConociste.unAmigo": "A friend",
@@ -479,6 +485,9 @@ export const ui = {
         "reservar.error.terminosRequeridos": "U moet akkoord gaan met de algemene voorwaarden",
         
         "reservar.boton.confirmarReserva": "Reservering bevestigen",
+        "reservar.success.title": "Reservering bevestigd!",
+        "reservar.success.description": "We hebben de details naar je e-mailadres gestuurd.",
+        "reservar.success.button": "Nieuwe reservering",
         
         "nosConociste.yaSoyCliente": "Ik ben al klant",
         "nosConociste.unAmigo": "Een vriend",

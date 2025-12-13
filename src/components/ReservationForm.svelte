@@ -144,7 +144,6 @@
       return;
     }
 
-
     try {
       const response = await fetch(`${API_URL}/api/bookings/pricing`, {
         method: "POST",
@@ -220,7 +219,6 @@
     submitError = "";
     submitSuccess = false;
 
-
     if (!validateForm()) return;
 
     isSubmitting = true;
@@ -270,11 +268,12 @@
 <div class="container my-5">
   {#if submitSuccess}
     <div class="alert alert-success text-center p-5">
-      <h3 class="fs-2">¡Reserva Confirmada!</h3>
-      <p>Hemos enviado los detalles a tu correo electrónico.</p>
+      <h3 class="fs-2">{t("reservar.success.title")}</h3>
+      <p>{t("reservar.success.description")}</p>
       <button
         class="btn btn-primary mt-3"
-        on:click={() => window.location.reload()}>Nueva Reserva</button
+        on:click={() => window.location.reload()}
+        >{t("reservar.success.button")}</button
       >
     </div>
   {:else}

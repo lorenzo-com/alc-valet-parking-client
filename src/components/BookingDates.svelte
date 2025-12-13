@@ -4,6 +4,8 @@
     import { Spanish } from "flatpickr/dist/l10n/es.js";
     import "flatpickr/dist/themes/airbnb.css";
     import { useTranslations } from "@/i18n/utils";
+    import FlightLand from "@/assets/icons/FlightLand.svelte";
+    import FlightTakeoff from "@/assets/icons/FlightTakeoff.svelte";
 
     // Props para recibir datos y devolverlos al padre (Two-way binding)
     export let lang = "es";
@@ -102,58 +104,76 @@
     });
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-4">
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
-        <label
-            for="fecha entrada"
-            class="block text-gray-700 text-sm font-bold mb-2"
-            >{t("reservar.label.fechaEntrada")}</label
-        >
-        <input
-            bind:this={refInputFechaEntrada}
-            class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
-            placeholder="dd-mm-aaaa"
-        />
-
-        <label
-            for="hora entrada"
-            class="block text-gray-700 text-sm font-bold mt-3 mb-2"
-            >{t("reservar.label.horaEntrada")}</label
-        >
-        <input
-            bind:this={refInputHoraEntrada}
-            class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
-            placeholder="--:--"
-        />
-        <p class="text-xs text-gray-500 mt-1 flex items-center">
-            {t("reservar.textHelp.horaEntrada")}: 06:00 - 23:55
-        </p>
+      <label
+        for="fecha entrada"
+        class="d-flex gap-1 text-gray-700 text-sm font-bold"
+      >
+      <FlightTakeoff />
+        {t("reservar.label.fechaEntrada")}
+      </label>
+      <input
+        bind:this={refInputFechaEntrada}
+        class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
+        placeholder="dd-mm-aaaa"
+      />
     </div>
 
     <div>
-        <label
-            for="fecha salida"
-            class="block text-gray-700 text-sm font-bold mb-2"
-            >{t("reservar.label.fechaSalida")}</label
-        >
-        <input
-            bind:this={refInputFechaSalida}
-            class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
-            placeholder="dd-mm-aaaa"
-        />
-
-        <label
-            for="hora salida"
-            class="block text-gray-700 text-sm font-bold mt-3 mb-2"
-            >{t("reservar.label.horaSalida")}</label
-        >
-        <input
-            bind:this={refInputHoraSalida}
-            class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
-            placeholder="--:--"
-        />
-        <p class="text-xs text-gray-500 mt-1 flex items-center">
-            {t("reservar.textHelp.horaEntrada")}: 06:00 - 23:55
-        </p>
+      <label
+        for="hora entrada"
+        class="d-flex gap-1 text-gray-700 text-sm font-bold"
+      >
+      <FlightTakeoff />
+        {t("reservar.label.horaEntrada")}
+      </label>
+      <input
+        bind:this={refInputHoraEntrada}
+        class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
+        placeholder="--:--"
+      />
+      <p class="text-xs text-gray-500 mt-1 flex items-center mb-0">
+        {t("reservar.textHelp.horaEntrada")}: 06:00 - 23:55
+      </p>
     </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label
+        for="fecha salida"
+        class="d-flex gap-1 text-gray-700 text-sm font-bold"
+      >
+        <FlightLand class="w-4 h-4" />
+        {t("reservar.label.fechaSalida")}
+      </label>
+      <input
+        bind:this={refInputFechaSalida}
+        class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
+        placeholder="dd-mm-aaaa"
+      />
+    </div>
+
+    <div>
+      <label
+        for="hora salida"
+        class="d-flex gap-1 text-gray-700 text-sm font-bold"
+      >
+        <FlightLand class="w-4 h-4" />
+        {t("reservar.label.horaSalida")}
+      </label>
+      <input
+        bind:this={refInputHoraSalida}
+        class="w-full p-2 border border-gray-300 rounded focus:border-blue-500 outline-none bg-white"
+        placeholder="--:--"
+      />
+      <p class="text-xs text-gray-500 mt-1 flex items-center mb-0">
+        {t("reservar.textHelp.horaEntrada")}: 06:00 - 23:55
+      </p>
+    </div>
+  </div>
+
 </div>
