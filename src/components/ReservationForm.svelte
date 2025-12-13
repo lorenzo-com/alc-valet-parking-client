@@ -44,12 +44,12 @@
       precio: z.number(),
 
       // Datos Cliente Comunes
-      nombre: dynamicString("nombreRequerido"),
+      nombreCompleto: dynamicString("nombreCompletoRequerido"),
       email: dynamicString("emailRequerido").email(
         isLoggedIn ? undefined : "emailInvalido",
       ),
       telefono: dynamicString("telefonoRequerido"),
-      comoNosConoce: dynamicString("comoNosConoceRequerido"),
+      nosConociste: dynamicString("nosConocisteRequerido"),
 
       // Términos
       aceptaTerminos: z.literal(true, {
@@ -96,10 +96,10 @@
     comentarios: "",
     // Cliente
     tipoCliente: TIPO_CLIENTE.PARTICULAR,
-    nombre: "",
+    nombreCompleto: "",
     email: "",
     telefono: "",
-    comoNosConoce: "",
+    nosConociste: "",
     // Empresa
     cif: "",
     direccion: "",
@@ -117,30 +117,42 @@
   // Estados de Precio
   let calculatedPrice = 0;
 
+  // Esto inyecta automáticamente el precio calculado dentro de formData
+  $: formData.precio = calculatedPrice;
+
   $: if ($user) {
     formData.clienteId = $user.id || null;
   }
 
-  // Si el precio calculado cambia, lo inyectamos en formData
-  $: formData.precio = calculatedPrice;
+  // JSON.stringify crea un string simple. Si cambias el nombre o coche,
+  // formData cambia, PERO este string resultante sigue siendo idéntico.
+  $: pricingSignature = JSON.stringify({
+    fechaEntrada: formData.fechaEntrada,
+    fechaSalida: formData.fechaSalida,
+    tipoPlaza: formData.tipoPlaza,
+  });
 
-  // Calcular precio cuando cambian fechas o plaza
-  // $: Sintaxis reactiva de Svelte (se ejecuta cuando las dependencias cambian)
-  $: if (formData.fechaEntrada && formData.fechaSalida && formData.tipoPlaza) {
-    fetchPrice();
-  } else {
-    calculatedPrice = 0; // Resetear si faltan datos
-  }
+  // Svelte compara 'pricingSignature' con su valor anterior. Si es igual se DETIENE
+  $: loadPrice(pricingSignature);
 
-  async function fetchPrice() {
+  async function loadPrice(signature) {
+    const params = JSON.parse(signature); // Recuperamos los datos limpios
+
+    // Validación temprana (Guard Clause)
+    if (!params.fechaEntrada || !params.fechaSalida || !params.tipoPlaza) {
+      calculatedPrice = 0;
+      return;
+    }
+
+
     try {
       const response = await fetch(`${API_URL}/api/bookings/pricing`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fechaEntrada: formData.fechaEntrada,
-          fechaSalida: formData.fechaSalida,
-          tipoPlaza: formData.tipoPlaza,
+          fechaEntrada: params.fechaEntrada,
+          fechaSalida: params.fechaSalida,
+          tipoPlaza: params.tipoPlaza,
         }),
       });
 
@@ -149,8 +161,8 @@
       if (result.success) {
         calculatedPrice = result.data.totalPrice;
       }
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -208,20 +220,25 @@
     submitError = "";
     submitSuccess = false;
 
+
     if (!validateForm()) return;
 
     isSubmitting = true;
 
-    console.log(formData);
+    const cleanPayload = (data) => {
+      return Object.fromEntries(
+        Object.entries(data).filter(([_, v]) => v !== "" && v !== null),
+      );
+    };
+
+    const payload = cleanPayload(formData);
 
     try {
       const response = await fetch(`${API_URL}/api/bookings`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...formData,
-          // Mapear campos si el backend espera nombres distintos,
-          // aunque el backend de ejemplo parece manejar camelCase->snake_case internamente
+          ...payload,
         }),
       });
 
@@ -233,11 +250,10 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
         // Opcional: Redirigir a pagina de gracias
       } else {
-        console.error("Resultado: ", result);
         submitError = result.message || t("reservar.error.errorEnvio");
       }
     } catch (err) {
-      console.error("Hola", err);
+      console.error("Error del formulario: ", err);
       submitError = t("reservar.error.errorConexion");
     } finally {
       isSubmitting = false;
@@ -438,25 +454,25 @@
             <div class="col-12 col-md-6">
               <label for="name" class="form-label"
                 >{formData.tipoCliente === TIPO_CLIENTE.PARTICULAR
-                  ? t("reservar.label.nombre")
+                  ? t("reservar.label.nombreCompleto")
                   : t("reservar.label.razonSocial")}<span class="text-danger"
                   >*</span
                 ></label
               >
               <input
-                id="nombre"
+                id="nombreCompleto"
                 type="text"
                 class="form-control"
                 placeholder={formData.tipoCliente === TIPO_CLIENTE.PARTICULAR
-                  ? t("reservar.placeholder.nombre")
+                  ? t("reservar.placeholder.nombreCompleto")
                   : t("reservar.placeholder.razonSocial")}
-                bind:value={formData.nombre}
-                class:is-invalid={formErrors.nombre}
+                bind:value={formData.nombreCompleto}
+                class:is-invalid={formErrors.nombreCompleto}
                 on:input={handleInput}
                 on:blur={handleInput}
               />
-              {#if formErrors.nombre}<div class="invalid-feedback">
-                  {formErrors.nombre}
+              {#if formErrors.nombreCompleto}<div class="invalid-feedback">
+                  {formErrors.nombreCompleto}
                 </div>{/if}
             </div>
             <div class="col-12 col-md-6">
@@ -499,28 +515,28 @@
             </div>
             <div class="col-12 col-md-6">
               <label for="how found" class="form-label"
-                >{t("reservar.label.comoNosConoce")}<span class="text-danger"
+                >{t("reservar.label.nosConociste")}<span class="text-danger"
                   >*</span
                 ></label
               >
               <select
-                id="comoNosConoce"
+                id="nosConociste"
                 class="form-select"
-                bind:value={formData.comoNosConoce}
-                class:is-invalid={formErrors.comoNosConoce}
+                bind:value={formData.nosConociste}
+                class:is-invalid={formErrors.nosConociste}
                 on:input={handleInput}
                 on:blur={handleInput}
               >
                 <option value="" disabled>{t("reservar.seleccionar")}</option>
                 <option value="Ya soy cliente"
-                  >{t("comoNosConoce.yaSoyCliente")}</option
+                  >{t("nosConociste.yaSoyCliente")}</option
                 >
                 <option value="Google">Google</option>
-                <option value="Un amigo">{t("comoNosConoce.unAmigo")}</option>
+                <option value="Un amigo">{t("nosConociste.unAmigo")}</option>
                 <option value="Internet">Internet</option>
               </select>
-              {#if formErrors.comoNosConoce}<div class="invalid-feedback">
-                  {formErrors.comoNosConoce}
+              {#if formErrors.nosConociste}<div class="invalid-feedback">
+                  {formErrors.nosConociste}
                 </div>{/if}
             </div>
 
