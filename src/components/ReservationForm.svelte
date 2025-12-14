@@ -45,9 +45,9 @@
 
       // Datos Cliente Comunes
       nombreCompleto: dynamicString("nombreCompletoRequerido"),
-      email: dynamicString("emailRequerido").email(
-        isLoggedIn ? undefined : "emailInvalido",
-      ),
+      email: isLoggedIn
+        ? z.string().email().optional().or(z.literal("")) // Permite texto vacío ("") porque validar formato email sobre "" da error
+        : z.string().min(1, "emailRequerido").email("emailInvalido"),
       telefono: dynamicString("telefonoRequerido"),
       nosConociste: dynamicString("nosConocisteRequerido"),
 
@@ -214,8 +214,7 @@
     validateField(field);
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit() {
     submitError = "";
     submitSuccess = false;
 
@@ -277,7 +276,7 @@
       >
     </div>
   {:else}
-    <form on:submit={handleSubmit} novalidate>
+    <form on:submit|preventDefault={handleSubmit} novalidate>
       {#if !$user}
         <div class="border-2 border-primary p-4 mb-4 rounded bg-light-subtle">
           <h2 class="fs-4 mb-3 text-center">
