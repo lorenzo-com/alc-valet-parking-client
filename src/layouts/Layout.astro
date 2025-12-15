@@ -5,6 +5,7 @@ import { ClientRouter } from "astro:transitions";
 import Header from "@/components/Header.svelte";
 import Footer from "@/components/Footer.astro";
 import LanguagePicker from '@/components/LanguagePicker.astro';
+import '@/styles/custom.scss';
 import '@/styles/global.css';
 
 const lang = getLangFromUrl(Astro.url);
@@ -18,7 +19,6 @@ const { title = 'ALC Valet Parking Alicante | PARKING AEROPUERTO ALICANTE' } = A
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 		<ClientRouter />
 	</head>
 	<body>
