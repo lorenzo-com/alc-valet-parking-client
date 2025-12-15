@@ -10,14 +10,14 @@
 
   const API_URL = import.meta.env.PUBLIC_API_URL;
 
-  // --- 1. CONFIGURACIÓN Y CONSTANTES ---
+  // --- CONFIGURACIÓN Y CONSTANTES ---
 
   const TIPO_CLIENTE = {
     PARTICULAR: "particular",
     EMPRESA: "empresa",
   };
 
-  // --- 2. SCHEMAS DE VALIDACIÓN (ZOD) ---
+  // --- SCHEMAS DE VALIDACIÓN (ZOD) ---
 
   // Schema base para campos comunes
   const getReservationSchema = (isLoggedIn) => {
@@ -57,13 +57,13 @@
       }),
     };
 
-    // 2. Esquema para PARTICULAR (Usa los comunes + fija el tipo)
+    // Esquema para PARTICULAR (Usa los comunes + fija el tipo)
     const ParticularSchema = z.object({
       ...commonShape,
       tipoCliente: z.literal(TIPO_CLIENTE.PARTICULAR),
     });
 
-    // 3. Esquema para EMPRESA (Comunes + OBLIGATORIOS de empresa)
+    // Esquema para EMPRESA (Comunes + OBLIGATORIOS de empresa)
     const EmpresaSchema = z.object({
       ...commonShape,
       tipoCliente: z.literal(TIPO_CLIENTE.EMPRESA),
@@ -73,14 +73,14 @@
       nombreConductor: z.string().min(1, "conductorRequerido"),
     });
 
-    // 4. Esquema FINAL: Zod elige automáticamente cuál usar según el "tipoCliente"
+    // Esquema FINAL: Zod elige automáticamente cuál usar según el "tipoCliente"
     return z.discriminatedUnion("tipoCliente", [
       ParticularSchema,
       EmpresaSchema,
     ]);
   };
 
-  // --- 3. ESTADO REACTIVO ---
+  // --- ESTADO REACTIVO ---
 
   let formData = {
     clienteId: "",
