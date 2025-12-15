@@ -363,7 +363,7 @@
             <input
               id="matricula"
               type="text"
-              class="form-control text-uppercase"
+              class="form-control"
               bind:value={formData.matricula}
               class:is-invalid={formErrors.matricula}
               placeholder={t("reservar.placeholder.matricula")}
