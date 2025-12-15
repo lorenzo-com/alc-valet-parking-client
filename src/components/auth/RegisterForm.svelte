@@ -425,12 +425,12 @@
                                     >
                                     <option value="Ya soy cliente"
                                         >{t(
-                                            "comoNosConoce.yaSoyCliente",
+                                            "nosConociste.yaSoyCliente",
                                         )}</option
                                     >
                                     <option value="Google">Google</option>
                                     <option value="Un amigo"
-                                        >{t("comoNosConoce.unAmigo")}</option
+                                        >{t("nosConociste.unAmigo")}</option
                                     >
                                     <option value="Internet">Internet</option>
                                 </select>
