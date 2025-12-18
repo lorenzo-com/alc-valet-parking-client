@@ -21,10 +21,6 @@
 
   // Schema base para campos comunes
   const getReservationSchema = (isLoggedIn) => {
-    // Función auxiliar para convertir vacíos y nulls a undefined
-    const emptyToUndefined = (value) =>
-      value === "" || value === null ? undefined : value;
-
     const dynamicString = (msg) =>
       isLoggedIn ? z.string().optional() : z.string().min(1, msg);
 

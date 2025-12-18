@@ -41,8 +41,6 @@
       profile = data || {};
     }
 
-    console.log(profile);
-
     loading = false;
   });
 </script>
