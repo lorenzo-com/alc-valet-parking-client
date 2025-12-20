@@ -39,8 +39,8 @@
         cif: z.string().optional(),
         address: z.string().optional(),
 
-        carModel: z.string().min(1, "required"),
-        carPlate: z.string().min(1, "required"),
+        carModel: z.string().min(1, "car_required"),
+        carPlate: z.string().min(1, "licensePlate_required"),
     });
 
     // ==========================================
@@ -452,7 +452,7 @@
 
                             <div class="col-12 mt-4">
                                 <h5 class="fw-bold text-dark mb-3">
-                                    Datos del Vehículo
+                                    {t("register.title.carInformation")}
                                 </h5>
                                 <div class="row g-3">
                                     <div class="col-12 col-md-6">
@@ -460,7 +460,7 @@
                                             for="carModel"
                                             class="form-label fw-medium text-secondary small"
                                         >
-                                            Marca - Modelo - Color
+                                            {t("register.label.car")}
                                         </label>
                                         <input
                                             type="text"
@@ -470,7 +470,7 @@
                                             bind:value={formData.carModel}
                                             on:input={handleInput}
                                             on:blur={handleInput}
-                                            placeholder="Ej. Ford Fiesta"
+                                            placeholder={t("register.placeholder.car")}
                                         />
                                         {#if formErrors.carModel}
                                             <div
@@ -486,7 +486,7 @@
                                             for="carPlate"
                                             class="form-label fw-medium text-secondary small"
                                         >
-                                            Matrícula
+                                            {t("register.label.licensePlate")}
                                         </label>
                                         <input
                                             type="text"
@@ -496,7 +496,7 @@
                                             bind:value={formData.carPlate}
                                             on:input={handleInput}
                                             on:blur={handleInput}
-                                            placeholder="Ej. 1234 ABC"
+                                            placeholder={t("register.placeholder.licensePlate")}
                                         />
                                         {#if formErrors.carPlate}
                                             <div
