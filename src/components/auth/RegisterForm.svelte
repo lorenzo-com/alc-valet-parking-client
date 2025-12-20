@@ -38,6 +38,9 @@
         // Campos opcionales por defecto (se hacen obligatorios en superRefine)
         cif: z.string().optional(),
         address: z.string().optional(),
+
+        carModel: z.string().min(1, "required"),
+        carPlate: z.string().min(1, "required"),
     });
 
     // ==========================================
@@ -52,6 +55,8 @@
         address: "",
         phone: "",
         howFound: "",
+        carModel: "",
+        carPlate: "",
     };
     let formErrors = {};
 
@@ -144,6 +149,8 @@
                 nos_conociste: formData.howFound,
                 cif: isCompany ? formData.cif : null,
                 direccion: isCompany ? formData.address : null,
+                coche: formData.carModel,
+                matricula: formData.carPlate.toUpperCase(),
             };
 
             // Llamada al servicio (Supabase)
@@ -441,6 +448,65 @@
                                         {formErrors.howFound}
                                     </div>
                                 {/if}
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <h5 class="fw-bold text-dark mb-3">
+                                    Datos del Vehículo
+                                </h5>
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <label
+                                            for="carModel"
+                                            class="form-label fw-medium text-secondary small"
+                                        >
+                                            Marca - Modelo - Color
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="carModel"
+                                            class="form-control form-control-lg bg-light-subtle"
+                                            class:is-invalid={formErrors.carModel}
+                                            bind:value={formData.carModel}
+                                            on:input={handleInput}
+                                            on:blur={handleInput}
+                                            placeholder="Ej. Ford Fiesta"
+                                        />
+                                        {#if formErrors.carModel}
+                                            <div
+                                                class="invalid-feedback ps-1 fw-medium"
+                                            >
+                                                {formErrors.carModel}
+                                            </div>
+                                        {/if}
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label
+                                            for="carPlate"
+                                            class="form-label fw-medium text-secondary small"
+                                        >
+                                            Matrícula
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="carPlate"
+                                            class="form-control form-control-lg bg-light-subtle"
+                                            class:is-invalid={formErrors.carPlate}
+                                            bind:value={formData.carPlate}
+                                            on:input={handleInput}
+                                            on:blur={handleInput}
+                                            placeholder="Ej. 1234 ABC"
+                                        />
+                                        {#if formErrors.carPlate}
+                                            <div
+                                                class="invalid-feedback ps-1 fw-medium"
+                                            >
+                                                {formErrors.carPlate}
+                                            </div>
+                                        {/if}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
