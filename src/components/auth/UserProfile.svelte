@@ -14,6 +14,16 @@
   let loading = true;
   let user = null;
   let profile = null;
+  let vehicles = [];
+
+  // Estado para el Modal de Vehículos
+  let showModal = false;
+  let isSaving = false;
+  let editingVehicle = null; // Si es null, estamos creando. Si tiene datos, editando.
+  let formData = {
+    coche: "",
+    matricula: "",
+  };
 
   onMount(async () => {
     // Obtener usuario autenticado
@@ -28,21 +38,112 @@
 
     user = authUser;
 
+    await loadData();
+  });
+
+  async function loadData() {
+    loading = true;
+
     // Obtener datos de la tabla 'clientes'
-    const { data, error } = await supabase
+    const profilePromise = supabase
       .from("clientes")
       .select("*")
-      .eq("id", authUser.id)
+      .eq("id", user.id)
       .single();
 
-    if (error) {
-      console.error("Error cargando perfil:", error);
-    } else {
-      profile = data || {};
-    }
+    const vehiclesPromise = supabase
+      .from("vehiculos")
+      .select("*")
+      .eq("cliente_id", user.id)
+      .order("created_at", { ascending: true });
+
+    const [profileRes, vehiclesRes] = await Promise.all([
+      profilePromise,
+      vehiclesPromise,
+    ]);
+
+    if (profileRes.error) console.error("Error perfil:", profileRes.error);
+    else profile = profileRes.data || {};
+
+    if (vehiclesRes.error) console.error("Error vehículos:", vehiclesRes.error);
+    else vehicles = vehiclesRes.data || [];
 
     loading = false;
-  });
+  }
+
+  function openModal(vehicle = null) {
+    editingVehicle = vehicle;
+    if (vehicle) {
+      // Modo Edición
+      formData = { coche: vehicle.coche, matricula: vehicle.matricula };
+    } else {
+      // Modo Crear
+      formData = { coche: "", matricula: "" };
+    }
+    showModal = true;
+  }
+
+  function closeModal() {
+    showModal = false;
+    formData = { coche: "", matricula: "" };
+    editingVehicle = null;
+  }
+
+  async function saveVehicle() {
+    if (!formData.coche || !formData.matricula) return; // Validación básica
+    isSaving = true;
+
+    try {
+      if (editingVehicle) {
+        // ACTUALIZAR
+        const { error } = await supabase
+          .from("vehiculos")
+          .update({
+            coche: formData.coche,
+            matricula: formData.matricula,
+            // updated_at se actualiza solo si tienes un trigger, sino puedes añadirlo aquí
+          })
+          .eq("id", editingVehicle.id);
+
+        if (error) throw error;
+      } else {
+        // CREAR
+        const { error } = await supabase.from("vehiculos").insert({
+          cliente_id: user.id, // Importante: Vincular al usuario
+          coche: formData.coche,
+          matricula: formData.matricula,
+        });
+
+        if (error) throw error;
+      }
+
+      // Recargar lista y cerrar
+      await loadData();
+      closeModal();
+    } catch (err) {
+      console.error("Error guardando vehículo:", err);
+      alert("Error al guardar el vehículo");
+    } finally {
+      isSaving = false;
+    }
+  }
+
+  async function deleteVehicle(id) {
+    if (!confirm("¿Estás seguro de que quieres eliminar este vehículo?"))
+      return;
+
+    try {
+      const { error } = await supabase.from("vehiculos").delete().eq("id", id);
+
+      if (error) throw error;
+
+      // Actualizar estado local (más rápido que recargar todo)
+      vehicles = vehicles.filter((v) => v.id !== id);
+    } catch (err) {
+      console.error("Error eliminando:", err);
+      alert("No se pudo eliminar el vehículo");
+    }
+  }
 </script>
 
 <div class="bg-gray-100 flex items-center justify-center p-5">
@@ -58,7 +159,7 @@
     >
       <div class="px-8 pt-10 pb-6 text-center">
         <h1 class="text-gray-800">
-          {t("profile.greeting")}{profile.nombre || "No definido"}
+          {t("profile.greeting")}{profile.nombre || "Usuario"}
         </h1>
       </div>
 
@@ -201,18 +302,176 @@
         </div>
       </div>
 
-      <!-- En el futuro a lo mejor nos interesa editar el usuario -->
-      <!-- <div class="px-8 py-6 bg-gray-50 border-t border-gray-100 flex flex-col gap-3">
-            <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200 shadow-md transform hover:-translate-y-0.5">
-                Editar Usuario
-            </button>
-        </div> -->
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="bg-gray-800 px-6 py-4 flex justify-between items-center">
+          <h2 class="text-white font-bold text-lg flex items-center gap-2">
+            <svg
+              class="w-5 h-5 text-orange-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              ></path></svg
+            >
+            Mis Vehículos
+          </h2>
+          <button
+            on:click={() => openModal()}
+            class="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-2 px-3 rounded transition-colors flex items-center gap-1"
+          >
+            <svg
+              class="w-3 h-3"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                d="M12 4v16m8-8H4"
+              ></path></svg
+            >
+            Agregar
+          </button>
+        </div>
+
+        <div class="p-6">
+          {#if vehicles.length === 0}
+            <div
+              class="text-center py-6 text-gray-400 border-2 border-dashed border-gray-200 rounded-lg"
+            >
+              <p>No tienes vehículos registrados.</p>
+            </div>
+          {:else}
+            <div class="grid gap-4">
+              {#each vehicles as v (v.id)}
+                <div
+                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-orange-300 transition-colors group"
+                >
+                  <div>
+                    <h3 class="font-bold text-gray-800">{v.coche}</h3>
+                    <div class="flex items-center gap-2 mt-1">
+                      <span
+                        class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded font-mono tracking-wider"
+                      >
+                        {v.matricula}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    class="flex gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+                  >
+                    <button
+                      on:click={() => openModal(v)}
+                      class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                      title="Editar"
+                    >
+                      <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        ></path></svg
+                      >
+                    </button>
+                    <button
+                      on:click={() => deleteVehicle(v.id)}
+                      class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+                      title="Eliminar"
+                    >
+                      <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        ></path></svg
+                      >
+                    </button>
+                  </div>
+                </div>
+              {/each}
+            </div>
+          {/if}
+        </div>
+
+        {#if showModal}
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div class="px-6 py-4 bg-gray-50 border-b border-gray-100 flex justify-between items-center">
+        <h3 class="font-bold text-lg text-gray-800">
+          {editingVehicle ? 'Editar Vehículo' : 'Nuevo Vehículo'}
+        </h3>
+        <button on:click={closeModal} class="text-gray-400 hover:text-gray-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      
+      <form on:submit|preventDefault={saveVehicle} class="p-6 space-y-4">
+        <div>
+          <label for="coche" class="block text-sm font-medium text-gray-700 mb-1">Marca, Modelo y Color</label>
+          <input 
+            type="text" 
+            id="coche"
+            bind:value={formData.coche}
+            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 py-2.5 px-3 bg-gray-50"
+            placeholder="Ej. Ford Fiesta Azul"
+            required
+          />
+        </div>
+        
+        <div>
+          <label for="matricula" class="block text-sm font-medium text-gray-700 mb-1">Matrícula</label>
+          <input 
+            type="text" 
+            id="matricula"
+            bind:value={formData.matricula}
+            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 py-2.5 px-3 bg-gray-50 uppercase"
+            placeholder="1234 ABC"
+            required
+          />
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button 
+            type="button" 
+            on:click={closeModal}
+            class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            Cancelar
+          </button>
+          <button 
+            type="submit" 
+            disabled={isSaving}
+            class="flex-1 px-4 py-2 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 transition-colors shadow-sm disabled:opacity-50"
+          >
+            {isSaving ? 'Guardando...' : 'Guardar'}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{/if}
+      </div>
     </div>
   {:else}
     <div class="alert alert-warning text-center">
-      {t("profile.error.loading")} <a href={translatePath("/login")}
-        >{t("profile.relogin")}</a
-      >
+      {t("profile.error.loading")}
+      <a href={translatePath("/login")}>{t("profile.relogin")}</a>
     </div>
   {/if}
 </div>
