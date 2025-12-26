@@ -54,8 +54,7 @@
     const vehiclesPromise = supabase
       .from("vehiculos")
       .select("*")
-      .eq("cliente_id", user.id)
-      .order("created_at", { ascending: true });
+      .eq("cliente_id", user.id);
 
     const [profileRes, vehiclesRes] = await Promise.all([
       profilePromise,
@@ -101,7 +100,7 @@
           .update({
             coche: formData.coche,
             matricula: formData.matricula,
-            // updated_at se actualiza solo si tienes un trigger, sino puedes añadirlo aquí
+            updated_at: new Date()
           })
           .eq("id", editingVehicle.id);
 
@@ -416,7 +415,7 @@
         <h3 class="font-bold text-lg text-gray-800">
           {editingVehicle ? 'Editar Vehículo' : 'Nuevo Vehículo'}
         </h3>
-        <button on:click={closeModal} class="text-gray-400 hover:text-gray-600">
+        <button aria-label="close" on:click={closeModal} class="text-gray-400 hover:text-gray-600">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
