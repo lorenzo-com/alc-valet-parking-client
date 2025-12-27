@@ -4,16 +4,54 @@ import { getLangFromUrl, useTranslatedPath } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
+
+const flagIcons: any = {
+  es: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 500"><rect width="750" height="500" fill="#c60b1e"/><rect width="750" height="250" y="125" fill="#ffc400"/></svg>`,
+  en: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30"><clipPath id="a"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="b"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#a)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#b)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>`,
+  nl: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600"><rect width="900" height="600" fill="#21468b"/><rect width="900" height="400" fill="#fff"/><rect width="900" height="200" fill="#ae1c28"/></svg>`,
+};
 ---
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    {languages[lang]}
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark">
-    {Object.entries(languages).map(([lang, label]) => (
-    <li>
-      <a class="dropdown-item" href={translatePath("/", lang)}>{label}</a>
-    </li>
-    ))}
-  </ul>
+
+<div class="d-flex align-items-center gap-3">
+  {
+    Object.entries(languages).map(([l, label]) => (
+      <a
+        href={translatePath("/", l)}
+        class={`flag-link ${l === lang ? "active" : ""}`}
+        title={label}
+        aria-label={`Cambiar idioma a ${label}`}
+      >
+        <div class="flag-icon" set:html={flagIcons[l]} />
+      </a>
+    ))
+  }
 </div>
+
+<style>
+  /* Estilos para las banderitas */
+  .flag-link {
+    display: block;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+    opacity: 0.7; /* Un poco transparentes si no están activas */
+  }
+
+  .flag-link:hover {
+    transform: scale(1.1); /* Efecto zoom al pasar el ratón */
+    opacity: 1;
+  }
+
+  .flag-link.active {
+    opacity: 1; /* La bandera actual se ve totalmente nítida */
+    border-bottom: 2px solid white; /* Opcional: indicador de activo */
+  }
+
+  .flag-icon {
+    width: 24px; /* Ajusta el tamaño de la bandera aquí */
+    height: 16px;
+    border-radius: 2px; /* Un pequeño borde redondeado queda bien */
+    overflow: hidden;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+</style>
