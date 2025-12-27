@@ -128,7 +128,7 @@
   }
 
   async function deleteVehicle(id) {
-    if (!confirm("¿Estás seguro de que quieres eliminar este vehículo?"))
+    if (!confirm(t("profile.vehicle.alert")))
       return;
 
     try {
@@ -316,7 +316,7 @@
                 d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
               ></path></svg
             >
-            Mis Vehículos
+            {t("profile.vehicle.title")}
           </h2>
           <button
             on:click={() => openModal()}
@@ -334,7 +334,7 @@
                 d="M12 4v16m8-8H4"
               ></path></svg
             >
-            Agregar
+            {t("profile.vehicle.add")}
           </button>
         </div>
 
@@ -343,7 +343,7 @@
             <div
               class="text-center py-6 text-gray-400 border-2 border-dashed border-gray-200 rounded-lg"
             >
-              <p>No tienes vehículos registrados.</p>
+              <p>{t("profile.novehicles")}</p>
             </div>
           {:else}
             <div class="grid gap-4">
@@ -413,7 +413,7 @@
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
       <div class="px-6 py-4 bg-gray-50 border-b border-gray-100 flex justify-between items-center">
         <h3 class="font-bold text-lg text-gray-800">
-          {editingVehicle ? 'Editar Vehículo' : 'Nuevo Vehículo'}
+          {editingVehicle ? t("profile.vehicle.edit") : t("profile.vehicle.new")}
         </h3>
         <button aria-label="close" on:click={closeModal} class="text-gray-400 hover:text-gray-600">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -422,7 +422,7 @@
       
       <form on:submit|preventDefault={saveVehicle} class="p-6 space-y-4">
         <div>
-          <label for="coche" class="block text-sm font-medium text-gray-700 mb-1">Marca, Modelo y Color</label>
+          <label for="coche" class="block text-sm font-medium text-gray-700 mb-1">{t("profile.vehicle.model")}</label>
           <input 
             type="text" 
             id="coche"
@@ -434,7 +434,7 @@
         </div>
         
         <div>
-          <label for="matricula" class="block text-sm font-medium text-gray-700 mb-1">Matrícula</label>
+          <label for="matricula" class="block text-sm font-medium text-gray-700 mb-1">{t("profile.vehicle.licenseplate")}</label>
           <input 
             type="text" 
             id="matricula"
@@ -451,14 +451,14 @@
             on:click={closeModal}
             class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
           >
-            Cancelar
+            {t("profile.vehicle.cancel")}
           </button>
           <button 
             type="submit" 
             disabled={isSaving}
             class="flex-1 px-4 py-2 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 transition-colors shadow-sm disabled:opacity-50"
           >
-            {isSaving ? 'Guardando...' : 'Guardar'}
+            {isSaving ? t("profile.vehicle.saving") : t("profile.vehicle.save")}
           </button>
         </div>
       </form>
