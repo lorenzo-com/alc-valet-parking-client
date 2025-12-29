@@ -176,7 +176,7 @@
             // Éxito y Redirección
             // Nota: Tenemos un store de Svelte escuchando onAuthStateChange,
             // se actualizará solo, pero la redirección la forzamos aquí.
-            window.location.href = translatePath("/login");
+            window.location.href = translatePath("/");
         } catch (error) {
             console.error("Error en el registro:", error); // Log para desarrolladores
 
