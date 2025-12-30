@@ -306,7 +306,7 @@
           />
 
           <div class="col-12 col-md-6">
-            <label for="square type" class="form-label"
+            <label for="square type" class="form-label font-bold"
               >{t("reservar.label.tipoPlaza")}<span class="text-danger">*</span
               ></label
             >
@@ -332,7 +332,7 @@
           </div>
 
           <div class="col-12 col-md-6">
-            <label for="car" class="form-label"
+            <label for="car" class="form-label font-bold"
               >{t("reservar.label.coche")}<span class="text-danger">*</span
               ></label
             >
@@ -352,7 +352,7 @@
           </div>
 
           <div class="col-12 col-md-6">
-            <label for="license plate" class="form-label"
+            <label for="license plate" class="form-label font-bold"
               >{t("reservar.label.matricula")}<span class="text-danger">*</span
               ></label
             >
@@ -372,7 +372,7 @@
           </div>
 
           <div class="col-12 col-md-6">
-            <label for="num flight" class="form-label"
+            <label for="num flight" class="form-label font-bold"
               >{t("reservar.label.numVuelo")}</label
             >
             <input
@@ -383,7 +383,7 @@
             />
           </div>
           <div class="col-12">
-            <label for="comments" class="form-label"
+            <label for="comments" class="form-label font-bold"
               >{t("reservar.label.comentarios")}</label
             >
             <textarea
@@ -446,7 +446,7 @@
 
           <div class="row g-3">
             <div class="col-12 col-md-6">
-              <label for="name" class="form-label"
+              <label for="name" class="form-label font-bold"
                 >{formData.tipoCliente === TIPO_CLIENTE.PARTICULAR
                   ? t("reservar.label.nombreCompleto")
                   : t("reservar.label.razonSocial")}<span class="text-danger"
@@ -470,7 +470,7 @@
                 </div>{/if}
             </div>
             <div class="col-12 col-md-6">
-              <label for="phone" class="form-label"
+              <label for="phone" class="form-label font-bold"
                 >{t("reservar.label.telefono")}<span class="text-danger">*</span
                 ></label
               >
@@ -489,7 +489,7 @@
                 </div>{/if}
             </div>
             <div class="col-12 col-md-6">
-              <label for="email" class="form-label"
+              <label for="email" class="form-label font-bold"
                 >{t("reservar.label.email")}<span class="text-danger">*</span
                 ></label
               >
@@ -508,7 +508,7 @@
                 </div>{/if}
             </div>
             <div class="col-12 col-md-6">
-              <label for="how found" class="form-label"
+              <label for="how found" class="form-label font-bold"
                 >{t("reservar.label.nosConociste")}<span class="text-danger"
                   >*</span
                 ></label
@@ -540,7 +540,7 @@
               </div>
 
               <div class="col-12 col-md-6">
-                <label for="cif" class="form-label"
+                <label for="cif" class="form-label font-bold"
                   >{t("reservar.label.cif")}<span class="text-danger">*</span
                   ></label
                 >
@@ -560,7 +560,7 @@
                   </div>{/if}
               </div>
               <div class="col-12 col-md-6">
-                <label for="driver name" class="form-label"
+                <label for="driver name" class="form-label font-bold"
                   >{t("reservar.label.nombreConductor")}<span
                     class="text-danger">*</span
                   ></label
@@ -580,7 +580,7 @@
                   </div>{/if}
               </div>
               <div class="col-12 col-md-6">
-                <label for="address" class="form-label"
+                <label for="address" class="form-label font-bold"
                   >{t("reservar.label.direccion")}<span class="text-danger"
                     >*</span
                   ></label

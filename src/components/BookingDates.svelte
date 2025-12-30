@@ -127,7 +127,7 @@
     <div>
       <label
         for="fecha entrada"
-        class="d-flex gap-1 text-gray-700 text-sm font-bold"
+        class="d-flex gap-1 text-gray-700 font-bold"
       >
         <FlightTakeoff />
         {t("reservar.label.fechaEntrada")}
@@ -142,7 +142,7 @@
     <div>
       <label
         for="hora entrada"
-        class="d-flex gap-1 text-gray-700 text-sm font-bold"
+        class="d-flex gap-1 text-gray-700 font-bold"
       >
         <FlightTakeoff />
         {t("reservar.label.horaEntrada")}
@@ -162,7 +162,7 @@
     <div>
       <label
         for="fecha salida"
-        class="d-flex gap-1 text-gray-700 text-sm font-bold"
+        class="d-flex gap-1 text-gray-700 font-bold"
       >
         <FlightLand class="w-4 h-4" />
         {t("reservar.label.fechaSalida")}
@@ -177,7 +177,7 @@
     <div>
       <label
         for="hora salida"
-        class="d-flex gap-1 text-gray-700 text-sm font-bold"
+        class="d-flex gap-1 text-gray-700 font-bold"
       >
         <FlightLand class="w-4 h-4" />
         {t("reservar.label.horaSalida")}
